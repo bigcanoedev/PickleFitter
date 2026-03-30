@@ -6,6 +6,7 @@ import { Paddle, PlayerProfile, PaddleScore } from "@/lib/types";
 import { getAllRanked } from "@/lib/recommendations";
 import { paddleData } from "@/lib/paddle-data";
 import { PaddleCard } from "@/components/PaddleCard";
+import { PickleballLoader } from "@/components/PickleballLoader";
 import { PaddleRankings } from "@/components/PaddleRankings";
 import { PaddleCustomizer } from "@/components/PaddleCustomizer";
 import { LeadTapeOptimizer } from "@/components/LeadTapeOptimizer";
@@ -27,8 +28,11 @@ function parseProfile(searchParams: URLSearchParams): PlayerProfile {
     coreThickness: (searchParams.get("coreThickness") as PlayerProfile["coreThickness"]) || "No preference",
     spinPriority: (searchParams.get("spinPriority") as PlayerProfile["spinPriority"]) || "Medium",
     handSize: (searchParams.get("handSize") as PlayerProfile["handSize"]) || "Medium",
+    gripLength: (searchParams.get("gripLength") as PlayerProfile["gripLength"]) || "No preference",
     moistureLevel: (searchParams.get("moistureLevel") as PlayerProfile["moistureLevel"]) || "Medium",
-    budget: (searchParams.get("budget") as PlayerProfile["budget"]) || "Mid",
+    currency: (searchParams.get("currency") as PlayerProfile["currency"]) || "USD",
+    budgetMin: parseInt(searchParams.get("budgetMin") || "0") || 0,
+    budgetMax: parseInt(searchParams.get("budgetMax") || "500") || 500,
   };
 }
 
@@ -92,7 +96,7 @@ function ResultsContent() {
       {/* Section 1: Quiz Results */}
       <section>
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold">Your Paddle Matches</h1>
+          <h1 className="text-3xl font-black">Your Paddle Matches</h1>
           <p className="text-muted-foreground mt-2">
             Profile:{" "}
             <strong>
@@ -110,6 +114,7 @@ function ResultsContent() {
               rank={i + 1}
               onSelect={(p) => selectAndScroll(p)}
               showSelectButton
+              currency={profile.currency}
             />
           ))}
         </div>
@@ -124,15 +129,6 @@ function ResultsContent() {
           />
         </section>
       )}
-
-      {/* Section 3: Paddle Customizer */}
-      <section>
-        <PaddleCustomizer
-          allPaddles={paddleData as Paddle[]}
-          initialBudget={profile.budget}
-          onSelectPaddle={(p) => selectAndScroll(p)}
-        />
-      </section>
 
       {/* Section 3: Lead Tape Optimizer */}
       {selectedPaddle && (
@@ -154,7 +150,7 @@ function ResultsContent() {
 
 export default function ResultsPage() {
   return (
-    <Suspense fallback={<div className="text-center py-16">Loading your results...</div>}>
+    <Suspense fallback={<PickleballLoader text="Finding your perfect paddles..." />}>
       <ResultsContent />
     </Suspense>
   );

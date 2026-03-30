@@ -21,14 +21,15 @@ import { Paddle, PlayerProfile, PaddleScore, IdealSpecs, CustomizerSpecs } from 
  */
 
 const WEIGHTS = {
-  swingWeight: 0.18,
-  twistWeight: 0.11,
-  coreThickness: 0.10,
-  shape: 0.10,
-  rpm: 0.09,
+  swingWeight: 0.17,
+  twistWeight: 0.10,
+  coreThickness: 0.09,
+  shape: 0.09,
+  rpm: 0.08,
   labPower: 0.10,
-  feel: 0.08,
+  feel: 0.07,
   buildStyle: 0.05,
+  grip: 0.06,
   material: 0.05,
   weight: 0.03,
   budget: 0.07,
@@ -46,17 +47,74 @@ const WEIGHTS = {
 //   - Demographics: Women/teens 105-115, Men/fitness 115-125
 //   - TW: <5 = small sweet spot, 5-7 = most players, 7+ = maximum forgiveness
 
-function calculateIdealSpecs(profile: PlayerProfile): IdealSpecs {
-  // Base specs for balanced intermediate (medium SW range per research)
-  const specs: IdealSpecs = {
-    swingWeightRange: [110, 120],    // "Medium" per Pro Pickleball Store
-    twistWeightRange: [6.0, 7.0],    // "Suitable for most players"
-    weightRange: [7.4, 8.0],
-    coreThicknessRange: [14, 16],
-    rpmRange: [1200, 1800],
-    preferredMaterials: ["Carbon", "Hybrid"],
-    preferredShapes: ["Standard", "Hybrid", "Wide body", "Elongated"],
-  };
+/** Try to find the user's current paddle in our database by fuzzy matching. */
+function findCurrentPaddle(currentPaddleStr: string, allPaddles?: Paddle[]): Paddle | null {
+  if (!currentPaddleStr || !allPaddles) return null;
+
+  const query = currentPaddleStr.toLowerCase().replace(/[^a-z0-9]/g, " ").trim();
+  if (!query) return null;
+
+  let bestMatch: Paddle | null = null;
+  let bestScore = 0;
+
+  for (const paddle of allPaddles) {
+    const name = `${paddle.brand} ${paddle.name}`.toLowerCase().replace(/[^a-z0-9]/g, " ").trim();
+
+    // Exact match
+    if (name === query) return paddle;
+
+    // Count how many query words appear in the paddle name
+    const queryWords = query.split(/\s+/);
+    const matchedWords = queryWords.filter((w) => name.includes(w)).length;
+    const score = matchedWords / queryWords.length;
+
+    if (score > bestScore && score >= 0.6) {
+      bestScore = score;
+      bestMatch = paddle;
+    }
+  }
+
+  return bestMatch;
+}
+
+function calculateIdealSpecs(profile: PlayerProfile, allPaddles?: Paddle[]): IdealSpecs {
+  // ── If user specified a current paddle, anchor specs to it ──
+  const currentPaddleMatch = findCurrentPaddle(profile.currentPaddle, allPaddles);
+
+  // Base specs: anchor to current paddle if found, otherwise use research defaults
+  const specs: IdealSpecs = currentPaddleMatch
+    ? {
+        // Center ranges around the current paddle's specs (±10 for SW, ±0.8 for TW, etc.)
+        swingWeightRange: [currentPaddleMatch.swing_weight - 10, currentPaddleMatch.swing_weight + 10],
+        twistWeightRange: [
+          Math.max(5, (currentPaddleMatch.twist_weight || 6.5) - 0.8),
+          (currentPaddleMatch.twist_weight || 6.5) + 0.8,
+        ],
+        weightRange: [
+          Math.max(7, currentPaddleMatch.weight_oz - 0.4),
+          currentPaddleMatch.weight_oz + 0.4,
+        ],
+        coreThicknessRange: currentPaddleMatch.core_thickness_mm
+          ? [currentPaddleMatch.core_thickness_mm - 1.5, currentPaddleMatch.core_thickness_mm + 1.5]
+          : [14, 16],
+        rpmRange: currentPaddleMatch.rpm
+          ? [currentPaddleMatch.rpm - 300, currentPaddleMatch.rpm + 300]
+          : [1200, 1800],
+        preferredMaterials: [currentPaddleMatch.face_material, "Carbon", "Hybrid"],
+        preferredShapes: currentPaddleMatch.shape
+          ? [currentPaddleMatch.shape, "Hybrid"]
+          : ["Standard", "Hybrid", "Wide body", "Elongated"],
+      }
+    : {
+        // Research-based defaults for balanced intermediate
+        swingWeightRange: [110, 120],
+        twistWeightRange: [6.0, 7.0],
+        weightRange: [7.4, 8.0],
+        coreThicknessRange: [14, 16],
+        rpmRange: [1200, 1800],
+        preferredMaterials: ["Carbon", "Hybrid"],
+        preferredShapes: ["Standard", "Hybrid", "Wide body", "Elongated"],
+      };
 
   // ── Skill level (research: beginners 100-115, intermediate 110-120, advanced 120+) ──
   if (profile.skillLevel === "Beginner") {
@@ -182,6 +240,11 @@ function calculateIdealSpecs(profile: PlayerProfile): IdealSpecs {
   } else if (profile.frustration === "Spin") {
     specs.rpmRange[0] += 200;
     specs.rpmRange[1] += 200;
+  } else if (profile.frustration === "Fatigue") {
+    specs.swingWeightRange[0] -= 5;
+    specs.swingWeightRange[1] = Math.min(specs.swingWeightRange[1], 118);
+    specs.twistWeightRange[0] = Math.max(specs.twistWeightRange[0], 6.5);
+    specs.coreThicknessRange[0] = Math.max(specs.coreThicknessRange[0], 15);
   }
 
   return specs;
@@ -233,6 +296,66 @@ function scoreMaterial(paddle: Paddle, specs: IdealSpecs): number {
   // Partial credit for similar materials
   if (paddle.face_material === "Hybrid" || paddle.face_material === "Composite") return 65;
   return 50;
+}
+
+/**
+ * Score grip fit based on hand size and grip style preference.
+ *
+ * Hand size → grip circumference:
+ *   Small:  4" - 4.125"
+ *   Medium: 4.125" - 4.25"
+ *   Large:  4.25" - 4.5"
+ *
+ * Grip length preference:
+ *   "Short":  4.75" - 5.25" (compact, wrist-driven, table tennis style)
+ *   "Standard": 5.25" - 5.75" (one-handed, most players)
+ *   "Long":  5.75"+ (two-handed backhand, tennis style, extra leverage)
+ */
+function scoreGrip(paddle: Paddle, profile: PlayerProfile): number {
+  let score = 70; // neutral if no data
+
+  // Grip circumference based on hand size
+  if (paddle.grip_thickness) {
+    const thickness = parseFloat(paddle.grip_thickness);
+    if (!isNaN(thickness)) {
+      const idealRanges: Record<string, [number, number]> = {
+        Small:  [3.9, 4.125],
+        Medium: [4.1, 4.25],
+        Large:  [4.25, 4.5],
+      };
+      const range = idealRanges[profile.handSize];
+      if (range) {
+        if (thickness >= range[0] && thickness <= range[1]) {
+          score = 100;
+        } else {
+          const dist = thickness < range[0] ? range[0] - thickness : thickness - range[1];
+          score = Math.max(30, 100 - dist * 150);
+        }
+      }
+    }
+  }
+
+  // Grip length preference
+  if (paddle.grip_length && profile.gripLength && profile.gripLength !== "No preference") {
+    const len = paddle.grip_length;
+    const idealLenRanges: Record<string, [number, number]> = {
+      Short:    [4.5, 5.25],
+      Standard: [5.25, 5.75],
+      Long:     [5.75, 7.0],
+    };
+    const range = idealLenRanges[profile.gripLength];
+    if (range) {
+      if (len >= range[0] && len <= range[1]) {
+        // keep score or boost it
+        score = Math.min(100, score + 10);
+      } else {
+        const dist = len < range[0] ? range[0] - len : len - range[1];
+        score = Math.max(20, score - dist * 40);
+      }
+    }
+  }
+
+  return score;
 }
 
 /**
@@ -365,16 +488,13 @@ function scoreLabBonus(paddle: Paddle): number {
   return 30;
 }
 
-function scoreBudget(paddle: Paddle, budget: string): number {
-  const ranges: Record<string, [number, number]> = {
-    Budget: [0, 150],
-    Mid: [100, 210],
-    Premium: [170, 5000],
-  };
-  const [min, max] = ranges[budget] || [0, 5000];
-  if (paddle.price >= min && paddle.price <= max) return 100;
-  const dist = paddle.price < min ? min - paddle.price : paddle.price - max;
-  return Math.max(0, 100 - dist * 0.5);
+function scoreBudget(paddle: Paddle, profile: PlayerProfile): number {
+  const price = paddle.price * (profile.currency === "CAD" ? 1.36 : 1);
+  const min = profile.budgetMin;
+  const max = profile.budgetMax;
+  if (price >= min && price <= max) return 100;
+  const dist = price < min ? min - price : price - max;
+  return Math.max(0, 100 - dist * 0.4);
 }
 
 // ── Reason generation ───────────────────────────────────────────────────────
@@ -473,6 +593,20 @@ function generateReason(paddle: Paddle, specs: IdealSpecs, profile: PlayerProfil
     reasons.push("Traditional build");
   }
 
+  // Grip fit
+  if (paddle.grip_thickness) {
+    const t = parseFloat(paddle.grip_thickness);
+    if (!isNaN(t)) {
+      if (profile.handSize === "Small" && t <= 4.125) reasons.push(`${t}" grip fits small hands`);
+      else if (profile.handSize === "Large" && t >= 4.25) reasons.push(`${t}" grip fits large hands`);
+    }
+  }
+  if (paddle.grip_length && profile.gripLength === "Long" && paddle.grip_length >= 5.75) {
+    reasons.push(`${paddle.grip_length}" handle for two-handed backhand`);
+  } else if (paddle.grip_length && profile.gripLength === "Short" && paddle.grip_length <= 5.25) {
+    reasons.push(`${paddle.grip_length}" compact handle`);
+  }
+
   // Prior sport
   if (profile.priorSport === "Tennis" && paddle.shape === "Elongated") {
     reasons.push("Elongated shape familiar for tennis players");
@@ -497,7 +631,8 @@ function selectBestAffiliateLink(paddle: Paddle): string {
 // ── Main recommendation function ────────────────────────────────────────────
 
 export function getRecommendations(profile: PlayerProfile, allPaddles: Paddle[]): PaddleScore[] {
-  const idealSpecs = calculateIdealSpecs(profile);
+  const idealSpecs = calculateIdealSpecs(profile, allPaddles);
+  const currentPaddle = findCurrentPaddle(profile.currentPaddle, allPaddles);
 
   const scoredPaddles: PaddleScore[] = allPaddles.map((paddle) => {
     const scores = {
@@ -509,9 +644,10 @@ export function getRecommendations(profile: PlayerProfile, allPaddles: Paddle[])
       labPower: scoreLabPower(paddle, profile),
       feel: scoreFeel(paddle, profile),
       buildStyle: scoreBuildStyle(paddle, profile),
+      grip: scoreGrip(paddle, profile),
       material: scoreMaterial(paddle, idealSpecs),
       weight: scoreWeight(paddle, idealSpecs),
-      budget: scoreBudget(paddle, profile.budget),
+      budget: scoreBudget(paddle, profile),
       labBonus: scoreLabBonus(paddle),
     };
 
@@ -524,15 +660,22 @@ export function getRecommendations(profile: PlayerProfile, allPaddles: Paddle[])
       scores.labPower * WEIGHTS.labPower +
       scores.feel * WEIGHTS.feel +
       scores.buildStyle * WEIGHTS.buildStyle +
+      scores.grip * WEIGHTS.grip +
       scores.material * WEIGHTS.material +
       scores.weight * WEIGHTS.weight +
       scores.budget * WEIGHTS.budget +
       scores.labBonus * WEIGHTS.labBonus;
 
+    const isCurrentPaddle = currentPaddle && paddle.id === currentPaddle.id;
+    let reason = generateReason(paddle, idealSpecs, profile);
+    if (isCurrentPaddle) {
+      reason = "\u2705 This is your current paddle! " + reason;
+    }
+
     return {
       ...paddle,
       matchPercentage: Math.round(total),
-      reason: generateReason(paddle, idealSpecs, profile),
+      reason,
       affiliateLink: selectBestAffiliateLink(paddle),
     };
   });
@@ -542,8 +685,8 @@ export function getRecommendations(profile: PlayerProfile, allPaddles: Paddle[])
 
 /** Returns ALL paddles scored and ranked (for the full rankings table). */
 export function getAllRanked(profile: PlayerProfile, allPaddles: Paddle[]): PaddleScore[] {
-  // Reuse getRecommendations logic but without the slice
-  const idealSpecs = calculateIdealSpecs(profile);
+  const idealSpecs = calculateIdealSpecs(profile, allPaddles);
+  const currentPaddle = findCurrentPaddle(profile.currentPaddle, allPaddles);
 
   return allPaddles
     .map((paddle) => {
@@ -556,9 +699,10 @@ export function getAllRanked(profile: PlayerProfile, allPaddles: Paddle[]): Padd
         labPower: scoreLabPower(paddle, profile),
         feel: scoreFeel(paddle, profile),
         buildStyle: scoreBuildStyle(paddle, profile),
+        grip: scoreGrip(paddle, profile),
         material: scoreMaterial(paddle, idealSpecs),
         weight: scoreWeight(paddle, idealSpecs),
-        budget: scoreBudget(paddle, profile.budget),
+        budget: scoreBudget(paddle, profile),
         labBonus: scoreLabBonus(paddle),
       };
 
@@ -571,15 +715,22 @@ export function getAllRanked(profile: PlayerProfile, allPaddles: Paddle[]): Padd
         scores.labPower * WEIGHTS.labPower +
         scores.feel * WEIGHTS.feel +
         scores.buildStyle * WEIGHTS.buildStyle +
+        scores.grip * WEIGHTS.grip +
         scores.material * WEIGHTS.material +
         scores.weight * WEIGHTS.weight +
         scores.budget * WEIGHTS.budget +
         scores.labBonus * WEIGHTS.labBonus;
 
+      const isCurrentPaddle = currentPaddle && paddle.id === currentPaddle.id;
+      let reason = generateReason(paddle, idealSpecs, profile);
+      if (isCurrentPaddle) {
+        reason = "\u2705 This is your current paddle! " + reason;
+      }
+
       return {
         ...paddle,
         matchPercentage: Math.round(total),
-        reason: generateReason(paddle, idealSpecs, profile),
+        reason,
         affiliateLink: selectBestAffiliateLink(paddle),
       };
     })
@@ -603,9 +754,14 @@ export function scoreAllPaddles(specs: CustomizerSpecs, allPaddles: Paddle[]): P
 
     let score = swMatch * 0.35 + twMatch * 0.25 + wMatch * 0.15 + materialMatch * 0.1;
 
-    // Budget adjustment
+    // Budget adjustment (customizer uses simple string budget, convert to range)
     if (specs.budget) {
-      score = score * 0.85 + scoreBudget(paddle, specs.budget) * 0.15;
+      const budgetRanges: Record<string, [number, number]> = {
+        Budget: [0, 150], Mid: [100, 210], Premium: [170, 500],
+      };
+      const [bMin, bMax] = budgetRanges[specs.budget] || [0, 500];
+      const inBudget = paddle.price >= bMin && paddle.price <= bMax ? 100 : Math.max(0, 100 - Math.abs(paddle.price - (bMin + bMax) / 2) * 0.4);
+      score = score * 0.85 + inBudget * 0.15;
     }
 
     const reasons: string[] = [];

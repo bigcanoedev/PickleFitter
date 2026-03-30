@@ -36,7 +36,24 @@
       "Bash(curl -s http://localhost:3000)",
       "Bash(curl -s http://localhost:3000/_next/static/css/app/layout.css)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/quiz)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(curl -s http://localhost:3000/quiz)",
+      "Bash(node -e \"const l = require\\(''lucide-react''\\); console.log\\(''Weight:'', !!l.Weight\\); console.log\\(''Database:'', !!l.Database\\); console.log\\(''FlaskConical:'', !!l.FlaskConical\\); console.log\\(''Target:'', !!l.Target\\); console.log\\(''Layers:'', !!l.Layers\\); console.log\\(''Twitter:'', !!l.Twitter\\); console.log\\(''ClipboardList:'', !!l.ClipboardList\\); console.log\\(''Search:'', !!l.Search\\); console.log\\(''ChevronLeft:'', !!l.ChevronLeft\\);\")",
+      "Read(//c/Users/bigca/Downloads/**)",
+      "Read(//c/Users/bigca/Desktop/**)",
+      "Bash(ls public/*.png)",
+      "Bash(ls public/*.PNG)",
+      "Bash(ls public/pickle*)",
+      "Bash(ls -la public/*.png)",
+      "Bash(ls -la public/*.PNG)",
+      "Bash(ls -la public/pickle*)",
+      "Read(//c/Users/bigca/OneDrive/Desktop/**)",
+      "Read(//c/Users/bigca/**)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/database)",
+      "Bash(node scripts/dedup-paddles.js)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/paddle/1)"
     ],
     "additionalDirectories": [
       "\\tmp"

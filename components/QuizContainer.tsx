@@ -2,7 +2,10 @@
 
 import { useState, useMemo, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight, Search, Loader2, DollarSign } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { generateSessionId } from "@/lib/utils";
@@ -12,7 +15,7 @@ interface QuizQuestion {
   id: number;
   question: string;
   key: string;
-  type: "radio" | "paddle-search";
+  type: "radio" | "paddle-search" | "budget-slider";
   options?: { label: string; value: string }[];
   placeholder?: string;
   skipLabel?: string; // label for "skip" button on text questions
@@ -55,13 +58,13 @@ const quizQuestions: QuizQuestion[] = [
   },
   {
     id: 4,
-    question: "How fast is your swing?",
+    question: "How would you describe your swings?",
     key: "swingSpeed",
     type: "radio",
     options: [
-      { label: "Slow (< 40 mph)", value: "Slow" },
-      { label: "Moderate (40-50 mph)", value: "Moderate" },
-      { label: "Fast (50+ mph)", value: "Fast" },
+      { label: "Compact and controlled — I don't take big swings", value: "Slow" },
+      { label: "Moderate — I swing with some pace but stay in control", value: "Moderate" },
+      { label: "Big and fast — I rip drives and overheads", value: "Fast" },
     ],
   },
   {
@@ -77,27 +80,27 @@ const quizQuestions: QuizQuestion[] = [
   },
   {
     id: 6,
-    question: "What's your main frustration with your current paddle?",
+    question: "What do you wish your paddle did better?",
     key: "frustration",
     type: "radio",
     options: [
-      { label: "Not enough power", value: "Power" },
-      { label: "Hard to control", value: "Control" },
-      { label: "Off-center hits hurt / too much vibration", value: "Vibration" },
-      { label: "Not enough spin", value: "Spin" },
-      { label: "Grip issues", value: "Grip" },
-      { label: "Other / Not sure / First paddle", value: "Other" },
+      { label: "More power on drives and overheads", value: "Power" },
+      { label: "Better touch on dinks and resets", value: "Control" },
+      { label: "Bigger sweet spot — too many mishits", value: "Vibration" },
+      { label: "More spin on serves and thirds", value: "Spin" },
+      { label: "Less fatigue — my arm gets tired or sore", value: "Fatigue" },
+      { label: "Nothing specific / Shopping for my first paddle", value: "Other" },
     ],
   },
   {
     id: 7,
-    question: "Do you prefer a soft/muted feel or a crisp/lively feel?",
+    question: "When the ball hits your paddle, what do you prefer?",
     key: "feelPreference",
     type: "radio",
     options: [
-      { label: "Soft / Muted (absorbs pace, great for touch shots and resets)", value: "Soft" },
-      { label: "Crisp / Lively (more pop and feedback on every shot)", value: "Crisp" },
-      { label: "No preference / Not sure", value: "No preference" },
+      { label: "Quiet and cushioned — the ball sinks in and I place it where I want", value: "Soft" },
+      { label: "Loud and punchy — I feel the ball pop off the face with energy", value: "Crisp" },
+      { label: "Not sure / No preference", value: "No preference" },
     ],
   },
   {
@@ -122,25 +125,26 @@ const quizQuestions: QuizQuestion[] = [
   },
   {
     id: 10,
-    question: "Build style preference?",
+    question: "Do you want the latest paddle technology?",
     key: "buildPreference",
     type: "radio",
     options: [
-      { label: "Thermoformed / Gen 3-4 (more pop, stiffer, modern builds)", value: "Thermoformed" },
-      { label: "Traditional / Gen 1-2 (softer feel, proven reliability)", value: "Traditional" },
-      { label: "No preference / Not sure", value: "No preference" },
+      { label: "Yes — I want the newest, highest-performing paddles available", value: "Thermoformed" },
+      { label: "No — I prefer tried-and-true paddles that have been around", value: "Traditional" },
+      { label: "Don't care / Not sure", value: "No preference" },
     ],
   },
   {
     id: 11,
-    question: "Paddle shape preference?",
+    question: "What matters most in your paddle shape?",
     key: "shapePreference",
     type: "radio",
     options: [
-      { label: "Standard (biggest sweet spot, most forgiving)", value: "Standard" },
-      { label: "Elongated (more reach, more power, smaller sweet spot)", value: "Elongated" },
-      { label: "Wide body (maximum sweet spot)", value: "Wide body" },
-      { label: "No preference / Not sure", value: "No preference" },
+      { label: "Forgiveness — I want the biggest sweet spot possible", value: "Wide body" },
+      { label: "Balance — a mix of reach and sweet spot", value: "Hybrid" },
+      { label: "Reach — I want extra length for range and power", value: "Elongated" },
+      { label: "Classic — the traditional paddle shape", value: "Standard" },
+      { label: "Not sure / No preference", value: "No preference" },
     ],
   },
   {
@@ -171,32 +175,28 @@ const quizQuestions: QuizQuestion[] = [
     key: "handSize",
     type: "radio",
     options: [
-      { label: "Small (glove size < 8)", value: "Small" },
-      { label: "Medium (glove size 8-9)", value: "Medium" },
-      { label: "Large (glove size > 9)", value: "Large" },
+      { label: "Small (glove size < 8) — best with 4\" grip", value: "Small" },
+      { label: "Medium (glove size 8-9) — best with 4.25\" grip", value: "Medium" },
+      { label: "Large (glove size > 9) — best with 4.25-4.5\" grip", value: "Large" },
     ],
   },
   {
     id: 15,
-    question: "Moisture / sweat level?",
-    key: "moistureLevel",
+    question: "How do you hit your backhand?",
+    key: "gripLength",
     type: "radio",
     options: [
-      { label: "Low (dry hands)", value: "Low" },
-      { label: "Medium", value: "Medium" },
-      { label: "High (sweaty hands)", value: "High" },
+      { label: "Two-handed backhand (need room for both hands)", value: "Long" },
+      { label: "One-handed, tennis style", value: "Standard" },
+      { label: "Compact / wrist-driven (table tennis style)", value: "Short" },
+      { label: "Not sure", value: "No preference" },
     ],
   },
   {
     id: 16,
-    question: "Budget?",
+    question: "What's your budget?",
     key: "budget",
-    type: "radio",
-    options: [
-      { label: "Under $150", value: "Budget" },
-      { label: "$150 - $200", value: "Mid" },
-      { label: "$200+", value: "Premium" },
-    ],
+    type: "budget-slider",
   },
 ];
 
@@ -205,6 +205,8 @@ export function QuizContainer() {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currency, setCurrency] = useState<"USD" | "CAD">("USD");
+  const [budgetRange, setBudgetRange] = useState<[number, number]>([50, 250]);
 
   const current = quizQuestions[currentStep];
   const totalSteps = quizQuestions.length;
@@ -243,6 +245,9 @@ export function QuizContainer() {
 
       const params = new URLSearchParams({
         ...answers,
+        currency,
+        budgetMin: String(budgetRange[0]),
+        budgetMax: String(budgetRange[1]),
         sessionId,
       });
 
@@ -257,7 +262,7 @@ export function QuizContainer() {
   };
 
   const currentAnswer = answers[current.key];
-  const canProceed = !!currentAnswer;
+  const canProceed = current.type === "budget-slider" || !!currentAnswer;
 
   return (
     <div className="max-w-lg mx-auto">
@@ -277,7 +282,16 @@ export function QuizContainer() {
         </div>
       </div>
 
-      {/* Question */}
+      {/* Question + options with slide animation */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStep}
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -30 }}
+          transition={{ duration: 0.2 }}
+        >
+
       <h2 className="text-2xl font-bold mb-6">{current.question}</h2>
 
       {/* Radio options */}
@@ -310,20 +324,107 @@ export function QuizContainer() {
         />
       )}
 
+      {/* Budget slider */}
+      {current.type === "budget-slider" && (
+        <BudgetSlider
+          currency={currency}
+          setCurrency={setCurrency}
+          range={budgetRange}
+          setRange={setBudgetRange}
+        />
+      )}
+
+        </motion.div>
+      </AnimatePresence>
+
       {/* Navigation */}
       <div className="flex justify-between mt-8">
-        <Button variant="outline" onClick={handlePrev} disabled={currentStep === 0}>
+        <Button variant="outline" onClick={handlePrev} disabled={currentStep === 0} className="gap-1">
+          <ChevronLeft className="w-4 h-4" />
           Previous
         </Button>
-        {current.type === "radio" && (
-          <Button onClick={handleNext} disabled={!canProceed || isSubmitting}>
-            {isSubmitting
-              ? "Finding paddles..."
-              : currentStep === totalSteps - 1
-              ? "See My Matches"
-              : "Next"}
+        {(current.type === "radio" || current.type === "budget-slider") && (
+          <Button onClick={handleNext} disabled={!canProceed || isSubmitting} className="gap-1">
+            {isSubmitting ? (
+              <><Loader2 className="w-4 h-4 animate-spin" /> Finding paddles...</>
+            ) : currentStep === totalSteps - 1 ? (
+              "See My Matches"
+            ) : (
+              <>Next <ChevronRight className="w-4 h-4" /></>
+            )}
           </Button>
         )}
+      </div>
+    </div>
+  );
+}
+
+/* ───────────────── Budget Slider ───────────────── */
+
+const CAD_RATE = 1.36;
+
+function BudgetSlider({
+  currency,
+  setCurrency,
+  range,
+  setRange,
+}: {
+  currency: "USD" | "CAD";
+  setCurrency: (c: "USD" | "CAD") => void;
+  range: [number, number];
+  setRange: (r: [number, number]) => void;
+}) {
+  const symbol = currency === "CAD" ? "CA$" : "$";
+  const maxVal = currency === "CAD" ? 450 : 330;
+
+  return (
+    <div className="space-y-6">
+      {/* Currency toggle */}
+      <div className="flex items-center justify-center gap-1 bg-muted rounded-lg p-1 w-fit mx-auto">
+        {(["USD", "CAD"] as const).map((c) => (
+          <button
+            key={c}
+            onClick={() => {
+              if (c !== currency) {
+                const rate = c === "CAD" ? CAD_RATE : 1 / CAD_RATE;
+                setRange([
+                  Math.round(range[0] * rate),
+                  Math.round(range[1] * rate),
+                ]);
+                setCurrency(c);
+              }
+            }}
+            className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${
+              currency === c
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {c === "USD" ? "🇺🇸 USD" : "🇨🇦 CAD"}
+          </button>
+        ))}
+      </div>
+
+      {/* Price display */}
+      <div className="text-center">
+        <div className="text-3xl font-black text-foreground">
+          {symbol}{range[0]} — {symbol}{range[1]}{range[1] >= maxVal ? "+" : ""}
+        </div>
+      </div>
+
+      {/* Dual range slider */}
+      <div className="px-2">
+        <Slider
+          min={0}
+          max={maxVal}
+          step={10}
+          value={range}
+          onValueChange={(v) => setRange(v as [number, number])}
+        />
+        <div className="flex justify-between text-xs text-muted-foreground mt-2">
+          <span>{symbol}0</span>
+          <span>{symbol}{maxVal}+</span>
+        </div>
       </div>
     </div>
   );
@@ -404,6 +505,7 @@ function PaddleSearch({
   return (
     <div className="space-y-4">
       <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
         <input
           ref={inputRef}
           type="text"
@@ -415,7 +517,7 @@ function PaddleSearch({
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
           placeholder="Start typing your paddle name..."
-          className="w-full px-4 py-3 rounded-lg border-2 border-border bg-background text-base focus:outline-none focus:border-primary transition-colors"
+          className="w-full pl-10 pr-4 py-3 rounded-lg border-2 border-border bg-background text-base focus:outline-none focus:border-primary transition-colors"
           autoComplete="off"
         />
 

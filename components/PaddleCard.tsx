@@ -3,15 +3,19 @@
 import { PaddleScore } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ExternalLink, SlidersHorizontal } from "lucide-react";
 
 interface PaddleCardProps {
   paddle: PaddleScore;
   rank?: number;
   onSelect?: (paddle: PaddleScore) => void;
   showSelectButton?: boolean;
+  currency?: "USD" | "CAD";
 }
 
-export function PaddleCard({ paddle, rank, onSelect, showSelectButton }: PaddleCardProps) {
+export function PaddleCard({ paddle, rank, onSelect, showSelectButton, currency = "USD" }: PaddleCardProps) {
+  const price = currency === "CAD" ? Math.round(paddle.price * 1.36) : paddle.price;
+  const symbol = currency === "CAD" ? "CA$" : "$";
   return (
     <Card className="relative overflow-hidden">
       {rank && (
@@ -23,7 +27,7 @@ export function PaddleCard({ paddle, rank, onSelect, showSelectButton }: PaddleC
         <div className="text-xs text-muted-foreground uppercase tracking-wide">{paddle.brand}</div>
         <CardTitle className="text-lg">{paddle.name}</CardTitle>
         <div className="flex items-center gap-3 text-sm">
-          <span className="text-2xl font-bold text-primary">${paddle.price}</span>
+          <span className="text-2xl font-bold text-primary">{symbol}{price}</span>
           <span className="bg-accent text-accent-foreground px-2 py-0.5 rounded text-xs font-medium">
             {paddle.matchPercentage}% match
           </span>
@@ -88,13 +92,15 @@ export function PaddleCard({ paddle, rank, onSelect, showSelectButton }: PaddleC
 
         {/* Actions */}
         <div className="flex gap-2">
-          <Button asChild className="flex-1">
+          <Button asChild className="flex-1 gap-1.5">
             <a href={paddle.affiliateLink} target="_blank" rel="noopener noreferrer">
               Buy Now
+              <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </Button>
           {showSelectButton && onSelect && (
-            <Button variant="outline" onClick={() => onSelect(paddle)}>
+            <Button variant="outline" onClick={() => onSelect(paddle)} className="gap-1.5">
+              <SlidersHorizontal className="w-3.5 h-3.5" />
               Optimize
             </Button>
           )}

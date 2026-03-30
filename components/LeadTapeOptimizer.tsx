@@ -73,7 +73,7 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold mb-2">Lead Tape Optimizer</h2>
+        <h2 className="text-2xl font-black mb-2">Lead Tape Optimizer</h2>
         <p className="text-xs text-muted-foreground mt-1">
           Calibrated to Thrive Pickleball RDC measurements. Actual results may vary slightly with paddle shape.
         </p>

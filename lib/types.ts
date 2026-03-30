@@ -54,8 +54,11 @@ export interface PlayerProfile {
   coreThickness: "Thin" | "Thick" | "No preference";
   spinPriority: "Low" | "Medium" | "High";
   handSize: "Small" | "Medium" | "Large";
+  gripLength: "Short" | "Standard" | "Long" | "No preference";
   moistureLevel: "Low" | "Medium" | "High";
-  budget: "Budget" | "Mid" | "Premium";
+  currency: "USD" | "CAD";
+  budgetMin: number;
+  budgetMax: number;
 }
 
 export interface PaddleScore extends Paddle {

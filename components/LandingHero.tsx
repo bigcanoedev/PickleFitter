@@ -1,55 +1,182 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { AuthorBranding } from "@/components/AuthorBranding";
+import {
+  ArrowRight,
+  Target,
+  FlaskConical,
+  Weight,
+  Database,
+  Layers,
+} from "lucide-react";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const stagger = {
+  visible: {
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
+function CountUp({ target, duration = 1.2 }: { target: number; duration?: number }) {
+  return (
+    <motion.span
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >
+      <motion.span
+        initial={{ count: 0 }}
+        animate={{ count: target }}
+        transition={{ duration, ease: "easeOut" }}
+      >
+        {/* Framer motion doesn't animate text directly, so we use a workaround */}
+        {target}
+      </motion.span>
+    </motion.span>
+  );
+}
 
 export function LandingHero() {
   return (
-    <div className="min-h-[80vh] flex flex-col items-center justify-center text-center px-4">
-      <div className="max-w-2xl space-y-6">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-          Find Your Perfect Paddle
+    <div className="min-h-[80vh] flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+      <motion.div
+        className="max-w-2xl space-y-8"
+        initial="hidden"
+        animate="visible"
+        variants={stagger}
+      >
+        {/* Bouncing pickleball */}
+        <motion.div
+          variants={fadeUp}
+          className="flex justify-center pt-6"
+        >
+          <motion.img
+            src="/logo.svg"
+            alt="PickleFitter"
+            className="w-16 h-16"
+            animate={{
+              y: [0, -12, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </motion.div>
+
+        {/* Badge */}
+        <motion.div
+          variants={fadeUp}
+          className="inline-flex items-center gap-2 bg-primary/10 text-primary text-sm font-semibold px-4 py-1.5 rounded-full"
+        >
+          <Database className="w-3.5 h-3.5" />
+          727 paddles &middot; Lab-tested data &middot; Free forever
+        </motion.div>
+
+        <motion.h1
+          variants={fadeUp}
+          className="text-5xl md:text-6xl font-black tracking-tight leading-[1.1]"
+        >
+          Find the paddle
           <br />
-          <span className="text-primary">in 2 Minutes</span>
-        </h1>
+          <span className="text-primary">that fits you.</span>
+        </motion.h1>
 
-        <p className="text-lg text-muted-foreground max-w-lg mx-auto">
-          Data-driven recommendations based on swing physics, not marketing.
-          Matched to YOUR play style, swing speed, and budget.
-        </p>
+        <motion.p
+          variants={fadeUp}
+          className="text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed"
+        >
+          Not marketing hype. Real swing weight, twist weight, power, and spin data
+          from lab testing — matched to your play style in 2 minutes.
+        </motion.p>
 
-        <div className="flex justify-center">
-          <Button asChild size="lg" className="text-lg px-8 py-6">
-            <Link href="/quiz">Take the Quiz</Link>
-          </Button>
-        </div>
+        <motion.div variants={fadeUp} className="flex justify-center gap-3">
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+            <Button asChild size="lg" className="text-base px-8 py-6 font-bold gap-2">
+              <Link href="/quiz">
+                Take the Quiz
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Button>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+            <Button asChild variant="outline" size="lg" className="text-base px-8 py-6 gap-2">
+              <Link href="/database">
+                <Database className="w-4 h-4" />
+                Browse All Paddles
+              </Link>
+            </Button>
+          </motion.div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-8 text-sm">
-          <div className="bg-card border rounded-lg p-4">
-            <div className="font-bold mb-1">Swing-Matched</div>
-            <p className="text-muted-foreground">
-              Paddles matched to YOUR swing speed and play style
-            </p>
-          </div>
-          <div className="bg-card border rounded-lg p-4">
-            <div className="font-bold mb-1">Spec-Driven</div>
-            <p className="text-muted-foreground">
-              See exact swing weight &amp; twist weight specs
-            </p>
-          </div>
-          <div className="bg-card border rounded-lg p-4">
-            <div className="font-bold mb-1">Lead Tape Guide</div>
-            <p className="text-muted-foreground">
-              Get custom tungsten tape placement for your paddle
-            </p>
-          </div>
-        </div>
+        {/* Stats bar */}
+        <motion.div
+          variants={fadeUp}
+          className="grid grid-cols-3 gap-6 pt-6 max-w-md mx-auto"
+        >
+          {[
+            { icon: Database, value: 727, label: "Paddles" },
+            { icon: Layers, value: 12, label: "Match Dimensions" },
+            { icon: FlaskConical, value: 326, label: "Lab-Tested" },
+          ].map((stat) => (
+            <motion.div
+              key={stat.label}
+              className="flex flex-col items-center"
+              whileHover={{ y: -3 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <stat.icon className="w-5 h-5 text-primary mb-1" />
+              <div className="text-2xl font-black text-foreground">
+                <CountUp target={stat.value} />
+              </div>
+              <div className="text-xs text-muted-foreground">{stat.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
 
-        <div className="pt-4 flex justify-center">
-          <AuthorBranding />
-        </div>
-      </div>
+        {/* Feature cards */}
+        <motion.div
+          variants={stagger}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 text-sm text-left"
+        >
+          {[
+            {
+              icon: Target,
+              title: "Swing-Matched",
+              desc: "Paddles matched to your swing speed, skill level, and play style.",
+            },
+            {
+              icon: FlaskConical,
+              title: "Lab-Tested Power",
+              desc: "Real MPH and RPM data from Pickleball Effect, not manufacturer claims.",
+            },
+            {
+              icon: Weight,
+              title: "Lead Tape Optimizer",
+              desc: "Exact tungsten placement calibrated to RDC measurements.",
+            },
+          ].map((card) => (
+            <motion.div
+              key={card.title}
+              variants={fadeUp}
+              whileHover={{ y: -4, boxShadow: "0 8px 25px -5px rgba(0,0,0,0.1)" }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="bg-card border rounded-xl p-5 cursor-default"
+            >
+              <card.icon className="w-5 h-5 text-primary mb-2" />
+              <div className="font-bold mb-1 text-foreground">{card.title}</div>
+              <p className="text-muted-foreground">{card.desc}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

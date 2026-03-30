@@ -240,7 +240,7 @@ function toAppFormat(paddle) {
     purchase_link: paddle.purchase_link || null,
     youtube_review: paddle.youtube_review || null,
     discount_code: paddle.discount_code || null,
-    amazon_link: `https://amazon.com/s?k=${encodeURIComponent(paddle.brand + " " + paddle.name)}&tag=paddlefinder-20`,
+    amazon_link: `https://amazon.com/s?k=${encodeURIComponent(paddle.brand + " " + paddle.name)}&tag=picklefitter-20`,
     generic_affiliate_link: paddle.purchase_link || null,
     preferred_link_type: paddle.purchase_link ? "generic" : "amazon",
   };

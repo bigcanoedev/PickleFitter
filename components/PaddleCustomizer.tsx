@@ -50,7 +50,7 @@ export function PaddleCustomizer({ allPaddles, initialBudget, onSelectPaddle }: 
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-bold mb-2">Design Your Ideal Paddle</h2>
+        <h2 className="text-2xl font-black mb-2">Design Your Ideal Paddle</h2>
         <p className="text-muted-foreground">
           Adjust the specs below and see which real paddles match your design.
         </p>

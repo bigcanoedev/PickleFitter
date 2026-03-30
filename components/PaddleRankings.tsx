@@ -1,23 +1,28 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
+import { Search } from "lucide-react";
 import { PaddleScore } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 
 interface PaddleRankingsProps {
   allRanked: PaddleScore[];
   onSelectPaddle?: (paddle: PaddleScore) => void;
+  startExpanded?: boolean;
+  defaultSort?: SortKey;
 }
 
-type SortKey = "match" | "price" | "swing_weight" | "twist_weight" | "power_mph" | "spin_rpm";
+type SortKey = "match" | "price" | "swing_weight" | "twist_weight" | "weight_oz" | "power_mph" | "pop_mph" | "spin_rpm";
 
 const PAGE_SIZE = 25;
 
-export function PaddleRankings({ allRanked, onSelectPaddle }: PaddleRankingsProps) {
-  const [expanded, setExpanded] = useState(false);
+export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = false, defaultSort = "match" }: PaddleRankingsProps) {
+  const [expanded, setExpanded] = useState(startExpanded);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-  const [sortBy, setSortBy] = useState<SortKey>("match");
+  const [sortBy, setSortBy] = useState<SortKey>(defaultSort);
   const [sortAsc, setSortAsc] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [filterBrand, setFilterBrand] = useState("");
   const [filterShape, setFilterShape] = useState("");
   const [filterBuild, setFilterBuild] = useState("");
@@ -40,6 +45,14 @@ export function PaddleRankings({ allRanked, onSelectPaddle }: PaddleRankingsProp
   const sorted = useMemo(() => {
     let list = [...allRanked];
 
+    // Search
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      list = list.filter((p) =>
+        `${p.brand} ${p.name}`.toLowerCase().includes(q)
+      );
+    }
+
     // Filter
     if (filterBrand) list = list.filter((p) => p.brand === filterBrand);
     if (filterShape) list = list.filter((p) => p.shape === filterShape);
@@ -54,7 +67,7 @@ export function PaddleRankings({ allRanked, onSelectPaddle }: PaddleRankingsProp
     });
 
     return list;
-  }, [allRanked, sortBy, sortAsc, filterBrand, filterShape, filterBuild]);
+  }, [allRanked, sortBy, sortAsc, searchQuery, filterBrand, filterShape, filterBuild]);
 
   const visible = sorted.slice(0, visibleCount);
 
@@ -67,10 +80,8 @@ export function PaddleRankings({ allRanked, onSelectPaddle }: PaddleRankingsProp
     }
   };
 
-  const sortIcon = (key: SortKey) => {
-    if (sortBy !== key) return "\u2195";
-    return sortAsc ? "\u2191" : "\u2193";
-  };
+  const sortClass = (key: SortKey) =>
+    sortBy === key ? "text-primary" : "";
 
   if (!expanded) {
     return (
@@ -85,10 +96,22 @@ export function PaddleRankings({ allRanked, onSelectPaddle }: PaddleRankingsProp
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Full Rankings</h2>
+        <h2 className="text-2xl font-black">Full Rankings</h2>
         <span className="text-sm text-muted-foreground">
           {sorted.length} paddles
         </span>
+      </div>
+
+      {/* Search */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => { setSearchQuery(e.target.value); setVisibleCount(PAGE_SIZE); }}
+          placeholder="Search paddles..."
+          className="w-full pl-9 pr-4 py-2 text-sm border rounded-lg bg-background focus:outline-none focus:border-primary transition-colors"
+        />
       </div>
 
       {/* Filters */}
@@ -123,11 +146,11 @@ export function PaddleRankings({ allRanked, onSelectPaddle }: PaddleRankingsProp
             <option key={b} value={b!}>{b}</option>
           ))}
         </select>
-        {(filterBrand || filterShape || filterBuild) && (
+        {(searchQuery || filterBrand || filterShape || filterBuild) && (
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => { setFilterBrand(""); setFilterShape(""); setFilterBuild(""); }}
+            onClick={() => { setSearchQuery(""); setFilterBrand(""); setFilterShape(""); setFilterBuild(""); }}
           >
             Clear filters
           </Button>
@@ -141,42 +164,15 @@ export function PaddleRankings({ allRanked, onSelectPaddle }: PaddleRankingsProp
             <tr>
               <th className="text-left px-3 py-2 font-medium w-8">#</th>
               <th className="text-left px-3 py-2 font-medium">Paddle</th>
-              <th
-                className="text-right px-3 py-2 font-medium cursor-pointer hover:text-primary"
-                onClick={() => toggleSort("match")}
-              >
-                Match {sortIcon("match")}
-              </th>
-              <th
-                className="text-right px-3 py-2 font-medium cursor-pointer hover:text-primary"
-                onClick={() => toggleSort("price")}
-              >
-                Price {sortIcon("price")}
-              </th>
-              <th
-                className="text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden md:table-cell"
-                onClick={() => toggleSort("swing_weight")}
-              >
-                SW {sortIcon("swing_weight")}
-              </th>
-              <th
-                className="text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden md:table-cell"
-                onClick={() => toggleSort("twist_weight")}
-              >
-                TW {sortIcon("twist_weight")}
-              </th>
-              <th
-                className="text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden lg:table-cell"
-                onClick={() => toggleSort("power_mph")}
-              >
-                Power {sortIcon("power_mph")}
-              </th>
-              <th
-                className="text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden lg:table-cell"
-                onClick={() => toggleSort("spin_rpm")}
-              >
-                Spin {sortIcon("spin_rpm")}
-              </th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("match")}`} onClick={() => toggleSort("match")}>Match</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("price")}`} onClick={() => toggleSort("price")}>Price</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden md:table-cell ${sortClass("swing_weight")}`} onClick={() => toggleSort("swing_weight")}>SW</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden md:table-cell ${sortClass("twist_weight")}`} onClick={() => toggleSort("twist_weight")}>TW</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden md:table-cell ${sortClass("weight_oz")}`} onClick={() => toggleSort("weight_oz")}>Wt</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden lg:table-cell ${sortClass("power_mph")}`} onClick={() => toggleSort("power_mph")}>Power</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden lg:table-cell ${sortClass("pop_mph")}`} onClick={() => toggleSort("pop_mph")}>Pop</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden lg:table-cell ${sortClass("spin_rpm")}`} onClick={() => toggleSort("spin_rpm")}>Spin</th>
+              <th className="text-center px-3 py-2 font-medium hidden xl:table-cell">Firepower</th>
               <th className="text-center px-3 py-2 font-medium hidden lg:table-cell">Shape</th>
               <th className="text-center px-3 py-2 font-medium hidden xl:table-cell">Core</th>
               <th className="px-3 py-2 font-medium w-20"></th>
@@ -192,8 +188,10 @@ export function PaddleRankings({ allRanked, onSelectPaddle }: PaddleRankingsProp
                 >
                   <td className="px-3 py-2 text-muted-foreground">{globalRank}</td>
                   <td className="px-3 py-2">
-                    <div className="font-medium">{paddle.name}</div>
-                    <div className="text-xs text-muted-foreground">{paddle.brand}</div>
+                    <Link href={`/paddle/${paddle.id}`} className="hover:text-primary transition-colors">
+                      <div className="font-medium">{paddle.name}</div>
+                      <div className="text-xs text-muted-foreground">{paddle.brand}</div>
+                    </Link>
                   </td>
                   <td className="text-right px-3 py-2">
                     <span
@@ -211,11 +209,30 @@ export function PaddleRankings({ allRanked, onSelectPaddle }: PaddleRankingsProp
                   <td className="text-right px-3 py-2">${paddle.price}</td>
                   <td className="text-right px-3 py-2 hidden md:table-cell">{paddle.swing_weight}</td>
                   <td className="text-right px-3 py-2 hidden md:table-cell">{paddle.twist_weight}</td>
+                  <td className="text-right px-3 py-2 hidden md:table-cell">
+                    {paddle.weight_oz ? `${parseFloat(paddle.weight_oz.toFixed(1))}` : "—"}
+                  </td>
                   <td className="text-right px-3 py-2 hidden lg:table-cell">
                     {paddle.power_mph ? `${paddle.power_mph}` : "—"}
                   </td>
                   <td className="text-right px-3 py-2 hidden lg:table-cell">
+                    {paddle.pop_mph ? `${paddle.pop_mph}` : "—"}
+                  </td>
+                  <td className="text-right px-3 py-2 hidden lg:table-cell">
                     {paddle.spin_rpm || paddle.rpm ? `${paddle.spin_rpm || paddle.rpm}` : "—"}
+                  </td>
+                  <td className="text-center px-3 py-2 hidden xl:table-cell">
+                    {paddle.firepower_tier ? (
+                      <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${
+                        paddle.firepower_tier.includes("Elite") ? "bg-primary/15 text-primary" :
+                        paddle.firepower_tier.includes("High") ? "bg-blue-100 text-blue-700" :
+                        paddle.firepower_tier.includes("Balanced") ? "bg-gray-100 text-gray-700" :
+                        paddle.firepower_tier.includes("Control") ? "bg-purple-100 text-purple-700" :
+                        "bg-orange-100 text-orange-700"
+                      }`}>
+                        {paddle.firepower_tier.replace("Firepower ", "")}
+                      </span>
+                    ) : "—"}
                   </td>
                   <td className="text-center px-3 py-2 hidden lg:table-cell">
                     <span className="text-xs">{paddle.shape || "—"}</span>
@@ -271,7 +288,9 @@ function getSortValue(paddle: PaddleScore, key: SortKey): number {
     case "price": return paddle.price;
     case "swing_weight": return paddle.swing_weight;
     case "twist_weight": return paddle.twist_weight;
+    case "weight_oz": return paddle.weight_oz || 0;
     case "power_mph": return paddle.power_mph || 0;
+    case "pop_mph": return paddle.pop_mph || 0;
     case "spin_rpm": return paddle.spin_rpm || paddle.rpm || 0;
   }
 }

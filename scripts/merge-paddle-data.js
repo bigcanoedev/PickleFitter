@@ -186,7 +186,7 @@ function main() {
       purchase_link: pe["Link to Paddle"] || (psMatch?.purchase_link || null),
       youtube_review: psMatch?.youtube_review || null,
       discount_code: pe["Discount Code"] || (psMatch?.discount_code || null),
-      amazon_link: `https://amazon.com/s?k=${encodeURIComponent(pe["Brand"] + " " + pe["Paddle Name"])}&tag=paddlefinder-20`,
+      amazon_link: `https://amazon.com/s?k=${encodeURIComponent(pe["Brand"] + " " + pe["Paddle Name"])}&tag=picklefitter-20`,
       generic_affiliate_link: pe["Link to Paddle"] || null,
       preferred_link_type: pe["Link to Paddle"] ? "generic" : "amazon",
     };
@@ -249,7 +249,7 @@ function main() {
       purchase_link: ps.purchase_link || null,
       youtube_review: ps.youtube_review || null,
       discount_code: ps.discount_code || null,
-      amazon_link: `https://amazon.com/s?k=${encodeURIComponent(ps.brand + " " + ps.name)}&tag=paddlefinder-20`,
+      amazon_link: `https://amazon.com/s?k=${encodeURIComponent(ps.brand + " " + ps.name)}&tag=picklefitter-20`,
       generic_affiliate_link: ps.purchase_link || null,
       preferred_link_type: ps.purchase_link ? "generic" : "amazon",
     };

@@ -21,8 +21,11 @@ export async function GET(request: NextRequest) {
     coreThickness: (searchParams.get("coreThickness") as PlayerProfile["coreThickness"]) || "No preference",
     spinPriority: (searchParams.get("spinPriority") as PlayerProfile["spinPriority"]) || "Medium",
     handSize: (searchParams.get("handSize") as PlayerProfile["handSize"]) || "Medium",
+    gripLength: (searchParams.get("gripLength") as PlayerProfile["gripLength"]) || "No preference",
     moistureLevel: (searchParams.get("moistureLevel") as PlayerProfile["moistureLevel"]) || "Medium",
-    budget: (searchParams.get("budget") as PlayerProfile["budget"]) || "Mid",
+    currency: (searchParams.get("currency") as PlayerProfile["currency"]) || "USD",
+    budgetMin: parseInt(searchParams.get("budgetMin") || "0") || 0,
+    budgetMax: parseInt(searchParams.get("budgetMax") || "500") || 500,
   };
 
   const recommendations = getRecommendations(profile, paddleData as Paddle[]);
