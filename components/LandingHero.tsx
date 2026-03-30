@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -23,23 +24,25 @@ const stagger = {
   },
 };
 
-function CountUp({ target, duration = 1.2 }: { target: number; duration?: number }) {
-  return (
-    <motion.span
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-    >
-      <motion.span
-        initial={{ count: 0 }}
-        animate={{ count: target }}
-        transition={{ duration, ease: "easeOut" }}
-      >
-        {/* Framer motion doesn't animate text directly, so we use a workaround */}
-        {target}
-      </motion.span>
-    </motion.span>
-  );
+function CountUp({ target }: { target: number }) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    let start = 0;
+    const end = target;
+    const duration = 1200;
+    const step = Math.ceil(end / (duration / 16));
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(start);
+      }
+    }, 16);
+    return () => clearInterval(timer);
+  }, [target]);
+  return <span>{count}</span>;
 }
 
 export function LandingHero() {
