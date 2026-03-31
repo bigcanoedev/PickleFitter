@@ -1,54 +1,39 @@
-"use client";
-
-import { useParams } from "next/navigation";
-import { useMemo } from "react";
-import { Paddle, PaddleScore } from "@/lib/types";
+import type { Metadata } from "next";
 import { paddleData } from "@/lib/paddle-data";
-import { LeadTapeOptimizer } from "@/components/LeadTapeOptimizer";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { Paddle } from "@/lib/types";
+import PaddleDetail from "./PaddleDetail";
 
-function selectBestLink(paddle: Paddle): string {
-  return paddle.purchase_link || paddle.generic_affiliate_link || paddle.amazon_link || "#";
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export async function generateStaticParams() {
+  return (paddleData as Paddle[]).map((p) => ({
+    id: String(p.id),
+  }));
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const paddle = (paddleData as Paddle[]).find((p) => p.id === Number(id));
+
+  if (!paddle) {
+    return { title: "Paddle Not Found — PickleFitter" };
+  }
+
+  const specs = [
+    paddle.shape,
+    paddle.core_thickness_mm ? `${paddle.core_thickness_mm}mm` : null,
+    paddle.power_mph ? `${paddle.power_mph} MPH power` : null,
+    paddle.spin_rpm ? `${paddle.spin_rpm} RPM spin` : null,
+  ].filter(Boolean).join(", ");
+
+  return {
+    title: `${paddle.brand} ${paddle.name} Review — Specs, Pros & Cons | PickleFitter`,
+    description: `${paddle.brand} ${paddle.name} ($${paddle.price}) — ${specs}. Swing weight ${paddle.swing_weight}, twist weight ${paddle.twist_weight}. See pros, cons, who it's best for, and optimize with lead tape.`,
+  };
 }
 
 export default function PaddlePage() {
-  const params = useParams();
-  const id = Number(params.id);
-
-  const paddle: PaddleScore | null = useMemo(() => {
-    const found = (paddleData as Paddle[]).find((p) => p.id === id);
-    if (!found) return null;
-    return {
-      ...found,
-      matchPercentage: 0,
-      reason: "",
-      affiliateLink: selectBestLink(found),
-    };
-  }, [id]);
-
-  if (!paddle) {
-    return (
-      <div className="text-center py-16">
-        <h1 className="text-2xl font-black">Paddle not found</h1>
-        <Link href="/database" className="text-primary hover:underline mt-4 inline-block">
-          Back to database
-        </Link>
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-8">
-      <Link
-        href="/database"
-        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to database
-      </Link>
-
-      <LeadTapeOptimizer selectedPaddle={paddle} />
-    </div>
-  );
+  return <PaddleDetail />;
 }
