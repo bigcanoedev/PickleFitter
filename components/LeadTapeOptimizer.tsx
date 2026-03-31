@@ -80,20 +80,20 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
       </div>
 
       {/* Current Paddle - prominent card */}
-      <div className="border-2 border-primary rounded-lg p-4 bg-primary/5">
-        <div className="flex items-center justify-between mb-3">
-          <div>
+      <div className="border-2 border-primary rounded-lg p-3 sm:p-4 bg-primary/5">
+        <div className="flex items-start sm:items-center justify-between gap-2 mb-3">
+          <div className="min-w-0">
             <div className="text-xs text-primary font-medium uppercase tracking-wide">Optimizing</div>
-            <div className="text-xl font-bold">{selectedPaddle.name}</div>
+            <div className="text-lg sm:text-xl font-bold truncate">{selectedPaddle.name}</div>
             <div className="text-sm text-muted-foreground">{selectedPaddle.brand} &middot; ${selectedPaddle.price}</div>
           </div>
           {selectedPaddle.firepower_tier && (
-            <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full font-medium">
+            <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full font-medium whitespace-nowrap shrink-0">
               {selectedPaddle.firepower_tier.replace("Firepower ", "")}
             </span>
           )}
         </div>
-        <div className="grid grid-cols-3 gap-3 text-center text-sm">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center text-sm">
           <div className="bg-background rounded-lg p-2">
             <div className="text-xs text-muted-foreground">Swing Weight</div>
             <div className="text-lg font-bold">{selectedPaddle.swing_weight}</div>
@@ -139,7 +139,7 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
       {/* Placement Controls + Diagram + Results */}
       <div className="grid md:grid-cols-[1fr_auto_1fr] gap-6">
         {/* Left: Placement gram sliders */}
-        <div className="space-y-3">
+        <div className="space-y-3 order-1">
           <label className="font-medium">Head Placements</label>
           <p className="text-xs text-muted-foreground mb-1">
             Set grams per side for each position. Paired positions apply equal weight to both sides.
@@ -214,7 +214,7 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
         </div>
 
         {/* Center: SVG Diagram */}
-        <div className="flex justify-center items-start pt-6">
+        <div className="flex justify-center items-start pt-6 order-3 md:order-2">
           <PaddleDiagram
             placementGrams={placementGrams}
             capGrams={capGrams}
@@ -224,7 +224,7 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
         </div>
 
         {/* Right: Results */}
-        <div className="space-y-4">
+        <div className="space-y-4 order-2 md:order-3">
           <label className="font-medium">Resulting Specs</label>
 
           {/* 3-column summary */}
@@ -333,7 +333,7 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
             <CardTitle className="text-lg">Get Your Lead Tape Kit</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
               <div>
                 <div className="font-medium">Tungsten Tape Kit</div>
                 <div className="text-sm text-muted-foreground">
@@ -373,8 +373,8 @@ function ResultCard({
   return (
     <div className={`rounded-lg border p-3 ${highlight ? "border-primary/50 bg-primary/5" : ""}`}>
       <div className="text-xs text-muted-foreground">{label}</div>
-      <div className="flex items-baseline justify-between">
-        <div className="text-lg font-bold">
+      <div className="flex items-baseline justify-between gap-2">
+        <div className="text-base sm:text-lg font-bold">
           {before}{suffix} &rarr;{" "}
           <span className="text-primary">{after}{suffix}</span>
         </div>

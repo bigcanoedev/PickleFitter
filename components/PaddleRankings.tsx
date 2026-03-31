@@ -95,9 +95,9 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-black">Full Rankings</h2>
-        <span className="text-sm text-muted-foreground">
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="text-xl sm:text-2xl font-black">Full Rankings</h2>
+        <span className="text-sm text-muted-foreground whitespace-nowrap">
           {sorted.length} paddles
         </span>
       </div>

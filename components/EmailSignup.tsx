@@ -56,7 +56,7 @@ export function EmailSignup({ sessionId, recommendedPaddleId }: EmailSignupProps
           We&apos;ll follow up in 2 weeks to see how your paddle choice is working out, plus send
           gear recommendations based on your play style.
         </p>
-        <form onSubmit={handleSubmit} className="flex gap-2">
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
           <input
             type="email"
             placeholder="your@email.com"
@@ -65,7 +65,7 @@ export function EmailSignup({ sessionId, recommendedPaddleId }: EmailSignupProps
             required
             className="flex-1 px-3 py-2 rounded-md border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
           />
-          <Button type="submit" disabled={loading}>
+          <Button type="submit" disabled={loading} className="w-full sm:w-auto">
             {loading ? "..." : "Sign Up"}
           </Button>
         </form>

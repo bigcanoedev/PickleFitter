@@ -292,7 +292,7 @@ export function QuizContainer() {
           transition={{ duration: 0.2 }}
         >
 
-      <h2 className="text-2xl font-bold mb-6">{current.question}</h2>
+      <h2 className="text-xl sm:text-2xl font-bold mb-6">{current.question}</h2>
 
       {/* Radio options */}
       {current.type === "radio" && current.options && (
@@ -301,7 +301,7 @@ export function QuizContainer() {
             <div key={option.value}>
               <Label
                 htmlFor={`option-${option.value}`}
-                className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                className={`flex items-center gap-3 p-3 sm:p-4 rounded-lg border-2 cursor-pointer transition-all ${
                   currentAnswer === option.value
                     ? "border-primary bg-primary/5"
                     : "border-border hover:border-primary/50"
@@ -407,7 +407,7 @@ function BudgetSlider({
 
       {/* Price display */}
       <div className="text-center">
-        <div className="text-3xl font-black text-foreground">
+        <div className="text-2xl sm:text-3xl font-black text-foreground">
           {symbol}{range[0]} — {symbol}{range[1]}{range[1] >= maxVal ? "+" : ""}
         </div>
       </div>

@@ -25,7 +25,7 @@ export default function DatabasePage() {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-black">Paddle Database</h1>
+        <h1 className="text-2xl sm:text-3xl font-black">Paddle Database</h1>
         <p className="text-muted-foreground mt-2">
           {paddleData.length} paddles with specs, lab-tested performance data, and purchase links.
         </p>

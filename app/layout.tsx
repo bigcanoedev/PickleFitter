@@ -19,9 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="max-w-5xl mx-auto px-4 py-8">{children}</main>
+        <main className="max-w-5xl mx-auto px-3 sm:px-4 py-4 sm:py-8">{children}</main>
         <footer className="border-t bg-card mt-16">
-          <div className="max-w-5xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+          <div className="max-w-5xl mx-auto px-3 sm:px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
             <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
               <img src="/logo.svg" alt="" className="w-5 h-5" />
               <span className="font-black text-foreground">

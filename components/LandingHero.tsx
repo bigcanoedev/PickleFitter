@@ -47,7 +47,7 @@ function CountUp({ target }: { target: number }) {
 
 export function LandingHero() {
   return (
-    <div className="min-h-[80vh] flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+    <div className="min-h-[80vh] flex flex-col items-center justify-center text-center px-2 sm:px-4 overflow-hidden">
       <motion.div
         className="max-w-2xl space-y-8"
         initial="hidden"
@@ -77,7 +77,7 @@ export function LandingHero() {
         {/* Badge */}
         <motion.div
           variants={fadeUp}
-          className="inline-flex items-center gap-2 bg-primary/10 text-primary text-sm font-semibold px-4 py-1.5 rounded-full"
+          className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 rounded-full"
         >
           <Database className="w-3.5 h-3.5" />
           727 paddles &middot; Lab-tested data &middot; Free forever
@@ -85,7 +85,7 @@ export function LandingHero() {
 
         <motion.h1
           variants={fadeUp}
-          className="text-5xl md:text-6xl font-black tracking-tight leading-[1.1]"
+          className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.1]"
         >
           Find the paddle
           <br />
@@ -100,9 +100,9 @@ export function LandingHero() {
           from lab testing — matched to your play style in 2 minutes.
         </motion.p>
 
-        <motion.div variants={fadeUp} className="flex justify-center gap-3">
+        <motion.div variants={fadeUp} className="flex flex-col sm:flex-row justify-center gap-3">
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-            <Button asChild size="lg" className="text-base px-8 py-6 font-bold gap-2">
+            <Button asChild size="lg" className="w-full sm:w-auto text-base px-8 py-6 font-bold gap-2">
               <Link href="/quiz">
                 Take the Quiz
                 <ArrowRight className="w-4 h-4" />
@@ -110,7 +110,7 @@ export function LandingHero() {
             </Button>
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-            <Button asChild variant="outline" size="lg" className="text-base px-8 py-6 gap-2">
+            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto text-base px-8 py-6 gap-2">
               <Link href="/database">
                 <Database className="w-4 h-4" />
                 Browse All Paddles
@@ -122,7 +122,7 @@ export function LandingHero() {
         {/* Stats bar */}
         <motion.div
           variants={fadeUp}
-          className="grid grid-cols-3 gap-6 pt-6 max-w-md mx-auto"
+          className="grid grid-cols-3 gap-3 sm:gap-6 pt-6 max-w-md mx-auto"
         >
           {[
             { icon: Database, value: 727, label: "Paddles" },
