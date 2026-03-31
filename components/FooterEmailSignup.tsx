@@ -1,0 +1,49 @@
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+
+export function FooterEmailSignup() {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setLoading(true);
+    try {
+      await fetch("/api/email-signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      setSubmitted(true);
+    } catch {
+      // Fail silently
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (submitted) {
+    return <p className="text-sm text-primary font-medium">You&apos;re on the list!</p>;
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+      <input
+        type="email"
+        placeholder="your@email.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        className="px-3 py-1.5 text-sm rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring w-full sm:w-56"
+      />
+      <Button type="submit" size="sm" disabled={loading}>
+        {loading ? "..." : "Subscribe"}
+      </Button>
+    </form>
+  );
+}

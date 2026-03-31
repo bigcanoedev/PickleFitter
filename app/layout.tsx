@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import { FooterEmailSignup } from "@/components/FooterEmailSignup";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,14 +22,20 @@ export default function RootLayout({
       <body className={inter.className}>
         <main className="max-w-5xl mx-auto px-3 sm:px-4 py-4 sm:py-8">{children}</main>
         <footer className="border-t bg-card mt-16">
-          <div className="max-w-5xl mx-auto px-3 sm:px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-            <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <img src="/logo.svg" alt="" className="w-5 h-5" />
-              <span className="font-black text-foreground">
-                Pickle<span className="text-primary">Fitter</span>
-              </span>
-            </Link>
-            <p>Lab-tested paddle recommendations based on swing physics.</p>
+          <div className="max-w-5xl mx-auto px-3 sm:px-4 py-8">
+            <div className="flex flex-col items-center gap-4 text-center mb-6">
+              <p className="text-sm font-medium text-foreground">Get paddle updates, deals, and new features</p>
+              <FooterEmailSignup />
+            </div>
+            <div className="border-t pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+              <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <img src="/logo.svg" alt="" className="w-5 h-5" />
+                <span className="font-black text-foreground">
+                  Pickle<span className="text-primary">Fitter</span>
+                </span>
+              </Link>
+              <p>Lab-tested paddle recommendations based on swing physics.</p>
+            </div>
           </div>
         </footer>
       </body>
