@@ -162,9 +162,9 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
         <table className="w-full text-sm">
           <thead className="bg-muted">
             <tr>
-              <th className="text-left px-3 py-2 font-medium w-8">#</th>
+              <th className="text-left px-3 py-2 font-medium w-8 hidden sm:table-cell">#</th>
               <th className="text-left px-3 py-2 font-medium">Paddle</th>
-              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("match")}`} onClick={() => toggleSort("match")}>Match</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden sm:table-cell ${sortClass("match")}`} onClick={() => toggleSort("match")}>Match</th>
               <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("price")}`} onClick={() => toggleSort("price")}>Price</th>
               <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden md:table-cell ${sortClass("swing_weight")}`} onClick={() => toggleSort("swing_weight")}>SW</th>
               <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden md:table-cell ${sortClass("twist_weight")}`} onClick={() => toggleSort("twist_weight")}>TW</th>
@@ -186,14 +186,14 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
                   key={paddle.id}
                   className={`border-t hover:bg-muted/50 ${i < 3 ? "bg-primary/5" : ""}`}
                 >
-                  <td className="px-3 py-2 text-muted-foreground">{globalRank}</td>
+                  <td className="px-3 py-2 text-muted-foreground hidden sm:table-cell">{globalRank}</td>
                   <td className="px-3 py-2">
                     <Link href={`/paddle/${paddle.id}`} className="hover:text-primary transition-colors">
                       <div className="font-medium">{paddle.name}</div>
                       <div className="text-xs text-muted-foreground">{paddle.brand}</div>
                     </Link>
                   </td>
-                  <td className="text-right px-3 py-2">
+                  <td className="text-right px-3 py-2 hidden sm:table-cell">
                     <span
                       className={`font-bold ${
                         paddle.matchPercentage >= 90
