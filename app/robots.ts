@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://pickle-fitter.vercel.app/sitemap.xml",
+    sitemap: "https://picklefitter.com/sitemap.xml",
   };
 }

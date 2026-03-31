@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { paddleData } from "@/lib/paddle-data";
 import { Paddle } from "@/lib/types";
 
-const BASE_URL = "https://pickle-fitter.vercel.app";
+const BASE_URL = "https://picklefitter.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
