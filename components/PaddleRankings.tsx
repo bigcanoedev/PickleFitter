@@ -159,22 +159,20 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
 
       {/* Table */}
       <div className="border rounded-lg overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="w-full text-sm min-w-[800px]">
           <thead className="bg-muted">
             <tr>
-              <th className="text-left px-3 py-2 font-medium w-8 hidden sm:table-cell">#</th>
+              <th className="text-left px-3 py-2 font-medium w-8">#</th>
               <th className="text-left px-3 py-2 font-medium">Paddle</th>
-              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden sm:table-cell ${sortClass("match")}`} onClick={() => toggleSort("match")}>Match</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("match")}`} onClick={() => toggleSort("match")}>Match</th>
               <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("price")}`} onClick={() => toggleSort("price")}>Price</th>
-              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden md:table-cell ${sortClass("swing_weight")}`} onClick={() => toggleSort("swing_weight")}>SW</th>
-              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden md:table-cell ${sortClass("twist_weight")}`} onClick={() => toggleSort("twist_weight")}>TW</th>
-              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden md:table-cell ${sortClass("weight_oz")}`} onClick={() => toggleSort("weight_oz")}>Wt</th>
-              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden lg:table-cell ${sortClass("power_mph")}`} onClick={() => toggleSort("power_mph")}>Power</th>
-              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden lg:table-cell ${sortClass("pop_mph")}`} onClick={() => toggleSort("pop_mph")}>Pop</th>
-              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary hidden lg:table-cell ${sortClass("spin_rpm")}`} onClick={() => toggleSort("spin_rpm")}>Spin</th>
-              <th className="text-center px-3 py-2 font-medium hidden xl:table-cell">Firepower</th>
-              <th className="text-center px-3 py-2 font-medium hidden lg:table-cell">Shape</th>
-              <th className="text-center px-3 py-2 font-medium hidden xl:table-cell">Core</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("swing_weight")}`} onClick={() => toggleSort("swing_weight")}>SW</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("twist_weight")}`} onClick={() => toggleSort("twist_weight")}>TW</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("weight_oz")}`} onClick={() => toggleSort("weight_oz")}>Wt</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("power_mph")}`} onClick={() => toggleSort("power_mph")}>Power</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("pop_mph")}`} onClick={() => toggleSort("pop_mph")}>Pop</th>
+              <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("spin_rpm")}`} onClick={() => toggleSort("spin_rpm")}>Spin</th>
+              <th className="text-center px-3 py-2 font-medium">Shape</th>
               <th className="px-3 py-2 font-medium w-20"></th>
             </tr>
           </thead>
@@ -186,14 +184,14 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
                   key={paddle.id}
                   className={`border-t hover:bg-muted/50 ${i < 3 ? "bg-primary/5" : ""}`}
                 >
-                  <td className="px-3 py-2 text-muted-foreground hidden sm:table-cell">{globalRank}</td>
+                  <td className="px-3 py-2 text-muted-foreground">{globalRank}</td>
                   <td className="px-3 py-2">
                     <Link href={`/paddle/${paddle.id}`} className="hover:text-primary transition-colors">
-                      <div className="font-medium">{paddle.name}</div>
+                      <div className="font-medium whitespace-nowrap">{paddle.name}</div>
                       <div className="text-xs text-muted-foreground">{paddle.brand}</div>
                     </Link>
                   </td>
-                  <td className="text-right px-3 py-2 hidden sm:table-cell">
+                  <td className="text-right px-3 py-2">
                     <span
                       className={`font-bold ${
                         paddle.matchPercentage >= 90
@@ -207,38 +205,22 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
                     </span>
                   </td>
                   <td className="text-right px-3 py-2">${paddle.price}</td>
-                  <td className="text-right px-3 py-2 hidden md:table-cell">{paddle.swing_weight}</td>
-                  <td className="text-right px-3 py-2 hidden md:table-cell">{paddle.twist_weight}</td>
-                  <td className="text-right px-3 py-2 hidden md:table-cell">
+                  <td className="text-right px-3 py-2">{paddle.swing_weight}</td>
+                  <td className="text-right px-3 py-2">{paddle.twist_weight}</td>
+                  <td className="text-right px-3 py-2">
                     {paddle.weight_oz ? `${parseFloat(paddle.weight_oz.toFixed(1))}` : "—"}
                   </td>
-                  <td className="text-right px-3 py-2 hidden lg:table-cell">
+                  <td className="text-right px-3 py-2">
                     {paddle.power_mph ? `${paddle.power_mph}` : "—"}
                   </td>
-                  <td className="text-right px-3 py-2 hidden lg:table-cell">
+                  <td className="text-right px-3 py-2">
                     {paddle.pop_mph ? `${paddle.pop_mph}` : "—"}
                   </td>
-                  <td className="text-right px-3 py-2 hidden lg:table-cell">
+                  <td className="text-right px-3 py-2">
                     {paddle.spin_rpm || paddle.rpm ? `${paddle.spin_rpm || paddle.rpm}` : "—"}
                   </td>
-                  <td className="text-center px-3 py-2 hidden xl:table-cell">
-                    {paddle.firepower_tier ? (
-                      <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${
-                        paddle.firepower_tier.includes("Elite") ? "bg-primary/15 text-primary" :
-                        paddle.firepower_tier.includes("High") ? "bg-blue-100 text-blue-700" :
-                        paddle.firepower_tier.includes("Balanced") ? "bg-gray-100 text-gray-700" :
-                        paddle.firepower_tier.includes("Control") ? "bg-purple-100 text-purple-700" :
-                        "bg-orange-100 text-orange-700"
-                      }`}>
-                        {paddle.firepower_tier.replace("Firepower ", "")}
-                      </span>
-                    ) : "—"}
-                  </td>
-                  <td className="text-center px-3 py-2 hidden lg:table-cell">
+                  <td className="text-center px-3 py-2">
                     <span className="text-xs">{paddle.shape || "—"}</span>
-                  </td>
-                  <td className="text-center px-3 py-2 hidden xl:table-cell">
-                    <span className="text-xs">{paddle.core_thickness_mm ? `${paddle.core_thickness_mm}mm` : "—"}</span>
                   </td>
                   <td className="px-3 py-2">
                     <div className="flex gap-1">
