@@ -12,7 +12,7 @@ import {
 } from "@/lib/lead-tape";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 
 interface LeadTapeOptimizerProps {
   selectedPaddle: PaddleScore;
@@ -326,29 +326,6 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
         </div>
       )}
 
-      {/* Purchase CTA */}
-      {calculation.totalGrams > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Get Your Lead Tape Kit</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-              <div>
-                <div className="font-medium">Tungsten Tape Kit</div>
-                <div className="text-sm text-muted-foreground">
-                  Pre-cut strips with placement guide &middot; Enough for{" "}
-                  {calculation.totalGrams}g+ builds
-                </div>
-              </div>
-              <div className="text-xl font-bold">$18.99</div>
-            </div>
-            <Button className="w-full" size="lg">
-              Buy Tungsten Tape Kit
-            </Button>
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 }
