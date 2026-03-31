@@ -7,7 +7,7 @@ import { paddleData } from "@/lib/paddle-data";
 import { LeadTapeOptimizer } from "@/components/LeadTapeOptimizer";
 import { generatePros, generateCons, generateBestFor, getProPlayers, getSpecVerdict } from "@/lib/paddle-analysis";
 import Link from "next/link";
-import { ArrowLeft, ShieldCheck, Zap, Target, Wind, Ruler, Weight, CircleDot, Layers } from "lucide-react";
+import { ArrowLeft, ExternalLink, ShieldCheck, Zap, Target, Wind, Ruler, Weight, CircleDot, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { paddleSlug } from "@/lib/utils";
 
