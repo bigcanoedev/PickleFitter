@@ -7,13 +7,9 @@ import { paddleData } from "@/lib/paddle-data";
 import { LeadTapeOptimizer } from "@/components/LeadTapeOptimizer";
 import { generatePros, generateCons, generateBestFor, getProPlayers, getSpecVerdict } from "@/lib/paddle-analysis";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, ShieldCheck, Zap, Target, Wind, Ruler, Weight, CircleDot, Layers } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Zap, Target, Wind, Ruler, Weight, CircleDot, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { paddleSlug } from "@/lib/utils";
-
-function selectBestLink(paddle: Paddle): string {
-  return paddle.purchase_link || paddle.generic_affiliate_link || paddle.amazon_link || "#";
-}
 
 export default function PaddleDetail() {
   const params = useParams();
@@ -28,7 +24,7 @@ export default function PaddleDetail() {
       ...found,
       matchPercentage: 0,
       reason: "",
-      affiliateLink: selectBestLink(found),
+      affiliateLink: "",
     };
   }, [slug]);
 
@@ -54,8 +50,6 @@ export default function PaddleDetail() {
     );
   }
 
-  const buyLink = paddle.affiliateLink;
-
   return (
     <div className="space-y-10">
       {/* Back nav */}
@@ -77,22 +71,9 @@ export default function PaddleDetail() {
           </div>
           <div className="flex flex-col items-start sm:items-end gap-2 shrink-0">
             <div className="text-3xl font-black text-primary">${paddle.price}</div>
-            <div className="flex gap-2">
-              <Button asChild className="gap-1.5">
-                <a href={buyLink} target="_blank" rel="noopener noreferrer">
-                  Buy Now
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              </Button>
-              <Button asChild variant="outline">
-                <Link href="/quiz">Find Your Match</Link>
-              </Button>
-            </div>
-            {paddle.discount_code && (
-              <div className="text-xs bg-primary/10 text-primary font-medium px-2.5 py-1 rounded-full">
-                Code: {paddle.discount_code}
-              </div>
-            )}
+            <Button asChild variant="outline">
+              <Link href="/quiz">Find Your Match</Link>
+            </Button>
           </div>
         </div>
 
@@ -235,31 +216,6 @@ export default function PaddleDetail() {
         <LeadTapeOptimizer selectedPaddle={paddle} />
       </section>
 
-      {/* ── Buy CTA ── */}
-      <section className="border-2 border-primary rounded-lg p-6 bg-primary/5 text-center">
-        <h2 className="text-xl font-black mb-2">Ready to buy the {paddle.name}?</h2>
-        <p className="text-muted-foreground text-sm mb-4">
-          {paddle.discount_code
-            ? `Use code "${paddle.discount_code}" at checkout for a discount.`
-            : "Click below to purchase from an authorized retailer."}
-        </p>
-        <div className="flex justify-center gap-3">
-          <Button asChild size="lg" className="gap-1.5">
-            <a href={buyLink} target="_blank" rel="noopener noreferrer">
-              Buy {paddle.name}
-              <ExternalLink className="w-4 h-4" />
-            </a>
-          </Button>
-          {paddle.amazon_link && paddle.amazon_link !== buyLink && (
-            <Button asChild variant="outline" size="lg" className="gap-1.5">
-              <a href={paddle.amazon_link} target="_blank" rel="noopener noreferrer">
-                Amazon
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            </Button>
-          )}
-        </div>
-      </section>
     </div>
   );
 }

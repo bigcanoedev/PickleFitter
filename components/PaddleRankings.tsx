@@ -174,7 +174,7 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
               <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("pop_mph")}`} onClick={() => toggleSort("pop_mph")}>Pop</th>
               <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("spin_rpm")}`} onClick={() => toggleSort("spin_rpm")}>Spin</th>
               <th className="text-center px-3 py-2 font-medium">Shape</th>
-              <th className="px-3 py-2 font-medium w-20"></th>
+              {onSelectPaddle && <th className="px-3 py-2 font-medium w-20"></th>}
             </tr>
           </thead>
           <tbody>
@@ -223,29 +223,16 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
                   <td className="text-center px-3 py-2">
                     <span className="text-xs">{paddle.shape || "—"}</span>
                   </td>
-                  <td className="px-3 py-2">
-                    <div className="flex gap-1">
-                      <a
-                        href={paddle.affiliateLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                  {onSelectPaddle && (
+                    <td className="px-3 py-2">
+                      <button
+                        onClick={() => onSelectPaddle(paddle)}
                         className="text-xs text-primary hover:underline font-medium"
                       >
-                        Buy
-                      </a>
-                      {onSelectPaddle && (
-                        <>
-                          <span className="text-muted-foreground">|</span>
-                          <button
-                            onClick={() => onSelectPaddle(paddle)}
-                            className="text-xs text-muted-foreground hover:text-primary font-medium"
-                          >
-                            Optimize
-                          </button>
-                        </>
-                      )}
-                    </div>
-                  </td>
+                        Optimize
+                      </button>
+                    </td>
+                  )}
                 </tr>
               );
             })}

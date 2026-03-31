@@ -3,7 +3,7 @@
 import { PaddleScore } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 
 interface PaddleCardProps {
   paddle: PaddleScore;
@@ -83,28 +83,13 @@ export function PaddleCard({ paddle, rank, onSelect, showSelectButton, currency 
         {/* Reason */}
         <p className="text-sm text-muted-foreground">{paddle.reason}</p>
 
-        {/* Discount code */}
-        {paddle.discount_code && (
-          <div className="bg-primary/5 border border-primary/20 rounded p-2 text-xs">
-            <span className="font-medium text-primary">Code: {paddle.discount_code}</span>
-          </div>
-        )}
-
         {/* Actions */}
-        <div className="flex gap-2">
-          <Button asChild className="flex-1 gap-1.5">
-            <a href={paddle.affiliateLink} target="_blank" rel="noopener noreferrer">
-              Buy Now
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
+        {showSelectButton && onSelect && (
+          <Button variant="outline" onClick={() => onSelect(paddle)} className="gap-1.5 w-full">
+            <SlidersHorizontal className="w-3.5 h-3.5" />
+            Optimize
           </Button>
-          {showSelectButton && onSelect && (
-            <Button variant="outline" onClick={() => onSelect(paddle)} className="gap-1.5">
-              <SlidersHorizontal className="w-3.5 h-3.5" />
-              Optimize
-            </Button>
-          )}
-        </div>
+        )}
       </CardContent>
     </Card>
   );
