@@ -9,6 +9,7 @@ import { generatePros, generateCons, generateBestFor, getProPlayers, getSpecVerd
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, ShieldCheck, Zap, Target, Wind, Ruler, Weight, CircleDot, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { paddleSlug } from "@/lib/utils";
 
 function selectBestLink(paddle: Paddle): string {
   return paddle.purchase_link || paddle.generic_affiliate_link || paddle.amazon_link || "#";
@@ -16,10 +17,12 @@ function selectBestLink(paddle: Paddle): string {
 
 export default function PaddleDetail() {
   const params = useParams();
-  const id = Number(params.id);
+  const slug = params.slug as string;
 
   const paddle: PaddleScore | null = useMemo(() => {
-    const found = (paddleData as Paddle[]).find((p) => p.id === id);
+    const found = (paddleData as Paddle[]).find(
+      (p) => paddleSlug(p.brand, p.name) === slug
+    );
     if (!found) return null;
     return {
       ...found,
@@ -27,7 +30,7 @@ export default function PaddleDetail() {
       reason: "",
       affiliateLink: selectBestLink(found),
     };
-  }, [id]);
+  }, [slug]);
 
   const analysis = useMemo(() => {
     if (!paddle) return null;

@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import { paddleData } from "@/lib/paddle-data";
 import { Paddle } from "@/lib/types";
+import { paddleSlug } from "@/lib/utils";
 
 const BASE_URL = "https://picklefitter.com";
 
@@ -29,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const paddlePages: MetadataRoute.Sitemap = (paddleData as Paddle[]).map((p) => ({
-    url: `${BASE_URL}/paddle/${p.id}`,
+    url: `${BASE_URL}/paddle/${paddleSlug(p.brand, p.name)}`,
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));

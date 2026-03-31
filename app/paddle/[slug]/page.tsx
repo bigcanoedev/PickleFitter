@@ -1,21 +1,24 @@
 import type { Metadata } from "next";
 import { paddleData } from "@/lib/paddle-data";
 import { Paddle } from "@/lib/types";
+import { paddleSlug } from "@/lib/utils";
 import PaddleDetail from "./PaddleDetail";
 
 interface PageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
   return (paddleData as Paddle[]).map((p) => ({
-    id: String(p.id),
+    slug: paddleSlug(p.brand, p.name),
   }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { id } = await params;
-  const paddle = (paddleData as Paddle[]).find((p) => p.id === Number(id));
+  const { slug } = await params;
+  const paddle = (paddleData as Paddle[]).find(
+    (p) => paddleSlug(p.brand, p.name) === slug
+  );
 
   if (!paddle) {
     return { title: "Paddle Not Found — PickleFitter" };
