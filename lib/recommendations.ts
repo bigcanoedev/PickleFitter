@@ -20,7 +20,7 @@ import { Paddle, PlayerProfile, PaddleScore, IdealSpecs, CustomizerSpecs } from 
  *   4%  - Lab bonus (paddles with lab data get a slight edge for trust)
  */
 
-const WEIGHTS = {
+const BASE_WEIGHTS = {
   swingWeight: 0.17,
   twistWeight: 0.10,
   coreThickness: 0.09,
@@ -35,6 +35,14 @@ const WEIGHTS = {
   budget: 0.07,
   labBonus: 0.04,
 };
+
+function getWeights(profile: PlayerProfile) {
+  if (profile.customizationPreference === "Fine-tune") {
+    // Weight matters more when customizing — take from labPower
+    return { ...BASE_WEIGHTS, weight: 0.06, labPower: 0.07 };
+  }
+  return BASE_WEIGHTS;
+}
 
 // ── Ideal spec calculation ──────────────────────────────────────────────────
 //
@@ -291,9 +299,9 @@ function calculateIdealSpecs(profile: PlayerProfile, allPaddles?: Paddle[]): Ide
     // Shift weight range down — prefer paddles with room to add tape
     specs.weightRange[0] = Math.max(6.8, specs.weightRange[0] - 0.4);
     specs.weightRange[1] -= 0.3;
-    // Widen SW and TW ranges — they'll fine-tune to their ideal with tape
+    // Widen SW floor only — they can add tape to increase SW
+    // Do NOT widen TW floor — TW preference is about feel, not customization
     specs.swingWeightRange[0] -= 8;
-    specs.twistWeightRange[0] -= 0.5;
   }
 
   return specs;
@@ -320,9 +328,11 @@ function scoreSwingWeight(paddle: Paddle, specs: IdealSpecs): number {
   return rangeScore(paddle.swing_weight, specs.swingWeightRange[0], specs.swingWeightRange[1], 3);
 }
 
-function scoreTwistWeight(paddle: Paddle, specs: IdealSpecs): number {
+function scoreTwistWeight(paddle: Paddle, specs: IdealSpecs, profile: PlayerProfile): number {
   if (!paddle.twist_weight) return 50;
-  return rangeScore(paddle.twist_weight, specs.twistWeightRange[0], specs.twistWeightRange[1], 12);
+  // Steeper falloff when player has a clear stability/maneuverability preference
+  const falloff = profile.stabilityPreference !== "No preference" ? 20 : 12;
+  return rangeScore(paddle.twist_weight, specs.twistWeightRange[0], specs.twistWeightRange[1], falloff);
 }
 
 function scoreCoreThickness(paddle: Paddle, specs: IdealSpecs): number {
@@ -715,13 +725,14 @@ function selectBestAffiliateLink(paddle: Paddle): string {
 // ── Main recommendation function ────────────────────────────────────────────
 
 export function getRecommendations(profile: PlayerProfile, allPaddles: Paddle[]): PaddleScore[] {
+  const w = getWeights(profile);
   const idealSpecs = calculateIdealSpecs(profile, allPaddles);
   const currentPaddle = findCurrentPaddle(profile.currentPaddle, allPaddles);
 
   const scoredPaddles: PaddleScore[] = allPaddles.map((paddle) => {
     const scores = {
       swingWeight: scoreSwingWeight(paddle, idealSpecs),
-      twistWeight: scoreTwistWeight(paddle, idealSpecs),
+      twistWeight: scoreTwistWeight(paddle, idealSpecs, profile),
       coreThickness: scoreCoreThickness(paddle, idealSpecs),
       shape: scoreShape(paddle, idealSpecs),
       rpm: scoreRpm(paddle, idealSpecs),
@@ -736,19 +747,19 @@ export function getRecommendations(profile: PlayerProfile, allPaddles: Paddle[])
     };
 
     const total =
-      scores.swingWeight * WEIGHTS.swingWeight +
-      scores.twistWeight * WEIGHTS.twistWeight +
-      scores.coreThickness * WEIGHTS.coreThickness +
-      scores.shape * WEIGHTS.shape +
-      scores.rpm * WEIGHTS.rpm +
-      scores.labPower * WEIGHTS.labPower +
-      scores.feel * WEIGHTS.feel +
-      scores.buildStyle * WEIGHTS.buildStyle +
-      scores.grip * WEIGHTS.grip +
-      scores.material * WEIGHTS.material +
-      scores.weight * WEIGHTS.weight +
-      scores.budget * WEIGHTS.budget +
-      scores.labBonus * WEIGHTS.labBonus;
+      scores.swingWeight * w.swingWeight +
+      scores.twistWeight * w.twistWeight +
+      scores.coreThickness * w.coreThickness +
+      scores.shape * w.shape +
+      scores.rpm * w.rpm +
+      scores.labPower * w.labPower +
+      scores.feel * w.feel +
+      scores.buildStyle * w.buildStyle +
+      scores.grip * w.grip +
+      scores.material * w.material +
+      scores.weight * w.weight +
+      scores.budget * w.budget +
+      scores.labBonus * w.labBonus;
 
     const isCurrentPaddle = currentPaddle && paddle.id === currentPaddle.id;
     let reason = generateReason(paddle, idealSpecs, profile);
@@ -769,6 +780,7 @@ export function getRecommendations(profile: PlayerProfile, allPaddles: Paddle[])
 
 /** Returns ALL paddles scored and ranked (for the full rankings table). */
 export function getAllRanked(profile: PlayerProfile, allPaddles: Paddle[]): PaddleScore[] {
+  const w = getWeights(profile);
   const idealSpecs = calculateIdealSpecs(profile, allPaddles);
   const currentPaddle = findCurrentPaddle(profile.currentPaddle, allPaddles);
 
@@ -776,7 +788,7 @@ export function getAllRanked(profile: PlayerProfile, allPaddles: Paddle[]): Padd
     .map((paddle) => {
       const scores = {
         swingWeight: scoreSwingWeight(paddle, idealSpecs),
-        twistWeight: scoreTwistWeight(paddle, idealSpecs),
+        twistWeight: scoreTwistWeight(paddle, idealSpecs, profile),
         coreThickness: scoreCoreThickness(paddle, idealSpecs),
         shape: scoreShape(paddle, idealSpecs),
         rpm: scoreRpm(paddle, idealSpecs),
@@ -791,19 +803,19 @@ export function getAllRanked(profile: PlayerProfile, allPaddles: Paddle[]): Padd
       };
 
       const total =
-        scores.swingWeight * WEIGHTS.swingWeight +
-        scores.twistWeight * WEIGHTS.twistWeight +
-        scores.coreThickness * WEIGHTS.coreThickness +
-        scores.shape * WEIGHTS.shape +
-        scores.rpm * WEIGHTS.rpm +
-        scores.labPower * WEIGHTS.labPower +
-        scores.feel * WEIGHTS.feel +
-        scores.buildStyle * WEIGHTS.buildStyle +
-        scores.grip * WEIGHTS.grip +
-        scores.material * WEIGHTS.material +
-        scores.weight * WEIGHTS.weight +
-        scores.budget * WEIGHTS.budget +
-        scores.labBonus * WEIGHTS.labBonus;
+        scores.swingWeight * w.swingWeight +
+        scores.twistWeight * w.twistWeight +
+        scores.coreThickness * w.coreThickness +
+        scores.shape * w.shape +
+        scores.rpm * w.rpm +
+        scores.labPower * w.labPower +
+        scores.feel * w.feel +
+        scores.buildStyle * w.buildStyle +
+        scores.grip * w.grip +
+        scores.material * w.material +
+        scores.weight * w.weight +
+        scores.budget * w.budget +
+        scores.labBonus * w.labBonus;
 
       const isCurrentPaddle = currentPaddle && paddle.id === currentPaddle.id;
       let reason = generateReason(paddle, idealSpecs, profile);
