@@ -4,7 +4,7 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Search, Loader2, DollarSign } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, Loader2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -15,10 +15,11 @@ interface QuizQuestion {
   id: number;
   question: string;
   key: string;
-  type: "radio" | "paddle-search" | "budget-slider";
+  type: "radio" | "multi-select" | "paddle-search" | "budget-slider";
   options?: { label: string; value: string }[];
-  placeholder?: string;
-  skipLabel?: string; // label for "skip" button on text questions
+  maxSelections?: number; // for multi-select
+  skipLabel?: string;
+  showIf?: (answers: Record<string, string>) => boolean; // conditional visibility
 }
 
 const quizQuestions: QuizQuestion[] = [
@@ -58,6 +59,18 @@ const quizQuestions: QuizQuestion[] = [
   },
   {
     id: 4,
+    question: "Where do you win most of your points?",
+    key: "pointSource",
+    type: "radio",
+    options: [
+      { label: "Driving from the baseline and overheads", value: "Drives" },
+      { label: "Hands battles and volleys at the kitchen", value: "Kitchen" },
+      { label: "Drop shots, dinks, and resets", value: "Touch" },
+      { label: "Mix of everything", value: "Mix" },
+    ],
+  },
+  {
+    id: 5,
     question: "How would you describe your swings?",
     key: "swingSpeed",
     type: "radio",
@@ -68,7 +81,18 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 5,
+    id: 6,
+    question: "How often do you play?",
+    key: "playingFrequency",
+    type: "radio",
+    options: [
+      { label: "1-2 times per week", value: "Light" },
+      { label: "3-4 times per week", value: "Regular" },
+      { label: "5+ times per week or daily", value: "Heavy" },
+    ],
+  },
+  {
+    id: 7,
     question: "Do you have any arm, wrist, or elbow issues?",
     key: "armIssues",
     type: "radio",
@@ -79,21 +103,22 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 6,
-    question: "What do you wish your paddle did better?",
+    id: 8,
+    question: "What do you wish your paddle did better? (pick up to 2)",
     key: "frustration",
-    type: "radio",
+    type: "multi-select",
+    maxSelections: 2,
     options: [
       { label: "More power on drives and overheads", value: "Power" },
       { label: "Better touch on dinks and resets", value: "Control" },
       { label: "Bigger sweet spot — too many mishits", value: "Vibration" },
       { label: "More spin on serves and thirds", value: "Spin" },
       { label: "Less fatigue — my arm gets tired or sore", value: "Fatigue" },
-      { label: "Nothing specific / Shopping for my first paddle", value: "Other" },
+      { label: "Nothing specific / Shopping for my first paddle", value: "None" },
     ],
   },
   {
-    id: 7,
+    id: 9,
     question: "When the ball hits your paddle, what do you prefer?",
     key: "feelPreference",
     type: "radio",
@@ -104,14 +129,14 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 8,
+    id: 10,
     question: "What paddle do you currently use?",
     key: "currentPaddle",
     type: "paddle-search",
     skipLabel: "Skip — this is my first paddle",
   },
   {
-    id: 9,
+    id: 11,
     question: "Are you coming from another racquet sport?",
     key: "priorSport",
     type: "radio",
@@ -123,11 +148,13 @@ const quizQuestions: QuizQuestion[] = [
       { label: "Other racquet sport", value: "Other" },
     ],
   },
+  // Technical questions — hidden for beginners
   {
-    id: 10,
+    id: 12,
     question: "Do you want the latest paddle technology?",
     key: "buildPreference",
     type: "radio",
+    showIf: (answers) => answers.skillLevel !== "Beginner",
     options: [
       { label: "Yes — I want the newest, highest-performing paddles available", value: "Thermoformed" },
       { label: "No — I prefer tried-and-true paddles that have been around", value: "Traditional" },
@@ -135,7 +162,7 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 11,
+    id: 13,
     question: "What matters most in your paddle shape?",
     key: "shapePreference",
     type: "radio",
@@ -148,10 +175,11 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 12,
+    id: 14,
     question: "Core thickness preference?",
     key: "coreThickness",
     type: "radio",
+    showIf: (answers) => answers.skillLevel !== "Beginner",
     options: [
       { label: "Thin (13-14mm) — more pop, faster hands, more feel", value: "Thin" },
       { label: "Thick (16mm) — more power, bigger sweet spot, softer feel", value: "Thick" },
@@ -159,10 +187,11 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 13,
+    id: 15,
     question: "How important is spin to your game?",
     key: "spinPriority",
     type: "radio",
+    showIf: (answers) => answers.skillLevel !== "Beginner",
     options: [
       { label: "Low — I mostly hit flat", value: "Low" },
       { label: "Medium — I use spin occasionally", value: "Medium" },
@@ -170,7 +199,7 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 14,
+    id: 16,
     question: "What matters more to you?",
     key: "stabilityPreference",
     type: "radio",
@@ -181,10 +210,11 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 15,
+    id: 17,
     question: "How do you feel about customizing your paddle with lead tape?",
     key: "customizationPreference",
     type: "radio",
+    showIf: (answers) => answers.skillLevel !== "Beginner",
     options: [
       { label: "I want it ready to play out of the box", value: "Out of the box" },
       { label: "I like to fine-tune with lead tape", value: "Fine-tune" },
@@ -192,7 +222,7 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 16,
+    id: 18,
     question: "Hand size?",
     key: "handSize",
     type: "radio",
@@ -203,7 +233,7 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 17,
+    id: 19,
     question: "How do you hit your backhand?",
     key: "gripLength",
     type: "radio",
@@ -215,7 +245,7 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 18,
+    id: 20,
     question: "What's your budget?",
     key: "budget",
     type: "budget-slider",
@@ -230,22 +260,54 @@ export function QuizContainer() {
   const [currency, setCurrency] = useState<"USD" | "CAD">("USD");
   const [budgetRange, setBudgetRange] = useState<[number, number]>([50, 250]);
 
-  const current = quizQuestions[currentStep];
-  const totalSteps = quizQuestions.length;
+  // Filter questions based on conditional visibility
+  const visibleQuestions = useMemo(
+    () => quizQuestions.filter((q) => !q.showIf || q.showIf(answers)),
+    [answers]
+  );
+
+  const current = visibleQuestions[currentStep];
+  const totalSteps = visibleQuestions.length;
   const progress = ((currentStep + 1) / totalSteps) * 100;
 
   const handleSelect = (value: string) => {
     setAnswers((prev) => ({ ...prev, [current.key]: value }));
   };
 
+  const handleMultiSelect = (value: string) => {
+    setAnswers((prev) => {
+      const currentValues = prev[current.key] ? prev[current.key].split(",") : [];
+      const max = current.maxSelections || 2;
+
+      // "None" is exclusive — clears other selections
+      if (value === "None") {
+        return { ...prev, [current.key]: "None" };
+      }
+
+      // Remove "None" if selecting something else
+      const filtered = currentValues.filter((v) => v !== "None");
+
+      if (filtered.includes(value)) {
+        // Deselect
+        const updated = filtered.filter((v) => v !== value);
+        return { ...prev, [current.key]: updated.join(",") };
+      } else if (filtered.length < max) {
+        // Add
+        return { ...prev, [current.key]: [...filtered, value].join(",") };
+      }
+      // At max — replace last selection
+      return { ...prev, [current.key]: [...filtered.slice(0, max - 1), value].join(",") };
+    });
+  };
+
   const handlePaddleSelect = (paddleName: string) => {
     setAnswers((prev) => ({ ...prev, [current.key]: paddleName }));
-    setCurrentStep((prev) => prev + 1);
+    setCurrentStep((prev) => Math.min(prev + 1, visibleQuestions.length - 1));
   };
 
   const handlePaddleSkip = () => {
     setAnswers((prev) => ({ ...prev, [current.key]: "" }));
-    setCurrentStep((prev) => prev + 1);
+    setCurrentStep((prev) => Math.min(prev + 1, visibleQuestions.length - 1));
   };
 
   const handleNext = async () => {
@@ -284,7 +346,9 @@ export function QuizContainer() {
   };
 
   const currentAnswer = answers[current.key];
-  const canProceed = current.type === "budget-slider" || !!currentAnswer;
+  const canProceed =
+    current.type === "budget-slider" ||
+    (current.type === "multi-select" ? !!currentAnswer : !!currentAnswer);
 
   return (
     <div className="max-w-lg mx-auto">
@@ -307,7 +371,7 @@ export function QuizContainer() {
       {/* Question + options with slide animation */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={currentStep}
+          key={current.key}
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -30 }}
@@ -335,6 +399,37 @@ export function QuizContainer() {
             </div>
           ))}
         </RadioGroup>
+      )}
+
+      {/* Multi-select options */}
+      {current.type === "multi-select" && current.options && (
+        <div className="space-y-3">
+          {current.options.map((option) => {
+            const selected = currentAnswer?.split(",").includes(option.value) || false;
+            return (
+              <button
+                key={option.value}
+                onClick={() => handleMultiSelect(option.value)}
+                className={`w-full flex items-center gap-3 p-3 sm:p-4 rounded-lg border-2 text-left transition-all ${
+                  selected
+                    ? "border-primary bg-primary/5"
+                    : "border-border hover:border-primary/50"
+                }`}
+              >
+                <div className={`w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 ${
+                  selected ? "border-primary bg-primary" : "border-muted-foreground"
+                }`}>
+                  {selected && (
+                    <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </div>
+                <span className="text-base">{option.label}</span>
+              </button>
+            );
+          })}
+        </div>
       )}
 
       {/* Paddle search */}
@@ -365,7 +460,7 @@ export function QuizContainer() {
           <ChevronLeft className="w-4 h-4" />
           Previous
         </Button>
-        {(current.type === "radio" || current.type === "budget-slider") && (
+        {(current.type === "radio" || current.type === "multi-select" || current.type === "budget-slider") && (
           <Button onClick={handleNext} disabled={!canProceed || isSubmitting} className="gap-1">
             {isSubmitting ? (
               <><Loader2 className="w-4 h-4 animate-spin" /> Finding paddles...</>

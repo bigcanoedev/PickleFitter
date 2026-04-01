@@ -44,11 +44,13 @@ export interface PlayerProfile {
   skillLevel: "Beginner" | "Intermediate" | "Advanced" | "Pro";
   gameType: "Singles" | "Doubles" | "Both";
   swingSpeed: "Slow" | "Moderate" | "Fast";
-  frustration: string;
+  pointSource: "Drives" | "Kitchen" | "Touch" | "Mix";
+  frustration: string; // comma-separated for multi-select, e.g. "Power,Spin"
   armIssues: "None" | "Mild" | "Serious";
   feelPreference: "Soft" | "Crisp" | "No preference";
   currentPaddle: string; // free text, empty = no current paddle
   priorSport: "Tennis" | "Racquetball" | "Table tennis" | "None" | "Other";
+  playingFrequency: "Light" | "Regular" | "Heavy";
   buildPreference: "Thermoformed" | "Traditional" | "No preference";
   shapePreference: "Standard" | "Elongated" | "Wide body" | "No preference";
   coreThickness: "Thin" | "Thick" | "No preference";
@@ -57,7 +59,6 @@ export interface PlayerProfile {
   customizationPreference: "Out of the box" | "Fine-tune" | "No preference";
   handSize: "Small" | "Medium" | "Large";
   gripLength: "Short" | "Standard" | "Long" | "No preference";
-  moistureLevel: "Low" | "Medium" | "High";
   currency: "USD" | "CAD";
   budgetMin: number;
   budgetMax: number;

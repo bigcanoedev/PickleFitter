@@ -159,6 +159,19 @@ function calculateIdealSpecs(profile: PlayerProfile, allPaddles?: Paddle[]): Ide
     specs.preferredShapes = ["Standard", "Wide body", "Hybrid"]; // Sweet spot > reach
   }
 
+  // ── Point source (power vs pop differentiation) ──
+  if (profile.pointSource === "Drives") {
+    specs.swingWeightRange[0] += 3;
+    specs.swingWeightRange[1] += 3;
+  } else if (profile.pointSource === "Kitchen") {
+    specs.swingWeightRange[0] -= 3;
+    specs.swingWeightRange[1] -= 2;
+  } else if (profile.pointSource === "Touch") {
+    specs.swingWeightRange[0] -= 5;
+    specs.swingWeightRange[1] -= 3;
+    specs.coreThicknessRange[0] = Math.max(specs.coreThicknessRange[0], 15);
+  }
+
   // ── Swing speed ──
   if (profile.swingSpeed === "Fast") {
     specs.swingWeightRange[1] += 5;   // Fast swingers can handle heavy paddles
@@ -227,20 +240,35 @@ function calculateIdealSpecs(profile: PlayerProfile, allPaddles?: Paddle[]): Ide
     specs.rpmRange[1] += 200;
   }
 
-  // ── Frustration adjustments ──
-  if (profile.frustration === "Power") {
+  // ── Playing frequency (heavy players need lighter, more forgiving gear) ──
+  if (profile.playingFrequency === "Heavy") {
+    specs.weightRange[1] = Math.min(specs.weightRange[1], 8.0);
+    specs.swingWeightRange[1] = Math.min(specs.swingWeightRange[1], specs.swingWeightRange[1] - 2);
+    specs.coreThicknessRange[0] = Math.max(specs.coreThicknessRange[0], 14);
+  } else if (profile.playingFrequency === "Light") {
+    // Light players can handle heavier gear without fatigue
+    specs.weightRange[1] += 0.2;
+  }
+
+  // ── Frustration adjustments (supports multiple, comma-separated) ──
+  const frustrations = profile.frustration ? profile.frustration.split(",") : [];
+  if (frustrations.includes("Power")) {
     specs.swingWeightRange[0] += 3;
     specs.swingWeightRange[1] += 5;
-  } else if (profile.frustration === "Control") {
+  }
+  if (frustrations.includes("Control")) {
     specs.swingWeightRange[0] -= 5;
     specs.swingWeightRange[1] -= 3;
-  } else if (profile.frustration === "Vibration") {
+  }
+  if (frustrations.includes("Vibration")) {
     specs.twistWeightRange[0] += 0.5;
     specs.twistWeightRange[1] += 0.5;
-  } else if (profile.frustration === "Spin") {
+  }
+  if (frustrations.includes("Spin")) {
     specs.rpmRange[0] += 200;
     specs.rpmRange[1] += 200;
-  } else if (profile.frustration === "Fatigue") {
+  }
+  if (frustrations.includes("Fatigue")) {
     specs.swingWeightRange[0] -= 5;
     specs.swingWeightRange[1] = Math.min(specs.swingWeightRange[1], 118);
     specs.twistWeightRange[0] = Math.max(specs.twistWeightRange[0], 6.5);
@@ -462,15 +490,25 @@ function scoreWeight(paddle: Paddle, specs: IdealSpecs): number {
 
 /**
  * Score lab-tested power data.
- * Power players want high Power MPH / Firepower Elite or High.
- * Control players want lower power / Firepower Control+ or Soft.
- * Balanced players want Firepower Balanced.
+ * Uses pointSource to distinguish drive power vs kitchen pop.
+ * Falls back to playStyle-based tier scoring.
  */
 function scoreLabPower(paddle: Paddle, profile: PlayerProfile): number {
-  // If no lab data, neutral score
   if (!paddle.power_mph && !paddle.firepower_tier) return 50;
 
   let score = 50;
+
+  // Point source modifies which lab metric matters most
+  if (profile.pointSource === "Kitchen" && paddle.pop_mph) {
+    // Kitchen players care about pop (short shot speed), not drive power
+    score = paddle.pop_mph >= 38 ? 100 : paddle.pop_mph >= 36 ? 85 : paddle.pop_mph >= 34 ? 70 : 50;
+    return score;
+  }
+  if (profile.pointSource === "Touch" && paddle.pop_mph) {
+    // Touch players want LOW pop — soft, controlled response
+    score = paddle.pop_mph <= 34 ? 95 : paddle.pop_mph <= 36 ? 80 : 50;
+    return score;
+  }
 
   if (paddle.firepower_tier) {
     const tierScores: Record<string, Record<string, number>> = {
@@ -498,7 +536,6 @@ function scoreLabPower(paddle: Paddle, profile: PlayerProfile): number {
     };
     score = tierScores[profile.playStyle]?.[paddle.firepower_tier] ?? 50;
   } else if (paddle.power_mph) {
-    // Fallback: use raw power MPH
     if (profile.playStyle === "Aggressive") {
       score = paddle.power_mph >= 56 ? 100 : paddle.power_mph >= 54 ? 80 : 50;
     } else if (profile.playStyle === "Control") {
@@ -584,16 +621,24 @@ function generateReason(paddle: Paddle, specs: IdealSpecs, profile: PlayerProfil
     reasons.push(`${paddle.power_mph} MPH power`);
   }
 
+  // Point source
+  if (profile.pointSource === "Kitchen" && paddle.pop_mph && paddle.pop_mph >= 37) {
+    reasons.push(`${paddle.pop_mph} MPH pop for kitchen battles`);
+  } else if (profile.pointSource === "Touch" && paddle.pop_mph && paddle.pop_mph <= 34) {
+    reasons.push("Soft touch for dinks and resets");
+  }
+
   // Twist weight / stability
-  if (profile.frustration === "Vibration" && paddle.twist_weight && paddle.twist_weight >= 7.0) {
+  const frusts = profile.frustration ? profile.frustration.split(",") : [];
+  if (frusts.includes("Vibration") && paddle.twist_weight && paddle.twist_weight >= 7.0) {
     reasons.push(`TW ${paddle.twist_weight} for stability`);
   }
 
   // Material
-  if (profile.frustration === "Power" && paddle.face_material === "Carbon") {
+  if (frusts.includes("Power") && paddle.face_material === "Carbon") {
     reasons.push("Carbon face for max power");
   }
-  if (profile.frustration === "Spin" && paddle.face_material === "Carbon") {
+  if (frusts.includes("Spin") && paddle.face_material === "Carbon") {
     reasons.push("Raw carbon for grip on the ball");
   }
 
