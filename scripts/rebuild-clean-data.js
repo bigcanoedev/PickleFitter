@@ -302,6 +302,65 @@ function main() {
     else sources.ps++;
   }
 
+  // Add PE-only paddles not found in JK or PS (keep rather than lose data)
+  for (const peP of current) {
+    if (!peP.swing_weight) continue;
+    const key = normalize(peP.brand + " " + peP.name);
+
+    let found = false;
+    for (const seenKey of seen) {
+      if (seenKey === key || seenKey.includes(key) || key.includes(seenKey)) {
+        found = true;
+        break;
+      }
+    }
+    if (found) continue;
+    seen.add(key);
+
+    const paddle = {
+      id: result.length + 1,
+      name: peP.name,
+      brand: peP.brand,
+      price: peP.price || 149.99,
+      weight_oz: peP.weight_oz || 7.8,
+      swing_weight: peP.swing_weight,
+      twist_weight: peP.twist_weight || 6.5,
+      face_material: peP.face_material || "Composite",
+      core_material: peP.core_material || null,
+      shape: peP.shape || null,
+      core_thickness_mm: peP.core_thickness_mm || null,
+      rpm: peP.rpm || null,
+      balance: peP.balance || null,
+      grip_length: peP.grip_length || null,
+      grip_thickness: peP.grip_thickness || null,
+      power_mph: peP.power_mph || null,
+      pop_mph: peP.pop_mph || null,
+      spin_rpm: peP.spin_rpm || null,
+      firepower_z: peP.firepower_z || null,
+      firepower_tier: peP.firepower_tier || null,
+      paddle_type: peP.paddle_type || null,
+      build_style: peP.build_style || null,
+      spin_rating: peP.spin_rating || null,
+      power_percentile: peP.power_percentile || null,
+      pop_percentile: peP.pop_percentile || null,
+      sw_percentile: peP.sw_percentile || null,
+      tw_percentile: peP.tw_percentile || null,
+      best_for: determineBestFor(peP.swing_weight, peP.paddle_type),
+      description: peP.description || `${peP.name} by ${peP.brand}.`,
+      image_url: peP.image_url || `/images/paddles/${peP.brand.toLowerCase().replace(/\s+/g, "-")}-${peP.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}.jpg`,
+      purchase_link: peP.purchase_link || null,
+      youtube_review: peP.youtube_review || null,
+      discount_code: peP.discount_code || null,
+      amazon_link: peP.amazon_link || `https://amazon.com/s?k=${encodeURIComponent(peP.brand + " " + peP.name)}&tag=picklefitter-20`,
+      generic_affiliate_link: peP.generic_affiliate_link || null,
+      preferred_link_type: peP.preferred_link_type || "amazon",
+      _sources: ["pe"],
+    };
+
+    result.push(paddle);
+    sources.pe = (sources.pe || 0) + 1;
+  }
+
   // Re-index
   result.forEach((p, i) => (p.id = i + 1));
 
@@ -315,6 +374,7 @@ function main() {
   console.log("  All 3:", sources.all3);
   console.log("  PS only:", sources.ps);
   console.log("  PS + PE:", sources.ps_pe);
+  console.log("  PE only:", sources.pe || 0);
 
   const withPower = result.filter(p => p.power_mph).length;
   const withPowerFromJK = result.filter(p => p._sources.includes("jk") && p.power_mph).length;
