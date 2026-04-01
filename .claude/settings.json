@@ -55,10 +55,22 @@
       "Bash(node scripts/dedup-paddles.js)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/paddle/1)",
       "Bash(git stash:*)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(grep -r \"affiliate\\\\|paddle\\\\|monetiz\" c:UsersbigcaOneDriveDesktopPickleFitter/components --include=*.tsx --include=*.ts)",
+      "Bash(grep -r \"gtag\\\\|google\\\\|analytics\\\\|posthog\\\\|segment\\\\|track\" c:UsersbigcaOneDriveDesktopPickleFitter --include=*.tsx --include=*.ts --include=*.json)",
+      "Bash(python3 -c \"import json, sys; data = json.load\\(sys.stdin\\); print\\(f''''Total paddles: {len\\(data\\)}''''\\)\")",
+      "Bash(grep -r \"GA\\\\|Google\\\\|Vercel\\\\|analytics\\\\|tracking\" c:UsersbigcaOneDriveDesktopPickleFitter/app --include=*.tsx --include=*.ts)",
+      "WebFetch(domain:www.johnkewpickleball.com)",
+      "WebFetch(domain:www.gigasheet.com)",
+      "Bash(curl -sL \"https://app.gigasheet.com/spreadsheet/pickleball-paddle-stats/6d644535_345d_4015_9245_bdbd405f801a\")",
+      "WebFetch(domain:observablehq.com)",
+      "Bash(curl -sL --compressed \"https://static.observableusercontent.com/files/4f9a1327495cf844283511ed44dc2b8c02b26d579a800aafcbe13b6d1faebdcbf8e327167271659369803f7479f1c40a0343f163d12f1824197bca3004158987\")",
+      "Bash(curl -s \"https://www.selkirk.com/collections/pickleball-paddles/products.json?limit=250\")",
+      "Bash(node scripts/rebuild-clean-data.js)"
     ],
     "additionalDirectories": [
-      "\\tmp"
+      "\\tmp",
+      "c:\\Users\\bigca\\OneDrive\\Desktop\\PickleFitter\\app\\best"
     ]
   }
 }

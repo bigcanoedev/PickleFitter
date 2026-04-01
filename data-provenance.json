@@ -1,0 +1,4094 @@
+[
+  {
+    "name": "11Six24 Hurache Control 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11Six24 Hurache-X Control 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11Six24 Hurache-X Control+ 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11Six24 Hurache-X Control+ 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11Six24 Hurache-X Jelly Bean 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11Six24 Hurache-X Power 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11Six24 Monarch All Court 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11Six24 Monarch Control 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11Six24 Monarch Jelly Bean 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11Six24 Pegasus All Court 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11Six24 Pegasus Power 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11Six24 Vapor Alpha Pro Power 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11Six24 Vapor Jelly Bean 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11Six24 Vapor Power 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ace Heart 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Adidas Metalbone 14.5 (Polypropylene) 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Adidas Metalbone 16 (Polypropylene) 16mm",
+    "sources": "jk+ps",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Adidas Metalbone LP S (Red EVA) 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Adidas Metalbone LP Team (Blue EVA) 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Aiso Ryu 15mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Avoura Rhapsody 13 13mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Babolat WZRD 20mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Bird Ball Hawk Classic 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Body Helix X4 Gold Kevlar 16mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Bread & Butter Fat Boy 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Bread & Butter Filth 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Bread & Butter Filth Hybrid 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Bread & Butter Invader 16mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Bread & Butter Loco 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Bread & Butter Shogun 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Cheetah Predion E16 Edgeless 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Fire HX 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Shapeshifter EX 16mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Chorus Shapeshifter with 5 grams tungsten tape 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Shapeshifter with 5 grams tungsten tape & 28-gram Slyce cap 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Shapeshifter-Original 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Supercourt 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Core Reaction Pro Elongated 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Core Reaction Pro Standard 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN 1X 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN 2X 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN TruFoam Genesis 1 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "CRBN TruFoam Genesis 2 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "CRBN TruFoam Genesis 3 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Diadem Edge 18K 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Diadem Hush 18mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Diadem Icon V2 XL 13mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Diadem Warrior 19mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Diadem Warrior BluCore Pro 14mm 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Diadem Warrior BluCore Standard 19mm 19mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Diller Wood Paddle 9mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Dymon Mayhem 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Electrum Model E Elite 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Electrum Model E Stealth 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Electrum Model E Stealth-with 0.5 oz. lead tape 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Electrum Pro II 11mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Electrum Pro II Stealth 12mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Electrum Pro II Stealth-with 0.5 oz. lead tape 12mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Electrum Pro Stealth 12mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Electrum Pro Stealth-with 0.5 oz. lead tape 12mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Evolution Extreme V2.14 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Evolution Extreme V2.16 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit EX 6.0 Maxx 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit EX 6.0 Pro 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit EX Pro 13mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit MX 6.0 Maxx 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit MX 6.0 Pro 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit MX Pro 13mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit Pro 1 6.0-Light 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit Pro 1-Light 13mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit Pro Innovation 15mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ethos Dunamis 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ethos Dunamis Pro 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Franklin C45 Dynasty 14mm 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Franklin C45 Dynasty 16mm 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Franklin C45 Hybrid 14mm 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Franklin C45 Hybrid with 8.5 grams tungsten and 9 gram Flick weight 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Franklin C45 Tempo 14mm 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Franklin C45 Tempo 16mm 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Franklin Tour Dynasty 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Franklin Tour Dynasty 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Franklin Tour Tempo 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Franklin Tour Tempo 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Franklin Tour Tempo 12mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Franklin Carbon STK 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Friday Fever 16mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gamma Airbender 13mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gamma Airbender 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gamma Airbender 10mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gamma Obsidian 10 10mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gamma Obsidian 13 13mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gamma Obsidian 16 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox CX14H Ultimate Power 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gearbox G2 Elongated 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox G2 Integra 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox G2 Quad 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox GX2 Elongated 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gearbox GX2 Hyper 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gearbox GX2 Integra 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox Pro Control Elongated 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gearbox Pro Control Integra 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gearbox Pro Power Elongated 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gearbox Pro Power Elongated with 10 grams tungsten 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gearbox Pro Power Integra 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gearbox Pro Ultimate Elongated 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gearbox Pro Ultimate Hyper 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gearbox Pro Ultimate Power Elongated 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gentle Booms Sports GBS-001 11mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN CRÜZ-16S 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN LAZR-16S 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN MÜVN-13S 13mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN MÜVN-13X 13mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN MÜVN-16E 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN MÜVN-16H 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN MÜVN-16S 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN MÜVN-16X 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN Raw-13R 13mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN Raw-13S 13mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN Raw-13V 13mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN Raw-16H 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN Raw-16R 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN Raw-16RX 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN Raw-16S 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN Raw-16V 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRÜVN Raw-16X 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRYP Balance 1 - 10g cap 15mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRYP Balance 1 - 30g cap 15mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Holbrook Arma Metallic-S 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Holbrook Arma Metallic-T 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Holbrook Arma S 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Holbrook Arma T 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Holbrook Pro - Aero Metallic T 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. J2K 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. J2K Pro 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. J2K with 10 grams tungsten tape 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. J2K with 10 grams tungsten tape & 28-gram Slyce cap 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. J2K+ 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. J2NFK 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. J2Ti 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. J2Ti with 10 grams tungsten tape 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. J2Ti with 10 grams tungsten tape & 28-gram Slyce cap 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. J2Ti+ 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. J3K 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. J3K Pro 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. J7K Pro 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. Sword & Shield-J1 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. Sword & Shield-J1H 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. Sword & Shield-J2 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. Sword & Shield-J3 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball Co. Sword & Shield-J5 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Hudef Mage Pro 16mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Hudef Mage Pro Gen 2 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Hudef Viva Pro Gen1 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Hudef Viva Pro Gen2 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Hyperion 3S 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Magnus 3 Tyson McGuffin 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Magnus 3S 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Perseus 3 Ben Johns 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Perseus 3 Ben Johns 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Perseus 3S 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Perseus 3S 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Perseus IV 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Perseus IV 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Perseus MOD TA-15 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Scorpeus 3 Anna Bright 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Scorpeus 3 Collin Johns 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Scorpeus 3S 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Scorpeus Collin Johns 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Komodo Katana 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Komodo Tonto 18K 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Komodo Tonto Unidirectional 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Mark unMARKed Alpha 15mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Maverix Clash-15 All Court 15mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Maverix Clash-15 Pro 15mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Maverix Havik-15 All Court 15mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Maverix Havik-15 Pro 15mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Neonic Flare Prime X 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Neonic Flare Titanium 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Neonic Flow 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Neonic Flow Prime X 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Nexus ProStar 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "OM Aero 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Owl Owl CXE 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek Bantam ALW-C 12mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek Bantam ALW-C 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek Bantam ESQ-C 12mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek Bantam ESQ-C 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek Bantam TKO-C 12mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek Bantam TKO-CX 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek Tempest TKO-C 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek Tempest Wave Pro-C 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "PCKL Pro 13 13mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "PCKL Pro 16 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Pickleball Apes Harmony S 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Pickleball Apes Harmony V 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Pickleball Apes Pro Line Energy 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Pickleball Apes Pro Line Energy S 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Pickleball Apes Pulse E 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Pickleball Apes Pulse S 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Pickleball Apes Pulse V 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Pickleball Apes Pulse X 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "PIKKL Hurricane Pro 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "PIKKL Hurricane Pro 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "PIKKL Vantage Pro 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "PIKKL Vantage Pro 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "ProDrive Drive Carbon 19mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "ProDrive Encounter 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "ProDrive Ghost 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "ProKennex Black Ace Pro 10mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "PROLITE K2 Power 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Proton Series 3-Project Flamingo 15mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Proton Series Four 15mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Proton Series One-Type A 15mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Proton Series One-Type A 11mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Proton Series One-Type B 15mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Proton Series Three 15mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Proton Series Two 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "ProXR Connor Garnett 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "ProXR Signature 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "ProXR Sweet Spot 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "\"ProXR Zane Navratil \"\"The Standard\"\" 14mm\"",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Reload RLD 1-16 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Revolin Revo Pro Pure Hybrid 16mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Revolin Revo Pro Reach Hybrid 16mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Rokne Republic 2.16 Standard 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus EV1.16 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus NOVA R1 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus NOVA R2 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus NOVA R3 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Pulsar FX.R1 16mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Ronbus Pulsar FX.R2 16mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Ronbus Pulsar FX.R3 16mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Ronbus Pulsar R1 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Pulsar R3 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple R1 - Beta 1 Version 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple R1 - Beta 2 Model 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple R1 - Production Model 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple R2 - Beta 1 Version 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple R2 - Production Model 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple R2 Beta 1 with 1 oz Slyce cap & 5.5 grams tungsten at neck & sides 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple R2 Beta 1 with 11 grams tungsten at neck & sides 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple R2 Beta 1 with 5.5 grams tungsten at neck and sides 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple V2-R1 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Ronbus Ripple V2-R2 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Ronbus Ripple V2-R4 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Selkirk AMPED Control Invikta 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Amped Pro Air Epic 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Amped Pro Air Invikta 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs 007 Epic 10mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs 007 Invikta 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs 008 Epic 13mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Selkirk Labs 008 Invikta 10mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Selkirk Labs 008 Invikta 13mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Selkirk Labs 008 Tour 13mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Selkirk Luxx Control Air Invikta 20mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Selkirk Luxx II Control Air Invikta 19mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Project 008 Invikta 10mm 10mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk SLK ERA Elongated 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk SLK ERA Widebody 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk SLK Halo Power XL 13mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Selkirk SLK Halo Pro 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Vanguard Power Air Invikta 12mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Vanguard Pro Invikta 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Six Zero Black Diamond Power 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Six Zero Double Black Diamond 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Six Zero Double Black Diamond 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Six Zero Infinity Black Diamond 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Six Zero Infinity Double Black Diamond  16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Six Zero Quartz 15mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Six Zero Ruby 16mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Six Zero Ruby 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Six Zero Triple Black Diamond (Willinator) 15mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Spartus Apollo 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Spartus Odyssey Apex 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Spartus Olympus 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Speedup Fire 14 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Speedup Ice 16 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Standout KC1 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Synergy Royale 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Synergy Supreme 13mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Tecnifibre TF Blitz 15mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Tecnifibre TF Select 15mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Thompson 515-Twill 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Thompson 515-Uni 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Thrive Azul (medium-light) 16mm",
+    "sources": "jk+ps",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Thrive Azul (medium) 16mm",
+    "sources": "jk+ps",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Thrive Smoke 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Thrive Surge 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Saga Flash 14 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro Bloom Prism 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro Bloom Prism 14 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro Bloom Saga 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro Prism Flash 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro Saga Flash 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro Saga Flash LH 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro Saga V7 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro V7 16mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Versix Vector 15mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Volair Alto 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Volair Alto 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Volair Corto 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Volair Corto 14mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Volair Mach 1 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Volair Mach 1 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Volair Mach 1 Forza 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Volair Mach 1 Forza 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Volair Mach 2 16mm",
+    "sources": "jk",
+    "power_source": "johnkew",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Volair Mach 2 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Volair Mach 2 Forza 16mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Volair Mach 2 Forza 14mm",
+    "sources": "jk+ps+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Wilson Vesper Control 17 17mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Wilson Vesper Power 14 14mm",
+    "sources": "jk+pe",
+    "power_source": "johnkew",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "11six24 Jelly Bean Pegasus 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11six24 Jelly Bean Pegasus 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "11six24 Jelly Bean Vapor 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "11six24 Jelly Bean Hurache-X 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "11six24 All Court Pegasus 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "11six24 All Court Vapor 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "11six24 All Court Hurache-X 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "11six24 Power Pegasus 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "11six24 Power Vapor 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "11six24 Power Hurache-X 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "11six24 Alpha Pro Power Hurache-X",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "11six24 Alpha Pro Power Pegasus",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "11six24 Alpha Pro Power Vapor",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "11six24 Vapor Power2",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Adidas Drive 2",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Adidas Match Light 2",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Adidas AdiPower Attk 2",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Adidas AdiPower CTRL",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Adidas Adipower Carbon Team",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Adidas Metalbone LP 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Aiso Centric 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Avoura Rhapsody 13mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Babolat Ballr+",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Babolat Strikr+",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ballr Ballr Pro",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Body Helix X1",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Body Helix X4 Kevlar",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Body Helix X4 Carbon",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Body Helix X5",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Bread & Butter Filth Elongated",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Bread & Butter Filth Standard",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Chorus Pickleball Echo SX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Pickleball Echo HX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Pickleball Echo EX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Pickleball Supercourt SX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Pickleball Supercourt HX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Pickleball Supercourt EX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Pickleball Shapeshifter (old aero head)",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Pickleball Shapeshifter SX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Pickleball Shapeshifter HX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Pickleball Shapeshifter EX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Pickleball Fire SX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Pickleball Fire HX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Chorus Pickleball Fire EX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN1 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN1 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN1 13mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN2 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN2 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN2 13mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN1X 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN1X 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN2X 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN2X 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN3X 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN3X 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN1 TruFoam Genesis",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN2 TruFoam Genesis",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN3 TruFoam Genesis",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Crush Force 5G",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Diadem Warrior Edge",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Diadem Edge 18k Pro Power",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Diadem Warrior v2",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Diadem Icon v1",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Diadem Icon Infinity Max",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Diadem Edge 18k Max",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Diadem BluCore Max 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Diadem BluCore Pro 19mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Electrum Model E 13mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Electrum Model E 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit Pro EX",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Engage Pursuit Pro MX",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Engage Pursuit Maxx MX 6.0",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit Maxx EX 6.0",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit Pro1 6.0 (Mid weight)",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit Pro1 6.0 (Lite)",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Engage Pursuit Pro1 (Mid weight)",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit Pro1 (Lite)",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Engage Pursuit Pro1 Hybrid",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Engage Pursuit Pro Innovation 15.2mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit Pro Innovation 12.7mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Extreme v2.16",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Extreme v2.14",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Encore Pro v2 15.2",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Encore Pro v2 12.7",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Evolution Aero",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Engage Pursuit v2.0",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Franklin Signature Carbon STK 14.5mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Franklin Signature Carbon STK 17mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Franklin FS Tour Dynasty 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Franklin FS Tour Dynasty 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Franklin FS Tour Tempo 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Franklin FS Tour Tempo 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Franklin FS Tour Tempo 12mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Franklin FS Tour Dynasty 12mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Franklin C45 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Friday Pickle Original",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Friday Pickle Challenger",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gamma Obsidian 10mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gamma Obsidian 13mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gamma Obsidian 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox CX14E",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox CX11E Power 7.8oz",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox CX11E Power 8.5oz",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox CX11E Control 8.5oz",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox CX11E Control 7.8oz",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox CX11Q Power 7.8oz",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox CX11Q Control 7.8oz",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox CX11Q Control 8.5oz",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox CX11Q Power 8.5oz",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox GBX",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gearbox Pro Power Fusion",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox Pro Control Fusion",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gearbox GX2 Integra XL",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "GRUVN 16E",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Gruvn 16H",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRUVN MUVN 16X",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRUVN MUVN 13S",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "GRUVN MUVN 16S",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRUVN MUVN 16E",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRUVN MUVN 16H",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "GRUVN MUVN 16V",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "GRUVN LAZR-16HD",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "GRUVN LAZR-16X",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Head Radical Nite",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Head Boom Tour EX 2024",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Head Boom Team EX 2024",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Holbrook Power Pro 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Holbrook Power Pro 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Holbrook Power Pro 12mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Holbrook Power Pro E 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Holbrook Power Pro E 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Holbrook Aero T 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Holbrook Aero X 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Holbrook Arma T Carbon",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Holbrook Arma S Metalic",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Holbrook Arma X Metalic",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Holbrook Arma T Metalic",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Holbrook Arma S Carbon",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Honolulu Pickleball J1",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball J2",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Honolulu Pickleball J3",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Honolulu Pickleball J5",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball J4K",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Honolulu Pickleball J7K",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Hudef Viva Pro 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Hudef Viva Pro 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Hudef Apex Pro 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Hudef Apex Pro 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Hudef Viva Pro Gen 2",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Hyperion CFS 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Solaire 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Hyperion CFS 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Hyperion CFS Swift 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Radius",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Vision 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Vision 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Hyperion CAS 13.5",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Hyperion CAS 16",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Perseus 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Perseus 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Scorpeus Anna Bright 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Scorpeus3 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Scorpeus3 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Perseus3 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Perseus3 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Magnus3 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Magnus3 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Hyperion3 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Hyperion3 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Mod TA-15 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Mod TA-15 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Magnus 3S 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Hyperion 3S 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Scorpeus 3S 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Perseus Pro IV 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Perseus Pro IV 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Agassi Pro IV 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Scorpeus Pro IV 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Scorpeus Pro IV 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Joola Magnus Pro IV 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Magnus Pro IV 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Joola Hyperion Pro IV 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Kiwi Labs Slice",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Legacy Pro S",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Mark Pickleball Mark One",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Mark Pickleball Mark Two",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Neonic Force",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Neonic Flow Swift",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Omega Evolution Pro",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Omega Evolution Elite",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Omega Evolution Max",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Onix Premier",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Onix Mayhem Max Control",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Onix Malice DB 16",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Onix Malice 14",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Onix Z5",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Oya Obsidian",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Oya Phantom",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek TS-5",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek Wave Pro v3",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek Wave v3",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek Reign Pro v3",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek Reign v3",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Paddletek Bantam ESQ-C 12.7mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Paddletek Bantam ESQ-C 14.3mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Paddletek Bantam ALW-C 14.3mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Paddletek Bantam ALW-C 12.7mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Paddletek Bantam TKO-C 14.3mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Paddletek Bantam TKO-C 12.7mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Paddletek Bantam TKO-CX 14.3mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Paddletek Bantam TKO-CX 12.7mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Pickleball Apes Neo Line One",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Pickleball Poker The Bet",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Pro Kennex Pro Flight",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Pro Kennex Black Ace Pro Ovation",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Pro Kennex Black Ace LG Daniel de la Rosa",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Pro Kennex Black Ace XF 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Pro Kennex Black Ace 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Pro Kennex Black Ace 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Pro Kennex Black Ace LG 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "ProDrive Maverick",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Professor PhD",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Proton Series 1 Type A Square 11mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "ProXR Zane Signature Carbon 13mm 2024",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "ProXR The Standard 16mm 2024",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "ProXR The Standard 13mm 2024",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Rokne Curve Classic",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Rokne  X",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Rokne Aeroblade",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus R1.16",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Ronbus R1 Pulsar (5.25” handle)",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Ronbus R1 Pulsar (5.5” handle)",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Ronbus R3 Pulsar",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Ronbus Pulsar FX1",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Pulsar FX2",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Pulsar FX3",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple R1.14 beta",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Vanguard S2 Control",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Vanguard Epic Control",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Vanguard Invikta Control Midweight",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Vanguard Invikta Control Lightweight",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Luxx Contral Air Epic",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Luxx Control Air S2",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Selkirk Labs Project 001 Epic",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs Project 002 Invikta",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs Project 003 Epic",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs Project 003 Invikta",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs Project 005 Invikta",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs Project 005 Epic",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Selkirk Labs Project 006 Tour",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs Project 007 Invikta 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Selkirk Labs Project 007 Invikta 10mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs Project 007 Epic 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Selkirk Labs Project 008 Tour 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs Project 008 Tour 13mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs Project 008 Invikta 13mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs Project 008 Invikta 10mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs Project 008 Epic 13mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SixZero Sapphire",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SixZero Quartz",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SixZero Triple Black Diamond",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SixZero Double Black Diamond 14mm ",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SixZero Double Black Diamond 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SixZero Double Black Diamond Infinity ",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SixZero Black Diamond 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SixZero Black Diamond Infinity",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SixZero Ruby 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SixZero Ruby 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SLK Omega Max",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SLK Evo Soft Max",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SLK EVO 2.0 Control XL",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SLK EVO 2.0 Hybrid XL",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SLK EVO 2.0 Power XL",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SLK Halo Control XL 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "SLK Halo Pro Max 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "SLK Halo Pro XL 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Spartus Ballista",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Spartus Gladius 16",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Spartus Gladius Centurion",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Spartus Orion Apex",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Spartus Oracle Apex",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Speed Up Fire 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Speed Up Ice 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Technifibre TF Command 15mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Technifibre TF Select 15mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Technifibre TF Blitz",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro Alchemy 13.5mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro Alchemy 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro V7 Carbon Fiber 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro Flash Carbon Fiber 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro Flash Carbon Fiber 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro Prism v7",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro Prism Flash 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro Prism Bloom 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro Prism Bloom 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro Saga Flash SH 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro Saga Flash SH 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro Saga Flash LH 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro Saga v7 SH 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro Saga v7 SH 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro Saga v7 LH 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro Saga v7 LH 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro Saga Bloom 16mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro Saga Bloom 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Versix Vector XL",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Volair CTRL1 Forza 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Volair CTRL2 Forza 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Volair V.1F XL-W",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Volair V.1F HYB",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Volair V.1F XL-L",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vulcan V720HT MAX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vulcan V740HT MAX",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Wilson Vesper Power 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Wilson Vesper  Control 17mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Unknown Black Diamond 14mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Volair Shift HYB 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Volair Shift EL 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Volair Shift WB 14mm",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Spartus P1",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "RPM Friction pro elongated 16",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "RPM Friction pro widebody 16",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "RPM Friction pro elongated 14",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "SixZero Coral hybrid",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SixZero Black Opal",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SixZero Coral widebody",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "SixZero Coral elongated",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Pickleball Apes Charm x",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Pickleball Apes Charm v",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Pickleball Apes Charm s",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Adidas Adipower pro 14",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Adidas Adipower pro 16 c",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Vatic Pro V-sol Power v7 LH",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro V-sol Power Flash",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro V-sol Power Bloom",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro V-sol pro Flash LH",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro V-sol Pro Bloom",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Vatic Pro V-sol Pro v7 LH",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "CRBN Waves 2",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN Waves 4",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN Waves 3",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN Waves 1",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Bread & Butter Loco Widebody",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Quanta R1",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Ronbus Quanta R3",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Ronbus Quanta R2",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Ronbus Quanta R4",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Bread & Butter Loco Hybrid",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Ronbus Quanta R5",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Honolulu Pickleball J7NF",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Selkirk Boomstik elongated",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Boomstik widebody",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Bread & Butter Wild thang",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple v2 R5",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Body Helix FLIK F1",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Avoura Rivelle",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Avoura Revaya",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "CRBN CRBN4 TruFoam Genesis",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Pickleball Apes Harmony X",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gearbox GX2 Power Elongated",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Gearbox GX2 Power Hybrid",
+    "sources": "ps+pe",
+    "power_source": "pe",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Paddletek Bantam GTO-C 14.3mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Paddletek Bantam GTO-C 12.7mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "SLK ERA Power Widebody",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "SLK ERA Power Elongated",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": true
+  },
+  {
+    "name": "Friday Pickle Fever",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Selkirk Labs Project 008 Invikta 16mm",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple R2.14 v2",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple R1.14 v2",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  },
+  {
+    "name": "Ronbus Ripple R4.14 v2",
+    "sources": "ps+pe",
+    "power_source": "none",
+    "has_pe_exclusive": false
+  }
+]
