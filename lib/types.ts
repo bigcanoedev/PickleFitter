@@ -54,6 +54,7 @@ export interface PlayerProfile {
   coreThickness: "Thin" | "Thick" | "No preference";
   spinPriority: "Low" | "Medium" | "High";
   stabilityPreference: "Stability" | "Maneuverability" | "No preference";
+  customizationPreference: "Out of the box" | "Fine-tune" | "No preference";
   handSize: "Small" | "Medium" | "Large";
   gripLength: "Short" | "Standard" | "Long" | "No preference";
   moistureLevel: "Low" | "Medium" | "High";

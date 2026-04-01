@@ -28,6 +28,7 @@ function parseProfile(searchParams: URLSearchParams): PlayerProfile {
     coreThickness: (searchParams.get("coreThickness") as PlayerProfile["coreThickness"]) || "No preference",
     spinPriority: (searchParams.get("spinPriority") as PlayerProfile["spinPriority"]) || "Medium",
     stabilityPreference: (searchParams.get("stabilityPreference") as PlayerProfile["stabilityPreference"]) || "No preference",
+    customizationPreference: (searchParams.get("customizationPreference") as PlayerProfile["customizationPreference"]) || "No preference",
     handSize: (searchParams.get("handSize") as PlayerProfile["handSize"]) || "Medium",
     gripLength: (searchParams.get("gripLength") as PlayerProfile["gripLength"]) || "No preference",
     moistureLevel: (searchParams.get("moistureLevel") as PlayerProfile["moistureLevel"]) || "Medium",
@@ -51,6 +52,7 @@ function ProfileSummary({ profile }: { profile: PlayerProfile }) {
     profile.coreThickness !== "No preference" ? `${profile.coreThickness} core` : null,
     profile.spinPriority === "High" ? "High spin" : null,
     profile.stabilityPreference !== "No preference" ? profile.stabilityPreference : null,
+    profile.customizationPreference === "Fine-tune" ? "Customizer" : profile.customizationPreference === "Out of the box" ? "Out of the box" : null,
     profile.currentPaddle ? `Upgrading from ${profile.currentPaddle}` : null,
   ].filter(Boolean);
 

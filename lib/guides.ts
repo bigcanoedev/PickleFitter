@@ -39,6 +39,7 @@ const NEUTRAL: PlayerProfile = {
   coreThickness: "No preference",
   spinPriority: "Medium",
   stabilityPreference: "No preference",
+  customizationPreference: "No preference",
   handSize: "Medium",
   gripLength: "No preference",
   moistureLevel: "Medium",

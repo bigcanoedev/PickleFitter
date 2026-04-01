@@ -258,6 +258,16 @@ function calculateIdealSpecs(profile: PlayerProfile, allPaddles?: Paddle[]): Ide
     specs.twistWeightRange[0] = Math.min(specs.twistWeightRange[0], 5.5);
   }
 
+  // ── Customization preference (lighter paddles = more headroom for tape) ──
+  if (profile.customizationPreference === "Fine-tune") {
+    // Shift weight range down — prefer paddles with room to add tape
+    specs.weightRange[0] = Math.max(6.8, specs.weightRange[0] - 0.4);
+    specs.weightRange[1] -= 0.3;
+    // Widen SW and TW ranges — they'll fine-tune to their ideal with tape
+    specs.swingWeightRange[0] -= 8;
+    specs.twistWeightRange[0] -= 0.5;
+  }
+
   return specs;
 }
 
@@ -630,6 +640,15 @@ function generateReason(paddle: Paddle, specs: IdealSpecs, profile: PlayerProfil
   // Prior sport
   if (profile.priorSport === "Tennis" && paddle.shape === "Elongated") {
     reasons.push("Elongated shape familiar for tennis players");
+  }
+
+  // Customization headroom
+  if (profile.customizationPreference === "Fine-tune" && paddle.weight_oz && paddle.weight_oz <= 8.1) {
+    const headroomOz = 8.5 - paddle.weight_oz;
+    const headroomG = Math.round(headroomOz * 28.35);
+    if (headroomG >= 8) {
+      reasons.push(`Starts at ${paddle.weight_oz.toFixed(1)} oz — room for ${headroomG}g of tape`);
+    }
   }
 
   if (reasons.length === 0) {

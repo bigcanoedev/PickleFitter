@@ -182,6 +182,17 @@ const quizQuestions: QuizQuestion[] = [
   },
   {
     id: 15,
+    question: "How do you feel about customizing your paddle with lead tape?",
+    key: "customizationPreference",
+    type: "radio",
+    options: [
+      { label: "I want it ready to play out of the box", value: "Out of the box" },
+      { label: "I like to fine-tune with lead tape", value: "Fine-tune" },
+      { label: "Not sure / No preference", value: "No preference" },
+    ],
+  },
+  {
+    id: 16,
     question: "Hand size?",
     key: "handSize",
     type: "radio",
@@ -192,7 +203,7 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 16,
+    id: 17,
     question: "How do you hit your backhand?",
     key: "gripLength",
     type: "radio",
@@ -204,7 +215,7 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 17,
+    id: 18,
     question: "What's your budget?",
     key: "budget",
     type: "budget-slider",
