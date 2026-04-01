@@ -127,6 +127,16 @@ export const PRESETS: { label: string; placements: PlacementGrams[]; capGrams: n
 const GRAMS_PER_OZ = 28.3495;
 
 /**
+ * The linear model (rate × grams) is physically correct: I = m × d², and
+ * since d is constant for a given position, the effect scales linearly
+ * with mass. Thrive's measured data confirms this (3g vs 6g at 3&9 give
+ * nearly identical per-gram rates). No taper or diminishing returns.
+ */
+
+/** Realistic upper bound for twist weight — the highest in our 727-paddle database is 8.34 */
+export const MAX_REALISTIC_TW = 9.0;
+
+/**
  * Calculate resulting specs from user-specified grams at each position.
  * For paired positions, gramsPerSide means the weight on EACH side.
  */

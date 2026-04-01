@@ -7,6 +7,7 @@ import {
   PLACEMENTS,
   PLACEMENT_KEYS,
   PRESETS,
+  MAX_REALISTIC_TW,
   PlacementKey,
   PlacementGrams,
 } from "@/lib/lead-tape";
@@ -316,6 +317,15 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
         <p className="text-sm text-muted-foreground bg-muted rounded-lg p-4">
           {calculation.explanation}
         </p>
+      )}
+
+      {/* Warning for unrealistic twist weight */}
+      {calculation.resultingTwistWeight > MAX_REALISTIC_TW && (
+        <div className="border border-orange-300 bg-orange-50 rounded-lg p-4 text-sm text-orange-800">
+          <strong>Heads up:</strong> A twist weight of {calculation.resultingTwistWeight} is beyond
+          what any production paddle achieves (max ~{MAX_REALISTIC_TW}). The highest in our database
+          of 727 paddles is 8.34. At this level, the estimates become less reliable.
+        </div>
       )}
 
       {/* Warning for excessive weight */}
