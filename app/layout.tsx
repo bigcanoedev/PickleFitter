@@ -36,6 +36,9 @@ export default function RootLayout({
               </Link>
               <div className="flex items-center gap-4">
                 <p>Lab-tested paddle recommendations based on swing physics.</p>
+                <Link href="/best" className="hover:text-foreground transition-colors whitespace-nowrap">
+                  Best Paddles
+                </Link>
                 <Link href="/terms" className="hover:text-foreground transition-colors whitespace-nowrap">
                   Terms of Service
                 </Link>
