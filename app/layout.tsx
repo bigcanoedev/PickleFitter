@@ -34,7 +34,15 @@ export default function RootLayout({
                   Pickle<span className="text-primary">Fitter</span>
                 </span>
               </Link>
-              <p>Lab-tested paddle recommendations based on swing physics.</p>
+              <div className="flex items-center gap-4">
+                <p>Lab-tested paddle recommendations based on swing physics.</p>
+                <Link href="/terms" className="hover:text-foreground transition-colors whitespace-nowrap">
+                  Terms of Service
+                </Link>
+                <Link href="/privacy" className="hover:text-foreground transition-colors whitespace-nowrap">
+                  Privacy Policy
+                </Link>
+              </div>
             </div>
           </div>
         </footer>
