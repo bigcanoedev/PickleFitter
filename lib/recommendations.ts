@@ -247,15 +247,35 @@ function calculateIdealSpecs(profile: PlayerProfile, allPaddles?: Paddle[]): Ide
     specs.coreThicknessRange[0] = Math.max(specs.coreThicknessRange[0], 15);
   }
 
+  // ── Stability vs maneuverability (narrows TW range) ──
+  if (profile.stabilityPreference === "Stability") {
+    // Player wants forgiveness: push TW range upward
+    specs.twistWeightRange[0] = Math.max(specs.twistWeightRange[0], 6.5);
+    specs.twistWeightRange[1] = Math.max(specs.twistWeightRange[1], 7.5);
+  } else if (profile.stabilityPreference === "Maneuverability") {
+    // Player wants touch/quick adjustments: push TW range lower
+    specs.twistWeightRange[1] = Math.min(specs.twistWeightRange[1], 6.5);
+    specs.twistWeightRange[0] = Math.min(specs.twistWeightRange[0], 5.5);
+  }
+
   return specs;
 }
 
 // ── Scoring functions ───────────────────────────────────────────────────────
 
 function rangeScore(value: number, min: number, max: number, falloffPerUnit: number): number {
-  if (value >= min && value <= max) return 100;
+  if (value >= min && value <= max) {
+    // Peaked curve: 100 at center, tapering to 85 at the edges.
+    // This differentiates paddles within the "acceptable" range —
+    // center-of-range is preferred over edge-of-range.
+    const center = (min + max) / 2;
+    const halfSpan = (max - min) / 2;
+    if (halfSpan === 0) return 100;
+    const distFromCenter = Math.abs(value - center) / halfSpan; // 0 at center, 1 at edge
+    return 100 - 15 * distFromCenter * distFromCenter; // quadratic: 100 at center, 85 at edge
+  }
   const dist = value < min ? min - value : value - max;
-  return Math.max(0, 100 - dist * falloffPerUnit);
+  return Math.max(0, 85 - dist * falloffPerUnit);
 }
 
 function scoreSwingWeight(paddle: Paddle, specs: IdealSpecs): number {

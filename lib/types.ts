@@ -53,6 +53,7 @@ export interface PlayerProfile {
   shapePreference: "Standard" | "Elongated" | "Wide body" | "No preference";
   coreThickness: "Thin" | "Thick" | "No preference";
   spinPriority: "Low" | "Medium" | "High";
+  stabilityPreference: "Stability" | "Maneuverability" | "No preference";
   handSize: "Small" | "Medium" | "Large";
   gripLength: "Short" | "Standard" | "Long" | "No preference";
   moistureLevel: "Low" | "Medium" | "High";

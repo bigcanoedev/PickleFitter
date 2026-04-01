@@ -171,6 +171,17 @@ const quizQuestions: QuizQuestion[] = [
   },
   {
     id: 14,
+    question: "What matters more to you?",
+    key: "stabilityPreference",
+    type: "radio",
+    options: [
+      { label: "Stability — I want forgiveness on off-center hits", value: "Stability" },
+      { label: "Maneuverability — I want quick paddle adjustments for touch and dinking", value: "Maneuverability" },
+      { label: "Not sure / No preference", value: "No preference" },
+    ],
+  },
+  {
+    id: 15,
     question: "Hand size?",
     key: "handSize",
     type: "radio",
@@ -181,7 +192,7 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 15,
+    id: 16,
     question: "How do you hit your backhand?",
     key: "gripLength",
     type: "radio",
@@ -193,7 +204,7 @@ const quizQuestions: QuizQuestion[] = [
     ],
   },
   {
-    id: 16,
+    id: 17,
     question: "What's your budget?",
     key: "budget",
     type: "budget-slider",

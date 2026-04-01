@@ -38,6 +38,7 @@ const NEUTRAL: PlayerProfile = {
   shapePreference: "No preference",
   coreThickness: "No preference",
   spinPriority: "Medium",
+  stabilityPreference: "No preference",
   handSize: "Medium",
   gripLength: "No preference",
   moistureLevel: "Medium",
@@ -81,6 +82,7 @@ const CONTROL_PROFILE = profile({
   frustration: "Control",
   feelPreference: "Soft",
   coreThickness: "Thick",
+  stabilityPreference: "Stability",
 });
 
 const SPIN_PROFILE = profile({
@@ -94,6 +96,7 @@ const BEGINNER_PROFILE = profile({
   feelPreference: "Soft",
   coreThickness: "Thick",
   spinPriority: "Low",
+  stabilityPreference: "Stability",
   budgetMax: 150,
 });
 
@@ -127,6 +130,7 @@ const TENNIS_ELBOW_PROFILE = profile({
   feelPreference: "Soft",
   coreThickness: "Thick",
   spinPriority: "Low",
+  stabilityPreference: "Stability",
 });
 
 const LIGHTWEIGHT_PROFILE = profile({
