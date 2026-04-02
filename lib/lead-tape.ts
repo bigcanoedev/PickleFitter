@@ -119,6 +119,14 @@ export interface PlacementGrams {
   tapeRate?: number;   // grams per inch (for tape mode display)
 }
 
+/** Tape arc defined by start/end angles (0=12 o'clock, 90=3 o'clock, 180=6 o'clock) */
+export interface TapeArc {
+  startDeg: number;
+  endDeg: number;
+  tapeRate: number;    // grams per inch
+  paired: boolean;     // apply to both sides
+}
+
 export const PRESETS: { label: string; placements: PlacementGrams[]; capGrams: number }[] = [
   { label: "Power",      placements: [{ position: "12", gramsPerSide: 3 }],                                                  capGrams: 0 },
   { label: "Stability",  placements: [{ position: "3&9", gramsPerSide: 3 }],                                                 capGrams: 0 },
@@ -225,6 +233,71 @@ function distributeTapeWeight(
   return result;
 }
 
+/** Angles for each calibrated position (degrees from 12 o'clock) */
+const POSITION_DEGREES: { deg: number; sw: number; tw: number }[] = [
+  { deg: 0,   sw: CAL_12.swPerGram,   tw: CAL_12.twPerGram },
+  { deg: 30,  sw: CAL_1_11.swPerGram, tw: CAL_1_11.twPerGram },
+  { deg: 60,  sw: CAL_2_10.swPerGram, tw: CAL_2_10.twPerGram },
+  { deg: 90,  sw: CAL_3_9.swPerGram,  tw: CAL_3_9.twPerGram },
+  { deg: 120, sw: CAL_4_8.swPerGram,  tw: CAL_4_8.twPerGram },
+  { deg: 150, sw: CAL_5_7.swPerGram,  tw: CAL_5_7.twPerGram },
+];
+
+/** Interpolate SW/TW rate at any angle by lerping between known positions */
+function ratesAtAngle(deg: number): { sw: number; tw: number } {
+  const clamped = Math.max(0, Math.min(150, deg));
+  for (let i = 0; i < POSITION_DEGREES.length - 1; i++) {
+    const a = POSITION_DEGREES[i];
+    const b = POSITION_DEGREES[i + 1];
+    if (clamped >= a.deg && clamped <= b.deg) {
+      const t = (clamped - a.deg) / (b.deg - a.deg);
+      return {
+        sw: a.sw + (b.sw - a.sw) * t,
+        tw: a.tw + (b.tw - a.tw) * t,
+      };
+    }
+  }
+  return POSITION_DEGREES[POSITION_DEGREES.length - 1];
+}
+
+/** Inches of paddle edge per degree (~12" per 180°) */
+const INCHES_PER_DEGREE = 12 / 180;
+
+/**
+ * Calculate SW/TW deltas from a tape arc defined by start/end angles.
+ * Integrates the per-gram rates along the arc by sampling.
+ */
+export function calculateTapeArc(arc: TapeArc): { swDelta: number; twDelta: number; totalGrams: number; inchesPerSide: number } {
+  const arcDeg = Math.max(0, arc.endDeg - arc.startDeg);
+  const inchesPerSide = arcDeg * INCHES_PER_DEGREE;
+  const gramsPerSide = inchesPerSide * arc.tapeRate;
+  const sides = arc.paired ? 2 : 1;
+  const totalGrams = gramsPerSide * sides;
+
+  if (arcDeg < 0.5) return { swDelta: 0, twDelta: 0, totalGrams: 0, inchesPerSide: 0 };
+
+  // Sample along the arc and integrate SW/TW contributions
+  const steps = Math.max(12, Math.round(arcDeg / 2));
+  let swSum = 0;
+  let twSum = 0;
+  for (let i = 0; i <= steps; i++) {
+    const deg = arc.startDeg + (arcDeg * i) / steps;
+    const rates = ratesAtAngle(deg);
+    // Each sample represents (arcDeg/steps) degrees of tape
+    const inchSlice = (arcDeg / steps) * INCHES_PER_DEGREE;
+    const gramSlice = inchSlice * arc.tapeRate * sides;
+    swSum += gramSlice * rates.sw;
+    twSum += gramSlice * rates.tw;
+  }
+
+  return {
+    swDelta: parseFloat(swSum.toFixed(1)),
+    twDelta: parseFloat(twSum.toFixed(2)),
+    totalGrams: parseFloat(totalGrams.toFixed(1)),
+    inchesPerSide: parseFloat(inchesPerSide.toFixed(1)),
+  };
+}
+
 /**
  * Calculate resulting specs from user-specified weight at each position.
  * For paired positions, gramsPerSide means the weight on EACH side.
@@ -298,6 +371,73 @@ export function calculateLeadTape(
     resultingWeightOz: resultWeight,
     explanation,
   };
+}
+
+/** Full calculation from a tape arc + optional cap weight. */
+export function calculateTapeArcFull(
+  currentSwingWeight: number,
+  currentTwistWeight: number,
+  currentWeightOz: number,
+  arc: TapeArc,
+  capGrams: number = 0,
+): LeadTapeCalculation {
+  const arcResult = calculateTapeArc(arc);
+  const capSwDelta = capGrams * CAP_RATES.swPerGram;
+  const totalGrams = arcResult.totalGrams + capGrams;
+
+  const resultSW = parseFloat((currentSwingWeight + arcResult.swDelta + capSwDelta).toFixed(1));
+  const resultTW = parseFloat((currentTwistWeight + arcResult.twDelta).toFixed(1));
+  const resultWeight = parseFloat((currentWeightOz + totalGrams / GRAMS_PER_OZ).toFixed(1));
+
+  // Clock labels for display
+  const startLabel = degToClockLabel(arc.startDeg);
+  const endLabel = degToClockLabel(arc.endDeg);
+  const label = arc.paired
+    ? `${startLabel}–${endLabel} (both sides)`
+    : `${startLabel}–${endLabel}`;
+
+  const placementResult: LeadTapePlacementResult = {
+    position: "3&9", // nominal
+    label,
+    gramsPerSide: parseFloat((arcResult.totalGrams / (arc.paired ? 2 : 1)).toFixed(1)),
+    grams: arcResult.totalGrams,
+    swDelta: arcResult.swDelta,
+    twDelta: arcResult.twDelta,
+  };
+
+  const parts: string[] = [];
+  parts.push(`${arcResult.inchesPerSide.toFixed(1)}″ of tape per side from ${startLabel} to ${endLabel} (${arcResult.totalGrams.toFixed(1)}g total).`);
+  if (capGrams > 0) {
+    parts.push(`${capGrams}g cap weight at the handle butt.`);
+  }
+
+  return {
+    placements: [placementResult],
+    totalGrams: parseFloat(totalGrams.toFixed(1)),
+    capGrams,
+    resultingSwingWeight: resultSW,
+    resultingTwistWeight: resultTW,
+    resultingWeightOz: resultWeight,
+    explanation: parts.join(" "),
+  };
+}
+
+/** Convert degrees from 12 o'clock to a clock label */
+function degToClockLabel(deg: number): string {
+  const hour = deg / 30; // 0=12, 1=1, 2=2, ..., 6=6
+  if (hour <= 0.25) return "12";
+  if (hour <= 0.75) return "12:30";
+  if (hour <= 1.25) return "1";
+  if (hour <= 1.75) return "1:30";
+  if (hour <= 2.25) return "2";
+  if (hour <= 2.75) return "2:30";
+  if (hour <= 3.25) return "3";
+  if (hour <= 3.75) return "3:30";
+  if (hour <= 4.25) return "4";
+  if (hour <= 4.75) return "4:30";
+  if (hour <= 5.25) return "5";
+  if (hour <= 5.75) return "5:30";
+  return "6";
 }
 
 function computeBalanceShift(

@@ -4,12 +4,14 @@ import { useState, useMemo, useCallback } from "react";
 import { PaddleScore } from "@/lib/types";
 import {
   calculateLeadTape,
+  calculateTapeArcFull,
   PLACEMENTS,
   PLACEMENT_KEYS,
   PRESETS,
   MAX_REALISTIC_TW,
   PlacementKey,
   PlacementGrams,
+  TapeArc,
 } from "@/lib/lead-tape";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
@@ -28,11 +30,28 @@ const TAPE_WEIGHTS = [
   { label: '1.5 g/in (heavy tungsten)', rate: 1.5 },
 ];
 
+function degToClockDisplay(deg: number): string {
+  const hour = deg / 30;
+  if (hour <= 0.25) return "12:00";
+  if (hour <= 0.75) return "12:30";
+  if (hour <= 1.25) return "1:00";
+  if (hour <= 1.75) return "1:30";
+  if (hour <= 2.25) return "2:00";
+  if (hour <= 2.75) return "2:30";
+  if (hour <= 3.25) return "3:00";
+  if (hour <= 3.75) return "3:30";
+  if (hour <= 4.25) return "4:00";
+  if (hour <= 4.75) return "4:30";
+  if (hour <= 5.25) return "5:00";
+  if (hour <= 5.75) return "5:30";
+  return "6:00";
+}
+
 export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
   const [inputMode, setInputMode] = useState<InputMode>("grams");
   const [tapeRate, setTapeRate] = useState(1); // g per inch
 
-  // Each placement has its own grams-per-side value (0 = inactive)
+  // Strip mode: per-position grams
   const [placementGrams, setPlacementGrams] = useState<Record<PlacementKey, number>>({
     "12": 0,
     "1&11": 0,
@@ -41,29 +60,48 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
     "4&8": 0,
     "5&7": 0,
   });
+
+  // Tape mode: start/end arc + paired toggle
+  const [tapeStartDeg, setTapeStartDeg] = useState(60);  // 2 o'clock
+  const [tapeEndDeg, setTapeEndDeg] = useState(120);      // 4 o'clock
+  const [tapePaired, setTapePaired] = useState(true);
+
   const [capGrams, setCapGrams] = useState(0);
 
+  // Strip mode: build placements
   const activePlacements: PlacementGrams[] = useMemo(
     () =>
       PLACEMENT_KEYS.filter((k) => placementGrams[k] > 0).map((k) => ({
         position: k,
         gramsPerSide: placementGrams[k],
-        isTape: inputMode === "tape",
-        tapeRate: tapeRate,
       })),
-    [placementGrams, inputMode, tapeRate]
+    [placementGrams]
+  );
+
+  // Tape mode: build arc
+  const tapeArc: TapeArc = useMemo(
+    () => ({ startDeg: tapeStartDeg, endDeg: tapeEndDeg, tapeRate, paired: tapePaired }),
+    [tapeStartDeg, tapeEndDeg, tapeRate, tapePaired]
   );
 
   const calculation = useMemo(
     () =>
-      calculateLeadTape(
-        selectedPaddle.swing_weight,
-        selectedPaddle.twist_weight,
-        selectedPaddle.weight_oz,
-        activePlacements,
-        capGrams
-      ),
-    [selectedPaddle, activePlacements, capGrams]
+      inputMode === "tape"
+        ? calculateTapeArcFull(
+            selectedPaddle.swing_weight,
+            selectedPaddle.twist_weight,
+            selectedPaddle.weight_oz,
+            tapeArc,
+            capGrams
+          )
+        : calculateLeadTape(
+            selectedPaddle.swing_weight,
+            selectedPaddle.twist_weight,
+            selectedPaddle.weight_oz,
+            activePlacements,
+            capGrams
+          ),
+    [selectedPaddle, inputMode, activePlacements, tapeArc, capGrams]
   );
 
   const setGrams = useCallback((key: PlacementKey, value: number) => {
@@ -124,8 +162,8 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
         </div>
       </div>
 
-      {/* Quick Presets */}
-      <div className="space-y-2">
+      {/* Quick Presets (strip mode only) */}
+      {inputMode === "grams" && <div className="space-y-2">
         <label className="text-sm font-medium text-muted-foreground">Quick Presets</label>
         <div className="flex flex-wrap gap-2">
           {PRESETS.map((preset) => (
@@ -149,134 +187,178 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
             Clear All
           </Button>
         </div>
-      </div>
+      </div>}
 
       {/* Placement Controls + Diagram + Results */}
       <div className="grid md:grid-cols-[1fr_auto_1fr] gap-6">
-        {/* Left: Placement gram sliders */}
+        {/* Left: Controls */}
         <div className="space-y-3 order-2 md:order-1">
           <label className="font-medium">Head Placements</label>
 
           {/* Input mode toggle */}
-          <div className="flex items-center gap-2">
-            <div className="flex bg-muted rounded-lg p-0.5 text-sm">
-              {(["grams", "tape"] as const).map((mode) => (
-                <button
-                  key={mode}
-                  onClick={() => {
-                    if (mode !== inputMode) {
-                      // Reset placements when switching modes
-                      setPlacementGrams({ "12": 0, "1&11": 0, "2&10": 0, "3&9": 0, "4&8": 0, "5&7": 0 });
-                      setCapGrams(0);
-                      setInputMode(mode);
-                    }
-                  }}
-                  className={`px-3 py-1 rounded-md font-medium transition-all ${
-                    inputMode === mode
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {mode === "grams" ? "Strips (g)" : "Tape (inches)"}
-                </button>
-              ))}
-            </div>
-            {inputMode === "tape" && (
-              <select
-                value={tapeRate}
-                onChange={(e) => {
-                  const newRate = parseFloat(e.target.value);
-                  // Convert existing placements to new rate
-                  const oldRate = tapeRate;
-                  if (oldRate !== newRate) {
-                    setPlacementGrams((prev) => {
-                      const updated = { ...prev };
-                      for (const key of PLACEMENT_KEYS) {
-                        if (prev[key] > 0) {
-                          const inches = prev[key] / oldRate;
-                          updated[key] = parseFloat((inches * newRate).toFixed(2));
-                        }
-                      }
-                      return updated;
-                    });
+          <div className="flex bg-muted rounded-lg p-0.5 text-sm w-fit">
+            {(["grams", "tape"] as const).map((mode) => (
+              <button
+                key={mode}
+                onClick={() => {
+                  if (mode !== inputMode) {
+                    setPlacementGrams({ "12": 0, "1&11": 0, "2&10": 0, "3&9": 0, "4&8": 0, "5&7": 0 });
+                    setCapGrams(0);
+                    setInputMode(mode);
                   }
-                  setTapeRate(newRate);
                 }}
-                className="px-2 py-1 text-sm border rounded-md bg-background"
-              >
-                {TAPE_WEIGHTS.map((tw) => (
-                  <option key={tw.rate} value={tw.rate}>{tw.label}</option>
-                ))}
-              </select>
-            )}
-          </div>
-
-          <p className="text-xs text-muted-foreground">
-            {inputMode === "grams"
-              ? "Set grams per side for each position. Paired positions apply equal weight to both sides."
-              : "Set inches of tape per side. Weight is calculated from your tape's g/inch rate."}
-          </p>
-
-          {PLACEMENT_KEYS.map((key) => {
-            const spec = PLACEMENTS[key];
-            const grams = placementGrams[key];
-            const isActive = grams > 0;
-            const totalAtPosition = spec.paired ? grams * 2 : grams;
-
-            // Tape mode: display in inches, slider in inches
-            const inches = tapeRate > 0 ? grams / tapeRate : 0;
-            const totalInches = spec.paired ? inches * 2 : inches;
-
-            return (
-              <div
-                key={key}
-                className={`rounded-lg border p-3 transition-all ${
-                  isActive ? "border-primary bg-primary/5" : "border-border"
+                className={`px-3 py-1 rounded-md font-medium transition-all ${
+                  inputMode === mode
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                <div className="flex justify-between items-center mb-1 gap-2">
-                  <div className="min-w-0">
-                    <span className="font-medium text-sm">{spec.label}</span>
-                    <span className="text-[10px] text-muted-foreground ml-1 sm:ml-2 hidden sm:inline">
-                      {spec.swPerGram} SW &middot; {spec.twPerGram} TW /g
-                    </span>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <span className="font-bold text-primary text-sm">
-                      {grams > 0
-                        ? inputMode === "tape"
-                          ? spec.paired
-                            ? `${inches.toFixed(1)}″/side (${totalAtPosition.toFixed(1)}g)`
-                            : `${inches.toFixed(1)}″ (${grams.toFixed(1)}g)`
-                          : spec.paired
-                            ? `${grams}g/side (${totalAtPosition}g)`
-                            : `${grams}g`
-                        : "off"}
-                    </span>
-                  </div>
-                </div>
-                {inputMode === "grams" ? (
-                  <Slider
-                    min={0}
-                    max={8}
-                    step={0.5}
-                    value={[grams]}
-                    onValueChange={([val]) => setGrams(key, val)}
-                  />
-                ) : (
-                  <Slider
-                    min={0}
-                    max={6}
-                    step={0.5}
-                    value={[parseFloat(inches.toFixed(1))]}
-                    onValueChange={([val]) => setGrams(key, parseFloat((val * tapeRate).toFixed(2)))}
-                  />
-                )}
-              </div>
-            );
-          })}
+                {mode === "grams" ? "Strips (g)" : "Tape (inches)"}
+              </button>
+            ))}
+          </div>
 
-          {/* Cap Weight */}
+          {/* ── STRIP MODE ── */}
+          {inputMode === "grams" && (
+            <>
+              <p className="text-xs text-muted-foreground">
+                Set grams per side for each position. Paired positions apply equal weight to both sides.
+              </p>
+
+              {PLACEMENT_KEYS.map((key) => {
+                const spec = PLACEMENTS[key];
+                const grams = placementGrams[key];
+                const isActive = grams > 0;
+                const totalAtPosition = spec.paired ? grams * 2 : grams;
+
+                return (
+                  <div
+                    key={key}
+                    className={`rounded-lg border p-3 transition-all ${
+                      isActive ? "border-primary bg-primary/5" : "border-border"
+                    }`}
+                  >
+                    <div className="flex justify-between items-center mb-1 gap-2">
+                      <div className="min-w-0">
+                        <span className="font-medium text-sm">{spec.label}</span>
+                        <span className="text-[10px] text-muted-foreground ml-1 sm:ml-2 hidden sm:inline">
+                          {spec.swPerGram} SW &middot; {spec.twPerGram} TW /g
+                        </span>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <span className="font-bold text-primary text-sm">
+                          {grams > 0
+                            ? spec.paired
+                              ? `${grams}g/side (${totalAtPosition}g)`
+                              : `${grams}g`
+                            : "off"}
+                        </span>
+                      </div>
+                    </div>
+                    <Slider
+                      min={0}
+                      max={8}
+                      step={0.5}
+                      value={[grams]}
+                      onValueChange={([val]) => setGrams(key, val)}
+                    />
+                  </div>
+                );
+              })}
+            </>
+          )}
+
+          {/* ── TAPE MODE ── */}
+          {inputMode === "tape" && (
+            <>
+              <p className="text-xs text-muted-foreground">
+                Set where your tape starts and ends. Weight is calculated from tape length and density.
+              </p>
+
+              {/* Tape weight selector */}
+              <div className="rounded-lg border p-3">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="font-medium text-sm">Tape weight</span>
+                </div>
+                <select
+                  value={tapeRate}
+                  onChange={(e) => setTapeRate(parseFloat(e.target.value))}
+                  className="w-full px-2 py-1.5 text-sm border rounded-md bg-background"
+                >
+                  {TAPE_WEIGHTS.map((tw) => (
+                    <option key={tw.rate} value={tw.rate}>{tw.label}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Start position */}
+              <div className="rounded-lg border p-3 border-primary bg-primary/5">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="font-medium text-sm">Start position</span>
+                  <span className="font-bold text-primary text-sm">{degToClockDisplay(tapeStartDeg)}</span>
+                </div>
+                <Slider
+                  min={0}
+                  max={150}
+                  step={15}
+                  value={[tapeStartDeg]}
+                  onValueChange={([val]) => {
+                    setTapeStartDeg(val);
+                    if (val >= tapeEndDeg) setTapeEndDeg(Math.min(180, val + 15));
+                  }}
+                />
+                <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
+                  <span>12</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                </div>
+              </div>
+
+              {/* End position */}
+              <div className="rounded-lg border p-3 border-primary bg-primary/5">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="font-medium text-sm">End position</span>
+                  <span className="font-bold text-primary text-sm">{degToClockDisplay(tapeEndDeg)}</span>
+                </div>
+                <Slider
+                  min={15}
+                  max={180}
+                  step={15}
+                  value={[tapeEndDeg]}
+                  onValueChange={([val]) => {
+                    setTapeEndDeg(val);
+                    if (val <= tapeStartDeg) setTapeStartDeg(Math.max(0, val - 15));
+                  }}
+                />
+                <div className="flex justify-between text-[10px] text-muted-foreground mt-1">
+                  <span>12:30</span><span>1:30</span><span>2:30</span><span>3:30</span><span>4:30</span><span>5:30</span><span>6</span>
+                </div>
+              </div>
+
+              {/* Both sides toggle */}
+              <label className="flex items-center gap-2 rounded-lg border p-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={tapePaired}
+                  onChange={(e) => setTapePaired(e.target.checked)}
+                  className="rounded border-muted-foreground"
+                />
+                <span className="text-sm font-medium">Apply to both sides</span>
+                <span className="text-xs text-muted-foreground ml-auto">
+                  {tapePaired ? "2 strips" : "1 strip"}
+                </span>
+              </label>
+
+              {/* Summary */}
+              {tapeEndDeg > tapeStartDeg && (
+                <div className="text-sm text-muted-foreground bg-muted rounded-lg p-3">
+                  {((tapeEndDeg - tapeStartDeg) * (12/180)).toFixed(1)}″ per side
+                  &middot; {((tapeEndDeg - tapeStartDeg) * (12/180) * tapeRate).toFixed(1)}g per side
+                  &middot; {((tapeEndDeg - tapeStartDeg) * (12/180) * tapeRate * (tapePaired ? 2 : 1)).toFixed(1)}g total
+                </div>
+              )}
+            </>
+          )}
+
+          {/* Cap Weight (both modes) */}
           <div
             className={`rounded-lg border p-3 transition-all ${
               capGrams > 0 ? "border-primary bg-primary/5" : "border-border"
@@ -314,6 +396,9 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
             resultTW={calculation.resultingTwistWeight}
             inputMode={inputMode}
             tapeRate={tapeRate}
+            tapeStartDeg={tapeStartDeg}
+            tapeEndDeg={tapeEndDeg}
+            tapePaired={tapePaired}
           />
         </div>
 
@@ -518,28 +603,9 @@ function edgePt(absA: number, sign: number, cx: number, rx: number, ry: number, 
   return { x: px, y: py };
 }
 
-/** Degrees per inch of edge for arc calculations. ~12" from 12→6 o'clock = 180° */
-const DEGREES_PER_INCH = 180 / 12;
-
-/** Center angle for each clock position */
-const POSITION_ANGLES: Record<PlacementKey, number> = {
-  "12": 0, "1&11": 30, "2&10": 60, "3&9": 90, "4&8": 120, "5&7": 150,
-};
-
-/** Clock label for a given angle */
-function angleToClockLabel(deg: number): string {
-  if (deg <= 5) return "12";
-  if (deg <= 20) return "12";
-  if (deg <= 45) return "1";
-  if (deg <= 75) return "2";
-  if (deg <= 105) return "3";
-  if (deg <= 135) return "4";
-  if (deg <= 165) return "5";
-  return "6";
-}
-
 function PaddleDiagram({
   placementGrams, capGrams, shape, baseTW, resultTW, inputMode, tapeRate,
+  tapeStartDeg, tapeEndDeg, tapePaired,
 }: {
   placementGrams: Record<PlacementKey, number>;
   capGrams: number;
@@ -549,6 +615,9 @@ function PaddleDiagram({
   resultTW: number;
   inputMode: InputMode;
   tapeRate: number;
+  tapeStartDeg: number;
+  tapeEndDeg: number;
+  tapePaired: boolean;
 }) {
   const dims = (shape && SHAPE_DIMS[shape]) || SHAPE_DIMS.Standard;
   const cx = 60;
@@ -578,32 +647,33 @@ function PaddleDiagram({
     "3&9": Math.PI/2, "4&8": Math.PI*2/3, "5&7": Math.PI*5/6,
   };
 
-  // Calculate directional sweet spot growth from the actual weight distribution
+  // Calculate directional sweet spot growth from actual weight distribution
   let lateralGain = 0;  // from weight at sides
   let verticalGain = 0; // from weight at top/bottom
-  for (const key of PLACEMENT_KEYS) {
-    const g = placementGrams[key];
-    if (g <= 0) continue;
-    const spec = PLACEMENTS[key];
-    const totalG = spec.paired ? g * 2 : g;
-    const θ = POSITION_ANGLE_RAD[key];
 
-    // For tape mode, the distribution is already handled in the calculation,
-    // but for sweet spot visualization we use the actual placement positions
-    // since that's where the physical mass sits on the paddle face.
-    if (inputMode === "tape" && tapeRate > 0) {
-      // Tape spreads — distribute contribution across the arc
-      const inchesPerSide = g / tapeRate;
-      const halfArcRad = (inchesPerSide / 2) * (Math.PI / 12); // ~180°/12" per side
-      const steps = 8;
-      for (let i = 0; i <= steps; i++) {
-        const sampleθ = Math.max(0, θ - halfArcRad + (2 * halfArcRad * i / steps));
-        const weight = totalG / (steps + 1);
-        lateralGain += weight * Math.sin(sampleθ) * Math.sin(sampleθ);
-        verticalGain += weight * Math.cos(sampleθ) * Math.cos(sampleθ);
-      }
-    } else {
-      // Strip: concentrated at position
+  if (inputMode === "tape" && tapeEndDeg > tapeStartDeg) {
+    // Tape mode: sample along the arc
+    const arcDeg = tapeEndDeg - tapeStartDeg;
+    const inchesPerSide = arcDeg * (12 / 180);
+    const gramsPerSide = inchesPerSide * tapeRate;
+    const sides = tapePaired ? 2 : 1;
+    const totalG = gramsPerSide * sides;
+    const steps = 12;
+    for (let i = 0; i <= steps; i++) {
+      const deg = tapeStartDeg + (arcDeg * i / steps);
+      const θ = (deg * Math.PI) / 180;
+      const weight = totalG / (steps + 1);
+      lateralGain += weight * Math.sin(θ) * Math.sin(θ);
+      verticalGain += weight * Math.cos(θ) * Math.cos(θ);
+    }
+  } else {
+    // Strip mode: concentrated at positions
+    for (const key of PLACEMENT_KEYS) {
+      const g = placementGrams[key];
+      if (g <= 0) continue;
+      const spec = PLACEMENTS[key];
+      const totalG = spec.paired ? g * 2 : g;
+      const θ = POSITION_ANGLE_RAD[key];
       lateralGain += totalG * Math.sin(θ) * Math.sin(θ);
       verticalGain += totalG * Math.cos(θ) * Math.cos(θ);
     }
@@ -684,64 +754,57 @@ function PaddleDiagram({
       {/* Butt cap */}
       <rect x={cx-hw-1} y={handleBot-1} width={hw*2+2} height="4" rx="2" fill="#1f2937"/>
 
-      {/* Tape/strip visualization */}
-      {PLACEMENT_KEYS.map(key => {
+      {/* Tape arc visualization (tape mode) */}
+      {inputMode === "tape" && tapeEndDeg > tapeStartDeg && (() => {
+        const color = TAPE_COLORS[0];
+        const steps = Math.max(12, Math.round((tapeEndDeg - tapeStartDeg) / 3));
+
+        const buildArcPath = (sign: number) => {
+          const outerPts: string[] = [];
+          const innerPts: string[] = [];
+          for (let i = 0; i <= steps; i++) {
+            const deg = tapeStartDeg + (tapeEndDeg - tapeStartDeg) * (i / steps);
+            const outer = edgePt(deg, sign, cx, rx, ry, faceCY);
+            const inner = edgePt(deg, sign, cx, rx * 0.88, ry * 0.92, faceCY);
+            outerPts.push(`${outer.x.toFixed(1)},${outer.y.toFixed(1)}`);
+            innerPts.unshift(`${inner.x.toFixed(1)},${inner.y.toFixed(1)}`);
+          }
+          return `M${outerPts[0]} L${outerPts.join(" L")} L${innerPts.join(" L")} Z`;
+        };
+
+        // Start/end markers
+        const startPt = edgePt(tapeStartDeg, 1, cx, rx, ry, faceCY);
+        const endPt = edgePt(tapeEndDeg, 1, cx, rx, ry, faceCY);
+        const midDeg = (tapeStartDeg + tapeEndDeg) / 2;
+        const midPt = edgePt(midDeg, 1, cx, rx * 0.72, ry * 0.75, faceCY);
+        const inchesPerSide = ((tapeEndDeg - tapeStartDeg) * 12 / 180);
+
+        return (
+          <g>
+            {/* Right side arc */}
+            <path d={buildArcPath(1)} fill={color} opacity={0.7} />
+            {/* Left side arc (if paired) */}
+            {tapePaired && <path d={buildArcPath(-1)} fill={color} opacity={0.7} />}
+
+            {/* Start dot */}
+            <circle cx={startPt.x} cy={startPt.y} r="2" fill="#fff" stroke={color} strokeWidth="1" />
+            {/* End dot */}
+            <circle cx={endPt.x} cy={endPt.y} r="2" fill="#fff" stroke={color} strokeWidth="1" />
+
+            {/* Label at midpoint */}
+            <text x={midPt.x + 3} y={midPt.y} fontSize="4.5" fontWeight="700" fill={color}>
+              {inchesPerSide.toFixed(1)}″
+            </text>
+          </g>
+        );
+      })()}
+
+      {/* Strip visualization (strip mode) */}
+      {inputMode === "grams" && PLACEMENT_KEYS.map(key => {
         const grams = placementGrams[key];
         if (grams <= 0) return null;
         const spec = PLACEMENTS[key];
         const color = colorMap.get(key) || TAPE_COLORS[0];
-
-        if (inputMode === "tape" && tapeRate > 0) {
-          // Tape mode: draw continuous arc along paddle edge
-          const inchesPerSide = grams / tapeRate;
-          const halfArcDeg = (inchesPerSide / 2) * DEGREES_PER_INCH;
-          const centerDeg = POSITION_ANGLES[key];
-          const startDeg = Math.max(0, centerDeg - halfArcDeg);
-          const endDeg = Math.min(180, centerDeg + halfArcDeg);
-
-          // Generate points along the edge for each side
-          const steps = Math.max(8, Math.round((endDeg - startDeg) / 3));
-          const buildArcPath = (sign: number) => {
-            const outerPts: string[] = [];
-            const innerPts: string[] = [];
-            for (let i = 0; i <= steps; i++) {
-              const deg = startDeg + (endDeg - startDeg) * (i / steps);
-              const outer = edgePt(deg, sign, cx, rx, ry, faceCY);
-              // Inner edge: slightly inset from paddle edge
-              const inner = edgePt(deg, sign, cx, rx * 0.88, ry * 0.92, faceCY);
-              outerPts.push(`${outer.x.toFixed(1)},${outer.y.toFixed(1)}`);
-              innerPts.unshift(`${inner.x.toFixed(1)},${inner.y.toFixed(1)}`);
-            }
-            return `M${outerPts[0]} L${outerPts.join(" L")} L${innerPts.join(" L")} Z`;
-          };
-
-          // Clock labels for the arc range
-          const startLabel = angleToClockLabel(startDeg);
-          const endLabel = angleToClockLabel(endDeg);
-          const rangeLabel = spec.paired
-            ? `${startLabel}-${endLabel}`
-            : `${startLabel}-${endLabel}`;
-
-          // Text position: at center of arc
-          const textPt = edgePt(centerDeg, 1, cx, rx * 0.75, ry * 0.78, faceCY);
-
-          return (
-            <g key={key}>
-              {/* Right side */}
-              <path d={buildArcPath(1)} fill={color} opacity={0.7} />
-              {/* Left side (for paired positions) */}
-              {spec.paired && <path d={buildArcPath(-1)} fill={color} opacity={0.7} />}
-              {/* Non-paired (12 o'clock): single centered arc */}
-              {!spec.paired && <path d={buildArcPath(-1)} fill={color} opacity={0.7} />}
-              {/* Label */}
-              <text x={textPt.x + 2} y={textPt.y} fontSize="4.5" fontWeight="700" fill={color}>
-                {inchesPerSide.toFixed(1)}″
-              </text>
-            </g>
-          );
-        }
-
-        // Strip mode: discrete rectangles at positions
         const angles = TAPE_ANGLES[key];
         const sLen = Math.min(6 + grams * 2, 16);
         const sW = Math.min(2 + grams * 0.4, 5);
