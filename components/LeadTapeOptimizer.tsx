@@ -491,6 +491,58 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
         </div>
       </div>
 
+      {/* Impact metrics */}
+      {calculation.totalGrams > 0 && (() => {
+        const swPct = selectedPaddle.swing_weight > 0
+          ? ((calculation.resultingSwingWeight - selectedPaddle.swing_weight) / selectedPaddle.swing_weight * 100)
+          : 0;
+        const twPct = selectedPaddle.twist_weight > 0
+          ? ((calculation.resultingTwistWeight - selectedPaddle.twist_weight) / selectedPaddle.twist_weight * 100)
+          : 0;
+        const weightPct = selectedPaddle.weight_oz > 0
+          ? ((calculation.resultingWeightOz - selectedPaddle.weight_oz) / selectedPaddle.weight_oz * 100)
+          : 0;
+
+        // Sweet spot: lateral expansion from TW increase (sqrt scaling)
+        const ssLateralPct = selectedPaddle.twist_weight > 0
+          ? (Math.sqrt(calculation.resultingTwistWeight / selectedPaddle.twist_weight) - 1) * 100
+          : 0;
+
+        // Plow-through / power: proportional to SW
+        const plowPct = swPct;
+
+        // Stability: proportional to TW
+        const stabilityPct = twPct;
+
+        const metrics = [
+          { label: "Sweet Spot", value: ssLateralPct, icon: "◎", desc: "Effective hitting area" },
+          { label: "Stability", value: stabilityPct, icon: "◆", desc: "Off-center forgiveness" },
+          { label: "Plow-Through", value: plowPct, icon: "▶", desc: "Power on drives" },
+          { label: "Weight", value: weightPct, icon: "●", desc: "Total paddle weight" },
+        ];
+
+        return (
+          <div className="border rounded-lg p-4">
+            <label className="font-medium text-sm">Impact</label>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3">
+              {metrics.map((m) => (
+                <div key={m.label} className="text-center">
+                  <div className={`text-lg sm:text-xl font-black ${
+                    m.label === "Weight"
+                      ? m.value > 5 ? "text-orange-500" : "text-muted-foreground"
+                      : m.value > 0 ? "text-primary" : "text-muted-foreground"
+                  }`}>
+                    {m.value > 0 ? "+" : ""}{m.value.toFixed(1)}%
+                  </div>
+                  <div className="text-xs font-medium mt-0.5">{m.label}</div>
+                  <div className="text-[10px] text-muted-foreground">{m.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Explanation */}
       {calculation.totalGrams > 0 && (
         <p className="text-sm text-muted-foreground bg-muted rounded-lg p-4">
