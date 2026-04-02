@@ -3,7 +3,7 @@
 import { PaddleScore } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal, ShoppingCart } from "lucide-react";
 
 interface PaddleCardProps {
   paddle: PaddleScore;
@@ -84,12 +84,22 @@ export function PaddleCard({ paddle, rank, onSelect, showSelectButton, currency 
         <p className="text-sm text-muted-foreground">{paddle.reason}</p>
 
         {/* Actions */}
-        {showSelectButton && onSelect && (
-          <Button variant="outline" onClick={() => onSelect(paddle)} className="gap-1.5 w-full">
-            <SlidersHorizontal className="w-3.5 h-3.5" />
-            Optimize
-          </Button>
-        )}
+        <div className="flex gap-2">
+          {paddle.affiliateLink && paddle.affiliateLink !== "#" && (
+            <Button asChild className="gap-1.5 flex-1">
+              <a href={paddle.affiliateLink} target="_blank" rel="noopener noreferrer">
+                <ShoppingCart className="w-3.5 h-3.5" />
+                Buy Now
+              </a>
+            </Button>
+          )}
+          {showSelectButton && onSelect && (
+            <Button variant="outline" onClick={() => onSelect(paddle)} className="gap-1.5 flex-1">
+              <SlidersHorizontal className="w-3.5 h-3.5" />
+              Optimize
+            </Button>
+          )}
+        </div>
       </CardContent>
     </Card>
   );

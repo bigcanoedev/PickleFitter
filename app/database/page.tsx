@@ -4,13 +4,10 @@ import { useState, useMemo } from "react";
 import { Paddle, PaddleScore } from "@/lib/types";
 import { paddleData } from "@/lib/paddle-data";
 import { PaddleRankings } from "@/components/PaddleRankings";
+import { selectBestLink } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-
-function selectBestLink(paddle: Paddle): string {
-  return paddle.purchase_link || paddle.generic_affiliate_link || paddle.amazon_link || "#";
-}
 
 export default function DatabasePage() {
   const allPaddles: PaddleScore[] = useMemo(() => {

@@ -2,8 +2,8 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Search } from "lucide-react";
-import { paddleSlug } from "@/lib/utils";
+import { Search, ExternalLink } from "lucide-react";
+import { paddleSlug, selectBestLink } from "@/lib/utils";
 import { PaddleScore } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 
@@ -174,6 +174,7 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
               <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("pop_mph")}`} onClick={() => toggleSort("pop_mph")}>Pop</th>
               <th className={`text-right px-3 py-2 font-medium cursor-pointer hover:text-primary ${sortClass("spin_rpm")}`} onClick={() => toggleSort("spin_rpm")}>Spin</th>
               <th className="text-center px-3 py-2 font-medium">Shape</th>
+              <th className="px-3 py-2 font-medium w-20"></th>
               {onSelectPaddle && <th className="px-3 py-2 font-medium w-20"></th>}
             </tr>
           </thead>
@@ -222,6 +223,18 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
                   </td>
                   <td className="text-center px-3 py-2">
                     <span className="text-xs">{paddle.shape || "—"}</span>
+                  </td>
+                  <td className="px-3 py-2">
+                    {selectBestLink(paddle) && (
+                      <a
+                        href={selectBestLink(paddle)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs text-primary hover:underline font-medium"
+                      >
+                        Buy <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
                   </td>
                   {onSelectPaddle && (
                     <td className="px-3 py-2">
