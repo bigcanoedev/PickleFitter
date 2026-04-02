@@ -312,6 +312,8 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
             paddleName={selectedPaddle.name}
             baseTW={selectedPaddle.twist_weight}
             resultTW={calculation.resultingTwistWeight}
+            inputMode={inputMode}
+            tapeRate={tapeRate}
           />
         </div>
 
@@ -516,8 +518,28 @@ function edgePt(absA: number, sign: number, cx: number, rx: number, ry: number, 
   return { x: px, y: py };
 }
 
+/** Degrees per inch of edge for arc calculations. ~12" from 12→6 o'clock = 180° */
+const DEGREES_PER_INCH = 180 / 12;
+
+/** Center angle for each clock position */
+const POSITION_ANGLES: Record<PlacementKey, number> = {
+  "12": 0, "1&11": 30, "2&10": 60, "3&9": 90, "4&8": 120, "5&7": 150,
+};
+
+/** Clock label for a given angle */
+function angleToClockLabel(deg: number): string {
+  if (deg <= 5) return "12";
+  if (deg <= 20) return "12";
+  if (deg <= 45) return "1";
+  if (deg <= 75) return "2";
+  if (deg <= 105) return "3";
+  if (deg <= 135) return "4";
+  if (deg <= 165) return "5";
+  return "6";
+}
+
 function PaddleDiagram({
-  placementGrams, capGrams, shape, baseTW, resultTW,
+  placementGrams, capGrams, shape, baseTW, resultTW, inputMode, tapeRate,
 }: {
   placementGrams: Record<PlacementKey, number>;
   capGrams: number;
@@ -525,6 +547,8 @@ function PaddleDiagram({
   paddleName: string;
   baseTW: number;
   resultTW: number;
+  inputMode: InputMode;
+  tapeRate: number;
 }) {
   const dims = (shape && SHAPE_DIMS[shape]) || SHAPE_DIMS.Standard;
   const cx = 60;
@@ -607,13 +631,65 @@ function PaddleDiagram({
       {/* Butt cap */}
       <rect x={cx-hw-1} y={handleBot-1} width={hw*2+2} height="4" rx="2" fill="#1f2937"/>
 
-      {/* Tape strips */}
+      {/* Tape/strip visualization */}
       {PLACEMENT_KEYS.map(key => {
         const grams = placementGrams[key];
         if (grams <= 0) return null;
-        const angles = TAPE_ANGLES[key];
         const spec = PLACEMENTS[key];
         const color = colorMap.get(key) || TAPE_COLORS[0];
+
+        if (inputMode === "tape" && tapeRate > 0) {
+          // Tape mode: draw continuous arc along paddle edge
+          const inchesPerSide = grams / tapeRate;
+          const halfArcDeg = (inchesPerSide / 2) * DEGREES_PER_INCH;
+          const centerDeg = POSITION_ANGLES[key];
+          const startDeg = Math.max(0, centerDeg - halfArcDeg);
+          const endDeg = Math.min(180, centerDeg + halfArcDeg);
+
+          // Generate points along the edge for each side
+          const steps = Math.max(8, Math.round((endDeg - startDeg) / 3));
+          const buildArcPath = (sign: number) => {
+            const outerPts: string[] = [];
+            const innerPts: string[] = [];
+            for (let i = 0; i <= steps; i++) {
+              const deg = startDeg + (endDeg - startDeg) * (i / steps);
+              const outer = edgePt(deg, sign, cx, rx, ry, faceCY);
+              // Inner edge: slightly inset from paddle edge
+              const inner = edgePt(deg, sign, cx, rx * 0.88, ry * 0.92, faceCY);
+              outerPts.push(`${outer.x.toFixed(1)},${outer.y.toFixed(1)}`);
+              innerPts.unshift(`${inner.x.toFixed(1)},${inner.y.toFixed(1)}`);
+            }
+            return `M${outerPts[0]} L${outerPts.join(" L")} L${innerPts.join(" L")} Z`;
+          };
+
+          // Clock labels for the arc range
+          const startLabel = angleToClockLabel(startDeg);
+          const endLabel = angleToClockLabel(endDeg);
+          const rangeLabel = spec.paired
+            ? `${startLabel}-${endLabel}`
+            : `${startLabel}-${endLabel}`;
+
+          // Text position: at center of arc
+          const textPt = edgePt(centerDeg, 1, cx, rx * 0.75, ry * 0.78, faceCY);
+
+          return (
+            <g key={key}>
+              {/* Right side */}
+              <path d={buildArcPath(1)} fill={color} opacity={0.7} />
+              {/* Left side (for paired positions) */}
+              {spec.paired && <path d={buildArcPath(-1)} fill={color} opacity={0.7} />}
+              {/* Non-paired (12 o'clock): single centered arc */}
+              {!spec.paired && <path d={buildArcPath(-1)} fill={color} opacity={0.7} />}
+              {/* Label */}
+              <text x={textPt.x + 2} y={textPt.y} fontSize="4.5" fontWeight="700" fill={color}>
+                {inchesPerSide.toFixed(1)}″
+              </text>
+            </g>
+          );
+        }
+
+        // Strip mode: discrete rectangles at positions
+        const angles = TAPE_ANGLES[key];
         const sLen = Math.min(6 + grams * 2, 16);
         const sW = Math.min(2 + grams * 0.4, 5);
 
