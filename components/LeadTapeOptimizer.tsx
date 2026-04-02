@@ -94,18 +94,18 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
             </span>
           )}
         </div>
-        <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center text-sm">
-          <div className="bg-background rounded-lg p-2">
-            <div className="text-xs text-muted-foreground">Swing Weight</div>
-            <div className="text-lg font-bold">{selectedPaddle.swing_weight}</div>
+        <div className="grid grid-cols-3 gap-1.5 sm:gap-3 text-center text-sm">
+          <div className="bg-background rounded-lg p-1.5 sm:p-2">
+            <div className="text-[10px] sm:text-xs text-muted-foreground">Swing Wt</div>
+            <div className="text-base sm:text-lg font-bold">{selectedPaddle.swing_weight}</div>
           </div>
-          <div className="bg-background rounded-lg p-2">
-            <div className="text-xs text-muted-foreground">Twist Weight</div>
-            <div className="text-lg font-bold">{selectedPaddle.twist_weight}</div>
+          <div className="bg-background rounded-lg p-1.5 sm:p-2">
+            <div className="text-[10px] sm:text-xs text-muted-foreground">Twist Wt</div>
+            <div className="text-base sm:text-lg font-bold">{selectedPaddle.twist_weight}</div>
           </div>
-          <div className="bg-background rounded-lg p-2">
-            <div className="text-xs text-muted-foreground">Weight</div>
-            <div className="text-lg font-bold">{parseFloat(selectedPaddle.weight_oz.toFixed(1))} oz</div>
+          <div className="bg-background rounded-lg p-1.5 sm:p-2">
+            <div className="text-[10px] sm:text-xs text-muted-foreground">Weight</div>
+            <div className="text-base sm:text-lg font-bold">{parseFloat(selectedPaddle.weight_oz.toFixed(1))} oz</div>
           </div>
         </div>
       </div>
@@ -140,7 +140,7 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
       {/* Placement Controls + Diagram + Results */}
       <div className="grid md:grid-cols-[1fr_auto_1fr] gap-6">
         {/* Left: Placement gram sliders */}
-        <div className="space-y-3 order-1">
+        <div className="space-y-3 order-2 md:order-1">
           <label className="font-medium">Head Placements</label>
           <p className="text-xs text-muted-foreground mb-1">
             Set grams per side for each position. Paired positions apply equal weight to both sides.
@@ -159,14 +159,14 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
                   isActive ? "border-primary bg-primary/5" : "border-border"
                 }`}
               >
-                <div className="flex justify-between items-center mb-1">
-                  <div>
+                <div className="flex justify-between items-center mb-1 gap-2">
+                  <div className="min-w-0">
                     <span className="font-medium text-sm">{spec.label}</span>
-                    <span className="text-[10px] text-muted-foreground ml-2">
+                    <span className="text-[10px] text-muted-foreground ml-1 sm:ml-2 hidden sm:inline">
                       {spec.swPerGram} SW &middot; {spec.twPerGram} TW /g
                     </span>
                   </div>
-                  <div className="text-right">
+                  <div className="text-right shrink-0">
                     <span className="font-bold text-primary text-sm">
                       {grams > 0
                         ? spec.paired
@@ -215,7 +215,7 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
         </div>
 
         {/* Center: SVG Diagram */}
-        <div className="flex justify-center items-start pt-6 order-3 md:order-2">
+        <div className="flex justify-center items-start pt-2 md:pt-6 order-1 md:order-2">
           <PaddleDiagram
             placementGrams={placementGrams}
             capGrams={capGrams}
@@ -225,7 +225,7 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
         </div>
 
         {/* Right: Results */}
-        <div className="space-y-4 order-2 md:order-3">
+        <div className="space-y-4 order-3 md:order-3">
           <label className="font-medium">Resulting Specs</label>
 
           {/* 3-column summary */}
@@ -255,53 +255,54 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
 
           {/* Breakdown table */}
           {(calculation.placements.length > 0 || capGrams > 0) && (
-            <div className="border rounded-lg overflow-hidden text-sm">
+            <div className="border rounded-lg overflow-hidden text-xs sm:text-sm">
               <table className="w-full">
                 <thead className="bg-muted">
                   <tr>
-                    <th className="text-left px-3 py-2 font-medium">Position</th>
-                    <th className="text-right px-3 py-2 font-medium">Tape</th>
-                    <th className="text-right px-3 py-2 font-medium">+SW</th>
-                    <th className="text-right px-3 py-2 font-medium">+TW</th>
+                    <th className="text-left px-2 sm:px-3 py-2 font-medium">Position</th>
+                    <th className="text-right px-2 sm:px-3 py-2 font-medium">Tape</th>
+                    <th className="text-right px-2 sm:px-3 py-2 font-medium">+SW</th>
+                    <th className="text-right px-2 sm:px-3 py-2 font-medium">+TW</th>
                   </tr>
                 </thead>
                 <tbody>
                   {calculation.placements.map((p) => (
                     <tr key={p.position} className="border-t">
-                      <td className="px-3 py-1.5">{p.label}</td>
-                      <td className="text-right px-3 py-1.5 text-muted-foreground">
-                        {p.gramsPerSide}g/side ({p.grams}g)
+                      <td className="px-2 sm:px-3 py-1.5">{p.label}</td>
+                      <td className="text-right px-2 sm:px-3 py-1.5 text-muted-foreground whitespace-nowrap">
+                        <span className="hidden sm:inline">{p.gramsPerSide}g/side ({p.grams}g)</span>
+                        <span className="sm:hidden">{p.grams}g</span>
                       </td>
-                      <td className="text-right px-3 py-1.5 text-primary font-medium">
+                      <td className="text-right px-2 sm:px-3 py-1.5 text-primary font-medium">
                         +{p.swDelta}
                       </td>
-                      <td className="text-right px-3 py-1.5 text-primary font-medium">
+                      <td className="text-right px-2 sm:px-3 py-1.5 text-primary font-medium">
                         +{p.twDelta}
                       </td>
                     </tr>
                   ))}
                   {capGrams > 0 && (
                     <tr className="border-t">
-                      <td className="px-3 py-1.5">
-                        Cap weight
-                        <span className="text-[10px] text-muted-foreground ml-1">(balance &larr;)</span>
+                      <td className="px-2 sm:px-3 py-1.5">
+                        Cap
+                        <span className="hidden sm:inline"> weight</span>
                       </td>
-                      <td className="text-right px-3 py-1.5 text-muted-foreground">
+                      <td className="text-right px-2 sm:px-3 py-1.5 text-muted-foreground">
                         {capGrams}g
                       </td>
-                      <td className="text-right px-3 py-1.5 text-muted-foreground font-medium">
+                      <td className="text-right px-2 sm:px-3 py-1.5 text-muted-foreground font-medium">
                         +{(capGrams * 0.09).toFixed(1)}
                       </td>
-                      <td className="text-right px-3 py-1.5">0</td>
+                      <td className="text-right px-2 sm:px-3 py-1.5">0</td>
                     </tr>
                   )}
                   <tr className="border-t bg-muted font-medium">
-                    <td className="px-3 py-2">Total</td>
-                    <td className="text-right px-3 py-2">{calculation.totalGrams}g</td>
-                    <td className="text-right px-3 py-2 text-primary">
+                    <td className="px-2 sm:px-3 py-2">Total</td>
+                    <td className="text-right px-2 sm:px-3 py-2">{calculation.totalGrams}g</td>
+                    <td className="text-right px-2 sm:px-3 py-2 text-primary">
                       {swDelta > 0 ? "+" : ""}{swDelta}
                     </td>
-                    <td className="text-right px-3 py-2 text-primary">
+                    <td className="text-right px-2 sm:px-3 py-2 text-primary">
                       {twDelta > 0 ? "+" : ""}{twDelta}
                     </td>
                   </tr>
@@ -449,7 +450,7 @@ function PaddleDiagram({
   activeKeys.forEach((k, i) => colorMap.set(k, TAPE_COLORS[i % TAPE_COLORS.length]));
 
   return (
-    <svg width="150" height={svgH * 1.5} viewBox={`0 0 120 ${svgH}`}>
+    <svg className="w-[120px] sm:w-[150px]" viewBox={`0 0 120 ${svgH}`}>
       <defs>
         <radialGradient id="fg" cx="44%" cy="40%">
           <stop offset="0%" stopColor="#f8fafc" />
