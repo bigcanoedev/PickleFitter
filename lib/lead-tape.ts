@@ -115,6 +115,8 @@ export const PLACEMENT_KEYS: PlacementKey[] = ["12", "1&11", "2&10", "3&9", "4&8
 export interface PlacementGrams {
   position: PlacementKey;
   gramsPerSide: number;
+  isTape?: boolean;    // true = distributed tape, false/undefined = concentrated strip
+  tapeRate?: number;   // grams per inch (for tape mode display)
 }
 
 export const PRESETS: { label: string; placements: PlacementGrams[]; capGrams: number }[] = [
@@ -131,14 +133,102 @@ const GRAMS_PER_OZ = 28.3495;
  * since d is constant for a given position, the effect scales linearly
  * with mass. Thrive's measured data confirms this (3g vs 6g at 3&9 give
  * nearly identical per-gram rates). No taper or diminishing returns.
+ *
+ * For distributed tape: tape applied at a position spreads along the edge.
+ * We model this by distributing weight across adjacent positions based on
+ * how far the tape extends. A typical paddle has ~12 inches of edge per
+ * side from 12 o'clock to 6 o'clock, with ~2 inches between each clock
+ * position. Short tape (<2") stays within its position. Longer tape bleeds
+ * into neighbors, and each neighbor has its own SW/TW rates.
  */
 
 /** Realistic upper bound for twist weight — the highest in our 727-paddle database is 8.34 */
 export const MAX_REALISTIC_TW = 9.0;
 
 /**
- * Calculate resulting specs from user-specified grams at each position.
+ * Ordered positions from 12→6 with their angular midpoints (degrees from top).
+ * Used to distribute tape weight across adjacent zones.
+ */
+const POSITION_ORDER: PlacementKey[] = ["12", "1&11", "2&10", "3&9", "4&8", "5&7"];
+const INCHES_PER_ZONE = 2; // ~2 inches of edge between each clock position
+
+/**
+ * Distribute tape weight across positions based on tape length.
+ * Returns a map of position → grams at that position (for one side).
+ *
+ * For a strip (isTape=false): all grams go to the specified position.
+ * For tape (isTape=true): grams spread into adjacent positions proportionally.
+ */
+function distributeTapeWeight(
+  centerPosition: PlacementKey,
+  gramsPerSide: number,
+  isTape: boolean,
+  tapeRate: number,
+): Record<PlacementKey, number> {
+  const result: Record<PlacementKey, number> = { "12": 0, "1&11": 0, "2&10": 0, "3&9": 0, "4&8": 0, "5&7": 0 };
+
+  if (!isTape || tapeRate <= 0) {
+    // Strip mode: concentrated at position
+    result[centerPosition] = gramsPerSide;
+    return result;
+  }
+
+  // Tape mode: calculate inches and spread
+  const inchesPerSide = gramsPerSide / tapeRate;
+  const centerIdx = POSITION_ORDER.indexOf(centerPosition);
+
+  // How many inches extend in each direction from center
+  const halfInches = inchesPerSide / 2;
+
+  // Walk outward from center, filling zones proportionally
+  // Each zone is ~2 inches wide. Center zone gets filled first, then neighbors.
+  let remaining = inchesPerSide;
+  const zoneInches: Record<PlacementKey, number> = { "12": 0, "1&11": 0, "2&10": 0, "3&9": 0, "4&8": 0, "5&7": 0 };
+
+  // Fill center zone (up to INCHES_PER_ZONE)
+  const centerFill = Math.min(remaining, INCHES_PER_ZONE);
+  zoneInches[centerPosition] = centerFill;
+  remaining -= centerFill;
+
+  // Fill outward in both directions
+  let offset = 1;
+  while (remaining > 0.01 && offset < POSITION_ORDER.length) {
+    const perDirection = remaining / 2;
+
+    // Toward 12 o'clock
+    const upIdx = centerIdx - offset;
+    if (upIdx >= 0) {
+      const fill = Math.min(perDirection, INCHES_PER_ZONE);
+      zoneInches[POSITION_ORDER[upIdx]] += fill;
+      remaining -= fill;
+    }
+
+    // Toward 6 o'clock
+    const downIdx = centerIdx + offset;
+    if (downIdx < POSITION_ORDER.length) {
+      const fill = Math.min(Math.min(perDirection, INCHES_PER_ZONE), remaining);
+      zoneInches[POSITION_ORDER[downIdx]] += fill;
+      remaining -= fill;
+    }
+
+    offset++;
+  }
+
+  // Convert inches per zone to grams per zone
+  const totalInches = Object.values(zoneInches).reduce((a, b) => a + b, 0);
+  if (totalInches > 0) {
+    for (const key of PLACEMENT_KEYS) {
+      result[key] = (zoneInches[key] / totalInches) * gramsPerSide;
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Calculate resulting specs from user-specified weight at each position.
  * For paired positions, gramsPerSide means the weight on EACH side.
+ * Tape placements distribute weight across adjacent positions.
  */
 export function calculateLeadTape(
   currentSwingWeight: number,
@@ -154,13 +244,35 @@ export function calculateLeadTape(
     .map((p) => {
       const spec = PLACEMENTS[p.position];
       const totalGrams = spec.paired ? p.gramsPerSide * 2 : p.gramsPerSide;
+
+      // Distribute weight across positions (tape spreads, strips don't)
+      const distribution = distributeTapeWeight(
+        p.position,
+        p.gramsPerSide,
+        !!p.isTape,
+        p.tapeRate || 1,
+      );
+
+      // Calculate SW/TW deltas using distributed weights
+      let swDelta = 0;
+      let twDelta = 0;
+      for (const key of PLACEMENT_KEYS) {
+        const gAtPos = distribution[key];
+        if (gAtPos > 0) {
+          const posSpec = PLACEMENTS[key];
+          const posTotalG = spec.paired ? gAtPos * 2 : gAtPos;
+          swDelta += posTotalG * posSpec.swPerGram;
+          twDelta += posTotalG * posSpec.twPerGram;
+        }
+      }
+
       return {
         position: p.position,
         label: spec.label,
         gramsPerSide: p.gramsPerSide,
         grams: totalGrams,
-        swDelta: parseFloat((totalGrams * spec.swPerGram).toFixed(1)),
-        twDelta: parseFloat((totalGrams * spec.twPerGram).toFixed(2)),
+        swDelta: parseFloat(swDelta.toFixed(1)),
+        twDelta: parseFloat(twDelta.toFixed(2)),
       };
     });
 

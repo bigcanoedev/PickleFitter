@@ -19,7 +19,19 @@ interface LeadTapeOptimizerProps {
   selectedPaddle: PaddleScore;
 }
 
+type InputMode = "grams" | "tape";
+
+const TAPE_WEIGHTS = [
+  { label: '0.25 g/in (1/4" thin)', rate: 0.25 },
+  { label: '0.5 g/in (1/4" standard)', rate: 0.5 },
+  { label: '1 g/in (1/2" tungsten)', rate: 1 },
+  { label: '1.5 g/in (heavy tungsten)', rate: 1.5 },
+];
+
 export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
+  const [inputMode, setInputMode] = useState<InputMode>("grams");
+  const [tapeRate, setTapeRate] = useState(1); // g per inch
+
   // Each placement has its own grams-per-side value (0 = inactive)
   const [placementGrams, setPlacementGrams] = useState<Record<PlacementKey, number>>({
     "12": 0,
@@ -36,8 +48,10 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
       PLACEMENT_KEYS.filter((k) => placementGrams[k] > 0).map((k) => ({
         position: k,
         gramsPerSide: placementGrams[k],
+        isTape: inputMode === "tape",
+        tapeRate: tapeRate,
       })),
-    [placementGrams]
+    [placementGrams, inputMode, tapeRate]
   );
 
   const calculation = useMemo(
@@ -142,8 +156,65 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
         {/* Left: Placement gram sliders */}
         <div className="space-y-3 order-2 md:order-1">
           <label className="font-medium">Head Placements</label>
-          <p className="text-xs text-muted-foreground mb-1">
-            Set grams per side for each position. Paired positions apply equal weight to both sides.
+
+          {/* Input mode toggle */}
+          <div className="flex items-center gap-2">
+            <div className="flex bg-muted rounded-lg p-0.5 text-sm">
+              {(["grams", "tape"] as const).map((mode) => (
+                <button
+                  key={mode}
+                  onClick={() => {
+                    if (mode !== inputMode) {
+                      // Reset placements when switching modes
+                      setPlacementGrams({ "12": 0, "1&11": 0, "2&10": 0, "3&9": 0, "4&8": 0, "5&7": 0 });
+                      setCapGrams(0);
+                      setInputMode(mode);
+                    }
+                  }}
+                  className={`px-3 py-1 rounded-md font-medium transition-all ${
+                    inputMode === mode
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {mode === "grams" ? "Strips (g)" : "Tape (inches)"}
+                </button>
+              ))}
+            </div>
+            {inputMode === "tape" && (
+              <select
+                value={tapeRate}
+                onChange={(e) => {
+                  const newRate = parseFloat(e.target.value);
+                  // Convert existing placements to new rate
+                  const oldRate = tapeRate;
+                  if (oldRate !== newRate) {
+                    setPlacementGrams((prev) => {
+                      const updated = { ...prev };
+                      for (const key of PLACEMENT_KEYS) {
+                        if (prev[key] > 0) {
+                          const inches = prev[key] / oldRate;
+                          updated[key] = parseFloat((inches * newRate).toFixed(2));
+                        }
+                      }
+                      return updated;
+                    });
+                  }
+                  setTapeRate(newRate);
+                }}
+                className="px-2 py-1 text-sm border rounded-md bg-background"
+              >
+                {TAPE_WEIGHTS.map((tw) => (
+                  <option key={tw.rate} value={tw.rate}>{tw.label}</option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          <p className="text-xs text-muted-foreground">
+            {inputMode === "grams"
+              ? "Set grams per side for each position. Paired positions apply equal weight to both sides."
+              : "Set inches of tape per side. Weight is calculated from your tape's g/inch rate."}
           </p>
 
           {PLACEMENT_KEYS.map((key) => {
@@ -151,6 +222,10 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
             const grams = placementGrams[key];
             const isActive = grams > 0;
             const totalAtPosition = spec.paired ? grams * 2 : grams;
+
+            // Tape mode: display in inches, slider in inches
+            const inches = tapeRate > 0 ? grams / tapeRate : 0;
+            const totalInches = spec.paired ? inches * 2 : inches;
 
             return (
               <div
@@ -169,20 +244,34 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
                   <div className="text-right shrink-0">
                     <span className="font-bold text-primary text-sm">
                       {grams > 0
-                        ? spec.paired
-                          ? `${grams}g/side (${totalAtPosition}g)`
-                          : `${grams}g`
+                        ? inputMode === "tape"
+                          ? spec.paired
+                            ? `${inches.toFixed(1)}″/side (${totalAtPosition.toFixed(1)}g)`
+                            : `${inches.toFixed(1)}″ (${grams.toFixed(1)}g)`
+                          : spec.paired
+                            ? `${grams}g/side (${totalAtPosition}g)`
+                            : `${grams}g`
                         : "off"}
                     </span>
                   </div>
                 </div>
-                <Slider
-                  min={0}
-                  max={8}
-                  step={0.5}
-                  value={[grams]}
-                  onValueChange={([val]) => setGrams(key, val)}
-                />
+                {inputMode === "grams" ? (
+                  <Slider
+                    min={0}
+                    max={8}
+                    step={0.5}
+                    value={[grams]}
+                    onValueChange={([val]) => setGrams(key, val)}
+                  />
+                ) : (
+                  <Slider
+                    min={0}
+                    max={6}
+                    step={0.5}
+                    value={[parseFloat(inches.toFixed(1))]}
+                    onValueChange={([val]) => setGrams(key, parseFloat((val * tapeRate).toFixed(2)))}
+                  />
+                )}
               </div>
             );
           })}
@@ -221,6 +310,8 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
             capGrams={capGrams}
             shape={selectedPaddle.shape}
             paddleName={selectedPaddle.name}
+            baseTW={selectedPaddle.twist_weight}
+            resultTW={calculation.resultingTwistWeight}
           />
         </div>
 
@@ -426,12 +517,14 @@ function edgePt(absA: number, sign: number, cx: number, rx: number, ry: number, 
 }
 
 function PaddleDiagram({
-  placementGrams, capGrams, shape,
+  placementGrams, capGrams, shape, baseTW, resultTW,
 }: {
   placementGrams: Record<PlacementKey, number>;
   capGrams: number;
   shape: string | null;
   paddleName: string;
+  baseTW: number;
+  resultTW: number;
 }) {
   const dims = (shape && SHAPE_DIMS[shape]) || SHAPE_DIMS.Standard;
   const cx = 60;
@@ -448,6 +541,15 @@ function PaddleDiagram({
   const activeKeys = PLACEMENT_KEYS.filter((k) => placementGrams[k] > 0);
   const colorMap = new Map<string, string>();
   activeKeys.forEach((k, i) => colorMap.set(k, TAPE_COLORS[i % TAPE_COLORS.length]));
+
+  // Sweet spot: lateral width scales with sqrt(TW), vertical is relatively fixed.
+  // Normalized so TW=6.3 (fleet average) → ~45% of face width.
+  // Using sqrt because deflection angle ∝ 1/I, so tolerance ∝ sqrt(I).
+  const baseSsRx = rx * 0.45 * Math.sqrt(baseTW / 6.3);
+  const resultSsRx = rx * 0.45 * Math.sqrt(resultTW / 6.3);
+  const ssRy = ry * 0.35; // vertical extent is relatively stable
+  const ssCY = faceCY - ry * 0.1; // slightly above center (toward COP)
+  const hasGrown = resultTW > baseTW + 0.05;
 
   return (
     <svg className="w-[120px] sm:w-[150px]" viewBox={`0 0 120 ${svgH}`}>
@@ -473,6 +575,21 @@ function PaddleDiagram({
       {/* Face */}
       <rect x={cx-rx} y={faceCY-ry} width={rx*2} height={ry*2} rx={rx*0.7} ry={ry*0.45}
         fill="url(#fg)" stroke="#b0b8c1" strokeWidth="0.8"/>
+
+      {/* Sweet spot — base (always visible) */}
+      <ellipse cx={cx} cy={ssCY} rx={baseSsRx} ry={ssRy}
+        fill="#86efac" opacity={0.2} stroke="#22c55e" strokeWidth="0.5" strokeDasharray="2,2" />
+
+      {/* Sweet spot — expanded from tape (only when TW increases) */}
+      {hasGrown && (
+        <ellipse cx={cx} cy={ssCY} rx={resultSsRx} ry={ssRy}
+          fill="#86efac" opacity={0.15} stroke="#16a34a" strokeWidth="0.7" />
+      )}
+
+      {/* Sweet spot label */}
+      <text x={cx} y={ssCY + ssRy + 5} textAnchor="middle" fontSize="3.5" fill="#16a34a" opacity={0.8}>
+        sweet spot{hasGrown ? ` (+${((resultSsRx / baseSsRx - 1) * 100).toFixed(0)}%)` : ""}
+      </text>
 
       {/* Throat */}
       <path d={`M${cx-10},${throatTop-4} Q${cx-10},${handleTop} ${cx-hw},${handleTop} L${cx+hw},${handleTop} Q${cx+10},${handleTop} ${cx+10},${throatTop-4}`}
