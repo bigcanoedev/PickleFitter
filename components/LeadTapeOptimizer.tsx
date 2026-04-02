@@ -708,6 +708,22 @@ function PaddleDiagram({
           <stop offset="50%" stopColor="#4b5563" />
           <stop offset="100%" stopColor="#374151" />
         </linearGradient>
+        {/* Sweet spot heat map gradient: green → yellow → orange → red */}
+        <radialGradient id="ss-base" cx="50%" cy="50%" rx="50%" ry="50%">
+          <stop offset="0%"  stopColor="#22c55e" stopOpacity="0.45" />
+          <stop offset="35%" stopColor="#84cc16" stopOpacity="0.35" />
+          <stop offset="60%" stopColor="#eab308" stopOpacity="0.25" />
+          <stop offset="80%" stopColor="#f97316" stopOpacity="0.15" />
+          <stop offset="100%" stopColor="#ef4444" stopOpacity="0.05" />
+        </radialGradient>
+        <radialGradient id="ss-expanded" cx="50%" cy="50%" rx="50%" ry="50%">
+          <stop offset="0%"  stopColor="#22c55e" stopOpacity="0.5" />
+          <stop offset="30%" stopColor="#22c55e" stopOpacity="0.4" />
+          <stop offset="50%" stopColor="#84cc16" stopOpacity="0.3" />
+          <stop offset="70%" stopColor="#eab308" stopOpacity="0.2" />
+          <stop offset="85%" stopColor="#f97316" stopOpacity="0.1" />
+          <stop offset="100%" stopColor="#ef4444" stopOpacity="0.05" />
+        </radialGradient>
       </defs>
 
       {/* Face shadow */}
@@ -721,18 +737,28 @@ function PaddleDiagram({
       <rect x={cx-rx} y={faceCY-ry} width={rx*2} height={ry*2} rx={rx*0.7} ry={ry*0.45}
         fill="url(#fg)" stroke="#b0b8c1" strokeWidth="0.8"/>
 
-      {/* Sweet spot — base (always visible) */}
-      <ellipse cx={cx} cy={ssCY} rx={baseSsRx} ry={baseSsRy}
-        fill="#86efac" opacity={0.2} stroke="#22c55e" strokeWidth="0.5" strokeDasharray="2,2" />
+      {/* Sweet spot heat map — base (always visible) */}
+      <ellipse cx={cx} cy={ssCY} rx={baseSsRx * 1.4} ry={baseSsRy * 1.4}
+        fill="url(#ss-base)" />
+      <ellipse cx={cx} cy={ssCY} rx={baseSsRx * 0.4} ry={baseSsRy * 0.4}
+        fill="none" stroke="#22c55e" strokeWidth="0.3" strokeDasharray="1.5,1.5" opacity={0.5} />
 
-      {/* Sweet spot — expanded from tape (only when weight is added) */}
+      {/* Sweet spot heat map — expanded from tape */}
+      {hasGrown && (
+        <ellipse cx={cx} cy={ssCY} rx={resultSsRx * 1.4} ry={resultSsRy * 1.4}
+          fill="url(#ss-expanded)" />
+      )}
+
+      {/* Sweet spot border — dashed for base, solid for expanded */}
+      <ellipse cx={cx} cy={ssCY} rx={baseSsRx} ry={baseSsRy}
+        fill="none" stroke="#22c55e" strokeWidth="0.4" strokeDasharray="2,2" opacity={0.6} />
       {hasGrown && (
         <ellipse cx={cx} cy={ssCY} rx={resultSsRx} ry={resultSsRy}
-          fill="#86efac" opacity={0.15} stroke="#16a34a" strokeWidth="0.7" />
+          fill="none" stroke="#16a34a" strokeWidth="0.6" />
       )}
 
       {/* Sweet spot label */}
-      <text x={cx} y={ssCY + Math.max(baseSsRy, resultSsRy) + 5} textAnchor="middle" fontSize="3.5" fill="#16a34a" opacity={0.8}>
+      <text x={cx} y={ssCY + Math.max(baseSsRy, resultSsRy) * 1.4 + 5} textAnchor="middle" fontSize="3.5" fill="#16a34a" opacity={0.8}>
         {hasGrown
           ? `sweet spot ${lateralPct > 0 ? `↔+${lateralPct}%` : ""}${lateralPct > 0 && verticalPct > 0 ? " " : ""}${verticalPct > 0 ? `↕+${verticalPct}%` : ""}`
           : "sweet spot"}
