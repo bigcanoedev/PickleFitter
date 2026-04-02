@@ -566,14 +566,65 @@ function PaddleDiagram({
   const colorMap = new Map<string, string>();
   activeKeys.forEach((k, i) => colorMap.set(k, TAPE_COLORS[i % TAPE_COLORS.length]));
 
-  // Sweet spot: lateral width scales with sqrt(TW), vertical is relatively fixed.
-  // Normalized so TW=6.3 (fleet average) → ~45% of face width.
-  // Using sqrt because deflection angle ∝ 1/I, so tolerance ∝ sqrt(I).
+  // Sweet spot shape depends on WHERE weight is added, not just total TW.
+  // Weight at lateral positions (3&9) expands width; weight at top (12) expands height.
+  //
+  // Each position contributes a lateral factor (sin²θ) and vertical factor (cos²θ)
+  // based on its angle from the top. This mirrors the physics: lateral resistance
+  // comes from mass at the sides, vertical from mass at the top/bottom.
+
+  const POSITION_ANGLE_RAD: Record<PlacementKey, number> = {
+    "12": 0, "1&11": Math.PI/6, "2&10": Math.PI/3,
+    "3&9": Math.PI/2, "4&8": Math.PI*2/3, "5&7": Math.PI*5/6,
+  };
+
+  // Calculate directional sweet spot growth from the actual weight distribution
+  let lateralGain = 0;  // from weight at sides
+  let verticalGain = 0; // from weight at top/bottom
+  for (const key of PLACEMENT_KEYS) {
+    const g = placementGrams[key];
+    if (g <= 0) continue;
+    const spec = PLACEMENTS[key];
+    const totalG = spec.paired ? g * 2 : g;
+    const θ = POSITION_ANGLE_RAD[key];
+
+    // For tape mode, the distribution is already handled in the calculation,
+    // but for sweet spot visualization we use the actual placement positions
+    // since that's where the physical mass sits on the paddle face.
+    if (inputMode === "tape" && tapeRate > 0) {
+      // Tape spreads — distribute contribution across the arc
+      const inchesPerSide = g / tapeRate;
+      const halfArcRad = (inchesPerSide / 2) * (Math.PI / 12); // ~180°/12" per side
+      const steps = 8;
+      for (let i = 0; i <= steps; i++) {
+        const sampleθ = Math.max(0, θ - halfArcRad + (2 * halfArcRad * i / steps));
+        const weight = totalG / (steps + 1);
+        lateralGain += weight * Math.sin(sampleθ) * Math.sin(sampleθ);
+        verticalGain += weight * Math.cos(sampleθ) * Math.cos(sampleθ);
+      }
+    } else {
+      // Strip: concentrated at position
+      lateralGain += totalG * Math.sin(θ) * Math.sin(θ);
+      verticalGain += totalG * Math.cos(θ) * Math.cos(θ);
+    }
+  }
+
+  // Base sweet spot (from stock TW)
   const baseSsRx = rx * 0.45 * Math.sqrt(baseTW / 6.3);
-  const resultSsRx = rx * 0.45 * Math.sqrt(resultTW / 6.3);
-  const ssRy = ry * 0.35; // vertical extent is relatively stable
+  const baseSsRy = ry * 0.35;
+
+  // Scale factor: how much each gram of directional weight expands the sweet spot
+  // Calibrated so ~6g at 3&9 (strip) gives roughly +15% lateral expansion
+  const LATERAL_SCALE = 0.012;
+  const VERTICAL_SCALE = 0.012;
+
+  const resultSsRx = baseSsRx * (1 + lateralGain * LATERAL_SCALE);
+  const resultSsRy = baseSsRy * (1 + verticalGain * VERTICAL_SCALE);
+
   const ssCY = faceCY - ry * 0.1; // slightly above center (toward COP)
-  const hasGrown = resultTW > baseTW + 0.05;
+  const hasGrown = lateralGain > 0.1 || verticalGain > 0.1;
+  const lateralPct = baseSsRx > 0 ? Math.round((resultSsRx / baseSsRx - 1) * 100) : 0;
+  const verticalPct = baseSsRy > 0 ? Math.round((resultSsRy / baseSsRy - 1) * 100) : 0;
 
   return (
     <svg className="w-[120px] sm:w-[150px]" viewBox={`0 0 120 ${svgH}`}>
@@ -601,18 +652,20 @@ function PaddleDiagram({
         fill="url(#fg)" stroke="#b0b8c1" strokeWidth="0.8"/>
 
       {/* Sweet spot — base (always visible) */}
-      <ellipse cx={cx} cy={ssCY} rx={baseSsRx} ry={ssRy}
+      <ellipse cx={cx} cy={ssCY} rx={baseSsRx} ry={baseSsRy}
         fill="#86efac" opacity={0.2} stroke="#22c55e" strokeWidth="0.5" strokeDasharray="2,2" />
 
-      {/* Sweet spot — expanded from tape (only when TW increases) */}
+      {/* Sweet spot — expanded from tape (only when weight is added) */}
       {hasGrown && (
-        <ellipse cx={cx} cy={ssCY} rx={resultSsRx} ry={ssRy}
+        <ellipse cx={cx} cy={ssCY} rx={resultSsRx} ry={resultSsRy}
           fill="#86efac" opacity={0.15} stroke="#16a34a" strokeWidth="0.7" />
       )}
 
       {/* Sweet spot label */}
-      <text x={cx} y={ssCY + ssRy + 5} textAnchor="middle" fontSize="3.5" fill="#16a34a" opacity={0.8}>
-        sweet spot{hasGrown ? ` (+${((resultSsRx / baseSsRx - 1) * 100).toFixed(0)}%)` : ""}
+      <text x={cx} y={ssCY + Math.max(baseSsRy, resultSsRy) + 5} textAnchor="middle" fontSize="3.5" fill="#16a34a" opacity={0.8}>
+        {hasGrown
+          ? `sweet spot ${lateralPct > 0 ? `↔+${lateralPct}%` : ""}${lateralPct > 0 && verticalPct > 0 ? " " : ""}${verticalPct > 0 ? `↕+${verticalPct}%` : ""}`
+          : "sweet spot"}
       </text>
 
       {/* Throat */}
