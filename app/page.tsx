@@ -9,15 +9,15 @@ export default function HomePage() {
       <div className="sr-only">
         <h1>PickleFitter — Find Your Perfect Pickleball Paddle</h1>
         <p>
-          Data-driven pickleball paddle recommendations powered by lab-tested performance data from
-          Pickleball Effect. Our 13-dimension scoring engine matches your play style to the ideal
-          paddle from 727 lab-tested options — using real swing weight, twist weight, power (MPH),
+          Data-driven pickleball paddle recommendations powered by lab-tested performance data
+          sourced from Pickleball Effect. The 13-dimension scoring engine matches your play style
+          to the ideal paddle from 727 options — using real swing weight, twist weight, power (MPH),
           and spin (RPM) data, not marketing claims.
         </p>
         <h2>How It Works</h2>
         <p>
           Take a 2-minute quiz about your skill level, play style, swing speed, and preferences.
-          Our algorithm scores every paddle across 13 dimensions including power, control, spin,
+          The algorithm scores every paddle across 13 dimensions including power, control, spin,
           stability, comfort, and value to find your best match.
         </p>
         <h2>Popular Paddle Guides</h2>

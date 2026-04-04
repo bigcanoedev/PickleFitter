@@ -6,12 +6,12 @@ import { Button } from "@/components/ui/button";
 export const metadata: Metadata = {
   title: "How We Rank Paddles — Scoring Methodology | PickleFitter",
   description:
-    "PickleFitter scores every paddle across 13 weighted dimensions including swing weight, twist weight, power, spin, control, stability, and comfort. Learn how our recommendation algorithm works.",
+    "PickleFitter scores every paddle across 13 weighted dimensions including swing weight, twist weight, power, spin, control, stability, and comfort. Learn how the recommendation algorithm works.",
   alternates: { canonical: "https://picklefitter.com/methodology" },
   openGraph: {
     title: "How We Rank Paddles — PickleFitter Scoring Methodology",
     description:
-      "Our 13-dimension scoring engine explained. Lab-tested data, transparent weights, deterministic rankings.",
+      "The 13-dimension scoring engine explained. Lab-tested data, transparent weights, deterministic rankings.",
     url: "https://picklefitter.com/methodology",
   },
 };
@@ -114,9 +114,9 @@ export default function MethodologyPage() {
             differentiated rankings.
           </p>
           <p>
-            Our data is updated as new paddles are released and new lab tests are published.
-            Paddle specs can change between production runs — our data reflects the most recent
-            information available.
+            The database is updated as new paddles are released and new lab tests are published.
+            Paddle specs can change between production runs. All lab-tested performance data is
+            sourced from Pickleball Effect — PickleFitter does not conduct its own lab testing.
           </p>
         </div>
       </section>

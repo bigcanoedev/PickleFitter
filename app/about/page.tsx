@@ -38,10 +38,10 @@ export default function AboutPage() {
             and &ldquo;control&rdquo; mean different things to different people.
           </p>
           <p>
-            We built PickleFitter to solve this. Our recommendation engine scores every paddle across
-            13 weighted dimensions using lab-tested data from Pickleball Effect, then matches those
-            scores to your play style, skill level, and preferences. No paddle is ever promoted or
-            demoted based on anything other than the data.
+            PickleFitter was built to solve this. The recommendation engine scores every paddle
+            across 13 weighted dimensions using lab-tested data sourced from Pickleball Effect, then
+            matches those scores to your play style, skill level, and preferences. No paddle is
+            ever promoted or demoted based on anything other than the data.
           </p>
         </div>
       </section>
@@ -81,22 +81,23 @@ export default function AboutPage() {
       </section>
 
       <section>
-        <h2 className="text-xl font-black mb-4">Our Data Sources</h2>
+        <h2 className="text-xl font-black mb-4">Where the Data Comes From</h2>
         <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
           <p>
             <strong className="text-foreground">Pickleball Effect</strong> — Lab-tested power (MPH),
             pop (MPH), and spin (RPM) data from controlled testing conditions. This is the most
-            comprehensive independent paddle testing dataset available.
+            comprehensive independent paddle testing dataset available. PickleFitter does not
+            conduct lab testing — this data is sourced from Pickleball Effect.
           </p>
           <p>
             <strong className="text-foreground">Manufacturer Specs</strong> — Weight, dimensions,
-            core thickness, face material, grip length, and shape data sourced directly from
-            manufacturer specifications and verified against lab measurements.
+            core thickness, face material, grip length, and shape data sourced from
+            manufacturer specifications.
           </p>
           <p>
             <strong className="text-foreground">Swing Weight & Twist Weight</strong> — Measured with
-            RDC-calibrated instruments, these are the two most important specs for predicting how a
-            paddle feels in your hand and performs on court.
+            RDC-calibrated instruments by third-party testers. These are the two most important
+            specs for predicting how a paddle feels and performs.
           </p>
         </div>
       </section>
@@ -110,10 +111,10 @@ export default function AboutPage() {
             they never influence which paddle ranks where.
           </p>
           <p>
-            <strong className="text-foreground">Real data, not reviews.</strong> We don&apos;t write
-            subjective reviews. Every paddle&apos;s pros, cons, and &ldquo;best for&rdquo; tags are
-            generated algorithmically from percentile analysis against the entire fleet of 727
-            paddles.
+            <strong className="text-foreground">Real data, not reviews.</strong> PickleFitter
+            doesn&apos;t write subjective reviews. Every paddle&apos;s pros, cons, and &ldquo;best
+            for&rdquo; tags are generated algorithmically from percentile analysis against the
+            entire fleet of 727 paddles.
           </p>
           <p>
             <strong className="text-foreground">Transparent methodology.</strong> Our scoring engine

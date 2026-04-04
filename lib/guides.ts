@@ -190,8 +190,8 @@ export const guides: Guide[] = [
       "Power matters when you want to put balls away. We ranked every paddle using our 13-dimension scoring engine tuned for an aggressive, fast-swinging player — not just raw MPH, but the full picture of what makes a paddle hit hard.",
     rank: (paddles) => getAllRanked(POWER_PROFILE, paddles),
     faqs: [
-      { question: "What makes a pickleball paddle powerful?", answer: "Power comes from a combination of swing weight, face stiffness, and core thickness. Thinner cores (14mm or less) and thermoformed construction tend to produce higher ball speeds. Our rankings factor in lab-tested MPH data, not manufacturer claims." },
-      { question: "Do power paddles sacrifice control?", answer: "Generally yes — more power means a stiffer response and less dwell time, which can reduce touch at the kitchen. However, many modern thermoformed paddles balance both. Our scoring engine accounts for this trade-off." },
+      { question: "What makes a pickleball paddle powerful?", answer: "Power comes from a combination of swing weight, face stiffness, and core thickness. Thinner cores (14mm or less) and thermoformed construction tend to produce higher ball speeds. These rankings factor in lab-tested MPH data from Pickleball Effect, not manufacturer claims." },
+      { question: "Do power paddles sacrifice control?", answer: "Generally yes — more power means a stiffer response and less dwell time, which can reduce touch at the kitchen. However, many modern thermoformed paddles balance both. The scoring engine accounts for this trade-off." },
       { question: "What swing weight is best for power?", answer: "Higher swing weight (above 115) generates more momentum and ball speed. But if your swing speed is slow, a lighter paddle swung faster can produce equal power. Match swing weight to your swing speed." },
     ],
   },
@@ -207,7 +207,7 @@ export const guides: Guide[] = [
     faqs: [
       { question: "What makes a pickleball paddle good for control?", answer: "Control paddles typically have thick cores (16mm+), high twist weight for stability on off-center hits, and a softer feel that gives you more dwell time for precise placement. We score for all three factors." },
       { question: "Is a thicker core always better for control?", answer: "Thicker cores (16mm and above) absorb more energy, giving a softer feel and more touch. But extremely thick cores can feel mushy for some players. 16mm is the sweet spot for most control-oriented players." },
-      { question: "Can a control paddle still have decent power?", answer: "Yes. Modern paddles like thermoformed 16mm builds offer surprising pop while maintaining control. Our engine ranks paddles that balance both, not just pure control." },
+      { question: "Can a control paddle still have decent power?", answer: "Yes. Modern paddles like thermoformed 16mm builds offer surprising pop while maintaining control. The engine ranks paddles that balance both, not just pure control." },
     ],
   },
   {
@@ -220,7 +220,7 @@ export const guides: Guide[] = [
       "Spin lets you curve serves, dip third shots, and add kick to volleys. We scored every paddle for a spin-focused player — factoring in RPM, surface material, and overall playability.",
     rank: (paddles) => getAllRanked(SPIN_PROFILE, paddles),
     faqs: [
-      { question: "What pickleball paddle has the most spin?", answer: "Paddles with raw carbon fiber or coarse-textured faces generate the most RPM. Our rankings use lab-tested spin rates, not manufacturer claims, to identify the highest-spin paddles." },
+      { question: "What pickleball paddle has the most spin?", answer: "Paddles with raw carbon fiber or coarse-textured faces generate the most RPM. These rankings use lab-tested spin rates from Pickleball Effect, not manufacturer claims, to identify the highest-spin paddles." },
       { question: "Does surface texture matter more than shape for spin?", answer: "Surface texture is the primary driver of spin. Raw carbon fiber faces create the most friction. Elongated shapes help indirectly because they encourage topspin-friendly swing paths, but the face material is what generates RPM." },
       { question: "Do high-spin paddles wear out faster?", answer: "Textured faces can smooth over time, reducing spin potential. Gen 3 and Gen 4 thermoformed paddles with raw carbon fiber tend to maintain texture longer than earlier constructions." },
     ],
@@ -278,7 +278,7 @@ export const guides: Guide[] = [
       "Tennis elbow and arm pain can end your season. We scored every paddle for a player with serious arm issues — the engine caps swing weight, demands thick cores for vibration absorption, and favors lightweight, soft-feel builds.",
     rank: (paddles) => getAllRanked(TENNIS_ELBOW_PROFILE, paddles),
     faqs: [
-      { question: "What pickleball paddle is easiest on the elbow?", answer: "Paddles with thick cores (16mm+), lower swing weight, and soft feel absorb more vibration before it reaches your arm. Look for paddles specifically designed for comfort — our engine caps swing weight and demands thick cores for arm-friendly picks." },
+      { question: "What pickleball paddle is easiest on the elbow?", answer: "Paddles with thick cores (16mm+), lower swing weight, and soft feel absorb more vibration before it reaches your arm. Look for paddles specifically designed for comfort — the scoring engine caps swing weight and demands thick cores for arm-friendly picks." },
       { question: "Does paddle weight affect tennis elbow?", answer: "Yes. Heavier paddles transfer more shock per impact, but very light paddles require more muscle effort to stabilize. A moderate weight (7.5-8.0 oz) with high twist weight gives the best combination of comfort and stability." },
     ],
   },
