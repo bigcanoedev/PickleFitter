@@ -207,8 +207,7 @@ function main() {
 
   // Save
   fs.writeFileSync("lib/paddle-data.json", JSON.stringify(pass2));
-  fs.writeFileSync("public/paddle-data.json", JSON.stringify(pass2));
-  console.log("\nSaved lib/paddle-data.json and public/paddle-data.json");
+  console.log("\nSaved lib/paddle-data.json");
 }
 
 main();

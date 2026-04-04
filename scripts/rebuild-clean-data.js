@@ -395,7 +395,6 @@ function main() {
   // Save (without _sources field in production data)
   const prodData = result.map(({ _sources, ...rest }) => rest);
   fs.writeFileSync("lib/paddle-data.json", JSON.stringify(prodData));
-  fs.writeFileSync("public/paddle-data.json", JSON.stringify(prodData));
 
   // Save provenance report
   const report = result.map(p => ({
@@ -405,7 +404,7 @@ function main() {
     has_pe_exclusive: !!(p.firepower_tier || p.build_style || p.paddle_type),
   }));
   fs.writeFileSync("data-provenance.json", JSON.stringify(report, null, 2));
-  console.log("\nSaved lib/paddle-data.json, public/paddle-data.json, data-provenance.json");
+  console.log("\nSaved lib/paddle-data.json, data-provenance.json");
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────

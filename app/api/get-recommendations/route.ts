@@ -2,8 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { PlayerProfile, Paddle } from "@/lib/types";
 import { getRecommendations } from "@/lib/recommendations";
 import { paddleData } from "@/lib/paddle-data";
+import { rateLimit } from "@/lib/rate-limit";
 
 export async function GET(request: NextRequest) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    request.headers.get("x-real-ip") || "unknown";
+
+  const { success } = rateLimit(`recommendations:${ip}`, { limit: 15, windowMs: 60_000 });
+  if (!success) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429, headers: { "Retry-After": "60" } }
+    );
+  }
+
   const { searchParams } = new URL(request.url);
 
   const profile: PlayerProfile = {
