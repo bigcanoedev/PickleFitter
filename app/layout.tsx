@@ -83,33 +83,28 @@ export default function RootLayout({
               <p className="text-sm font-medium text-foreground">Get paddle updates, deals, and new features</p>
               <FooterEmailSignup />
             </div>
-            <div className="border-t pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-              <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <img src="/logo.svg" alt="" className="w-5 h-5" />
-                <span className="font-black text-foreground">
-                  Pickle<span className="text-primary">Fitter</span>
-                </span>
-              </Link>
-              <div className="flex flex-wrap items-center gap-4">
+            <div className="border-t pt-6 space-y-4 text-sm text-muted-foreground">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                  <img src="/logo.svg" alt="" className="w-5 h-5" />
+                  <span className="font-black text-foreground">
+                    Pickle<span className="text-primary">Fitter</span>
+                  </span>
+                </Link>
+                <nav className="flex flex-wrap justify-center gap-x-5 gap-y-1">
+                  <Link href="/best" className="hover:text-foreground transition-colors">Best Paddles</Link>
+                  <Link href="/guides/how-to-choose" className="hover:text-foreground transition-colors">Buying Guide</Link>
+                  <Link href="/compare" className="hover:text-foreground transition-colors">Compare</Link>
+                  <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
+                  <Link href="/methodology" className="hover:text-foreground transition-colors">Methodology</Link>
+                </nav>
+              </div>
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground/70">
                 <p>Lab-tested paddle recommendations based on swing physics.</p>
-                <Link href="/best" className="hover:text-foreground transition-colors whitespace-nowrap">
-                  Best Paddles
-                </Link>
-                <Link href="/guides/how-to-choose" className="hover:text-foreground transition-colors whitespace-nowrap">
-                  Buying Guide
-                </Link>
-                <Link href="/about" className="hover:text-foreground transition-colors whitespace-nowrap">
-                  About
-                </Link>
-                <Link href="/methodology" className="hover:text-foreground transition-colors whitespace-nowrap">
-                  Methodology
-                </Link>
-                <Link href="/terms" className="hover:text-foreground transition-colors whitespace-nowrap">
-                  Terms of Service
-                </Link>
-                <Link href="/privacy" className="hover:text-foreground transition-colors whitespace-nowrap">
-                  Privacy Policy
-                </Link>
+                <div className="flex gap-4">
+                  <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
+                  <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
+                </div>
               </div>
             </div>
           </div>
