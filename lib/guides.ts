@@ -190,7 +190,7 @@ export const guides: Guide[] = [
       "Power matters when you want to put balls away. We ranked every paddle using our 13-dimension scoring engine tuned for an aggressive, fast-swinging player — not just raw MPH, but the full picture of what makes a paddle hit hard.",
     rank: (paddles) => getAllRanked(POWER_PROFILE, paddles),
     faqs: [
-      { question: "What makes a pickleball paddle powerful?", answer: "Power comes from a combination of swing weight, face stiffness, and core thickness. Thinner cores (14mm or less) and thermoformed construction tend to produce higher ball speeds. These rankings factor in lab-tested MPH data from Pickleball Effect, not manufacturer claims." },
+      { question: "What makes a pickleball paddle powerful?", answer: "Power comes from a combination of swing weight, face stiffness, and core thickness. Thinner cores (14mm or less) and thermoformed construction tend to produce higher ball speeds. These rankings factor in lab-tested MPH data, not manufacturer claims." },
       { question: "Do power paddles sacrifice control?", answer: "Generally yes — more power means a stiffer response and less dwell time, which can reduce touch at the kitchen. However, many modern thermoformed paddles balance both. The scoring engine accounts for this trade-off." },
       { question: "What swing weight is best for power?", answer: "Higher swing weight (above 115) generates more momentum and ball speed. But if your swing speed is slow, a lighter paddle swung faster can produce equal power. Match swing weight to your swing speed." },
     ],
@@ -220,7 +220,7 @@ export const guides: Guide[] = [
       "Spin lets you curve serves, dip third shots, and add kick to volleys. We scored every paddle for a spin-focused player — factoring in RPM, surface material, and overall playability.",
     rank: (paddles) => getAllRanked(SPIN_PROFILE, paddles),
     faqs: [
-      { question: "What pickleball paddle has the most spin?", answer: "Paddles with raw carbon fiber or coarse-textured faces generate the most RPM. These rankings use lab-tested spin rates from Pickleball Effect, not manufacturer claims, to identify the highest-spin paddles." },
+      { question: "What pickleball paddle has the most spin?", answer: "Paddles with raw carbon fiber or coarse-textured faces generate the most RPM. These rankings use lab-tested spin rates, not manufacturer claims, to identify the highest-spin paddles." },
       { question: "Does surface texture matter more than shape for spin?", answer: "Surface texture is the primary driver of spin. Raw carbon fiber faces create the most friction. Elongated shapes help indirectly because they encourage topspin-friendly swing paths, but the face material is what generates RPM." },
       { question: "Do high-spin paddles wear out faster?", answer: "Textured faces can smooth over time, reducing spin potential. Gen 3 and Gen 4 thermoformed paddles with raw carbon fiber tend to maintain texture longer than earlier constructions." },
     ],

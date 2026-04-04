@@ -54,7 +54,7 @@ export default function RootLayout({
                 url: BASE_URL,
                 logo: `${BASE_URL}/logo.svg`,
                 description:
-                  "Data-driven pickleball paddle recommendations using lab-tested performance data sourced from Pickleball Effect. 727 paddles scored across 13 dimensions.",
+                  "Data-driven pickleball paddle recommendations using lab-tested performance data. 727 paddles scored across 13 dimensions.",
                 sameAs: [],
               },
               {

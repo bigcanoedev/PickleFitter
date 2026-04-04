@@ -21,7 +21,7 @@ export default function MethodologyPage() {
     { name: "Swing Weight", desc: "How heavy the paddle feels when you swing it. Measured in RDC units. Higher = more momentum and power, lower = faster hand speed. Matched to your swing speed preference." },
     { name: "Twist Weight", desc: "Resistance to twisting on off-center hits. Higher twist weight = larger effective sweet spot and more stability. Critical for doubles players and beginners." },
     { name: "Static Weight", desc: "Overall paddle weight in ounces. Lighter paddles reduce fatigue and enable faster reactions. Heavier paddles generate more power passively." },
-    { name: "Power (MPH)", desc: "Lab-tested ball speed on drives, measured by Pickleball Effect. Indicates how fast the ball leaves the paddle face on full swings." },
+    { name: "Power (MPH)", desc: "Lab-tested ball speed on drives. Indicates how fast the ball leaves the paddle face on full swings." },
     { name: "Pop (MPH)", desc: "Lab-tested ball speed on short punch shots. Important for kitchen play and blocking where you can't take a full swing." },
     { name: "Spin (RPM)", desc: "Lab-tested spin rate. Indicates how much grip the face surface provides for topspin, slice, and serve rotation." },
     { name: "Core Thickness", desc: "Measured in millimeters. Thicker cores (16mm+) absorb more energy for a softer feel and better control. Thinner cores (14mm or less) return more energy for power." },
@@ -107,16 +107,15 @@ export default function MethodologyPage() {
         <h2 className="text-xl font-black mb-4">Data Quality & Limitations</h2>
         <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
           <p>
-            Not every paddle has lab-tested data. About 326 of 727 paddles have Pickleball Effect
-            lab data for power, pop, and spin. Paddles without lab data are scored on their
-            available specs (swing weight, twist weight, core thickness, etc.) and receive neutral
-            scores for missing dimensions. This means lab-tested paddles tend to have more
-            differentiated rankings.
+            Not every paddle has lab-tested data. About 326 of 727 paddles have lab data for power,
+            pop, and spin. Paddles without lab data are scored on their available specs (swing
+            weight, twist weight, core thickness, etc.) and receive neutral scores for missing
+            dimensions. This means lab-tested paddles tend to have more differentiated rankings.
           </p>
           <p>
             The database is updated as new paddles are released and new lab tests are published.
-            Paddle specs can change between production runs. All lab-tested performance data is
-            sourced from Pickleball Effect — PickleFitter does not conduct its own lab testing.
+            Paddle specs can change between production runs. PickleFitter does not conduct its own
+            lab testing — performance data comes from independent third-party sources.
           </p>
         </div>
       </section>

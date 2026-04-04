@@ -39,9 +39,9 @@ export default function AboutPage() {
           </p>
           <p>
             PickleFitter was built to solve this. The recommendation engine scores every paddle
-            across 13 weighted dimensions using lab-tested data sourced from Pickleball Effect, then
-            matches those scores to your play style, skill level, and preferences. No paddle is
-            ever promoted or demoted based on anything other than the data.
+            across 13 weighted dimensions using lab-tested performance data, then matches those
+            scores to your play style, skill level, and preferences. No paddle is ever promoted or
+            demoted based on anything other than the data.
           </p>
         </div>
       </section>
@@ -58,7 +58,7 @@ export default function AboutPage() {
             {
               icon: FlaskConical,
               title: "Lab-Tested Data",
-              desc: "Power (MPH), spin (RPM), and pop data from Pickleball Effect's lab testing — not manufacturer claims.",
+              desc: "Power (MPH), spin (RPM), and pop data from independent lab testing — not manufacturer claims.",
             },
             {
               icon: Layers,
@@ -84,10 +84,9 @@ export default function AboutPage() {
         <h2 className="text-xl font-black mb-4">Where the Data Comes From</h2>
         <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
           <p>
-            <strong className="text-foreground">Pickleball Effect</strong> — Lab-tested power (MPH),
-            pop (MPH), and spin (RPM) data from controlled testing conditions. This is the most
-            comprehensive independent paddle testing dataset available. PickleFitter does not
-            conduct lab testing — this data is sourced from Pickleball Effect.
+            <strong className="text-foreground">Lab-Tested Performance</strong> — Power (MPH),
+            pop (MPH), and spin (RPM) data from independent lab testing under controlled
+            conditions. PickleFitter does not conduct its own lab testing.
           </p>
           <p>
             <strong className="text-foreground">Manufacturer Specs</strong> — Weight, dimensions,
@@ -96,8 +95,8 @@ export default function AboutPage() {
           </p>
           <p>
             <strong className="text-foreground">Swing Weight & Twist Weight</strong> — Measured with
-            RDC-calibrated instruments by third-party testers. These are the two most important
-            specs for predicting how a paddle feels and performs.
+            RDC-calibrated instruments. These are the two most important specs for predicting how a
+            paddle feels and performs.
           </p>
         </div>
       </section>
