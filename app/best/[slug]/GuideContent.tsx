@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowRight, ShoppingCart, Zap, ShieldCheck, Wind, Weight } f
 import { Button } from "@/components/ui/button";
 import { Paddle } from "@/lib/types";
 import { paddleSlug, selectBestLink } from "@/lib/utils";
-import { getGuideBySlug, getGuideRanking } from "@/lib/guides";
+import { getGuideBySlug, getGuideRanking, type GuideFAQ } from "@/lib/guides";
 import { generatePros, generateCons } from "@/lib/paddle-analysis";
 
 export default function GuideContent({ slug }: { slug: string }) {
@@ -54,6 +54,21 @@ export default function GuideContent({ slug }: { slug: string }) {
           <PaddleCard key={paddle.id} paddle={paddle} rank={index + 1} />
         ))}
       </section>
+
+      {/* FAQ */}
+      {guide.faqs && guide.faqs.length > 0 && (
+        <section>
+          <h2 className="text-xl font-black mb-4">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {guide.faqs.map((faq: GuideFAQ, i: number) => (
+              <div key={i} className="border rounded-lg p-5">
+                <h3 className="font-bold text-sm">{faq.question}</h3>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="text-center border rounded-lg p-8 bg-primary/5 border-primary/20">

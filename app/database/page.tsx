@@ -1,42 +1,19 @@
-"use client";
+import type { Metadata } from "next";
+import DatabaseClient from "./DatabaseClient";
 
-import { useState, useMemo } from "react";
-import { Paddle, PaddleScore } from "@/lib/types";
-import { paddleData } from "@/lib/paddle-data";
-import { PaddleRankings } from "@/components/PaddleRankings";
-import { selectBestLink } from "@/lib/utils";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+export const metadata: Metadata = {
+  title: "Pickleball Paddle Database — All 727 Paddles with Specs | PickleFitter",
+  description:
+    "Browse all 727 pickleball paddles with lab-tested specs, swing weight, twist weight, power, spin, and prices. Sort, filter, and compare to find your paddle.",
+  alternates: { canonical: "https://picklefitter.com/database" },
+  openGraph: {
+    title: "Pickleball Paddle Database — All 727 Paddles with Specs",
+    description:
+      "Browse all 727 pickleball paddles with lab-tested specs. Sort, filter, and compare.",
+    url: "https://picklefitter.com/database",
+  },
+};
 
 export default function DatabasePage() {
-  const allPaddles: PaddleScore[] = useMemo(() => {
-    return (paddleData as Paddle[]).map((p, i) => ({
-      ...p,
-      matchPercentage: 0,
-      reason: "",
-      affiliateLink: selectBestLink(p),
-    }));
-  }, []);
-
-  return (
-    <div className="space-y-8">
-      <div className="text-center">
-        <h1 className="text-2xl sm:text-3xl font-black">Paddle Database</h1>
-        <p className="text-muted-foreground mt-2">
-          {paddleData.length} paddles with specs, lab-tested performance data, and purchase links.
-        </p>
-        <div className="mt-4">
-          <Button asChild size="sm" className="gap-1.5">
-            <Link href="/quiz">
-              Want personalized matches? Take the Quiz
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <PaddleRankings allRanked={allPaddles} startExpanded defaultSort="price" />
-    </div>
-  );
+  return <DatabaseClient />;
 }

@@ -8,6 +8,13 @@ export const metadata: Metadata = {
   title: "Best Pickleball Paddles — Top 10 Guides by Category | PickleFitter",
   description:
     "Lab-tested top 10 pickleball paddle guides for every play style, budget, and skill level. Ranked by real data from 727 paddles.",
+  alternates: { canonical: "https://picklefitter.com/best" },
+  openGraph: {
+    title: "Best Pickleball Paddles — Top 10 Guides by Category",
+    description:
+      "Lab-tested top 10 pickleball paddle guides for every play style, budget, and skill level.",
+    url: "https://picklefitter.com/best",
+  },
 };
 
 export default function GuidesIndexPage() {

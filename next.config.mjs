@@ -10,7 +10,7 @@ const nextConfig = {
           { key: "X-XSS-Protection", value: "1; mode=block" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-          { key: "X-Robots-Tag", value: "noai, noimageai" },
+          { key: "X-Robots-Tag", value: "all" },
         ],
       },
       {

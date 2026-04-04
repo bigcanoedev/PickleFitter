@@ -1,13 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // Known scraper/AI bot user-agent patterns
+// Scraper/spam bots only — AI crawlers (GPTBot, ClaudeBot, etc.) are allowed
 const BLOCKED_BOT_PATTERNS = [
-  /GPTBot/i,
-  /CCBot/i,
-  /ChatGPT/i,
-  /Google-Extended/i,
-  /anthropic-ai/i,
-  /ClaudeBot/i,
   /Bytespider/i,
   /PetalBot/i,
   /Scrapy/i,
@@ -27,21 +22,9 @@ const BLOCKED_BOT_PATTERNS = [
   /scrapingbee/i,
   /brightdata/i,
   /DataForSeoBot/i,
-  /SemrushBot/i,
-  /AhrefsBot/i,
   /MJ12bot/i,
   /DotBot/i,
   /BLEXBot/i,
-  /SeznamBot/i,
-  /YandexBot/i,
-  /Baiduspider/i,
-  /serpstatbot/i,
-  /Applebot-Extended/i,
-  /Meta-ExternalAgent/i,
-  /PerplexityBot/i,
-  /Amazonbot/i,
-  /FacebookBot/i,
-  /cohere-ai/i,
 ];
 
 // Simple in-memory rate limiter for middleware (Edge Runtime compatible)
@@ -112,7 +95,7 @@ export function middleware(request: NextRequest) {
   response.headers.set("X-Content-Type-Options", "nosniff");
   response.headers.set("X-Frame-Options", "DENY");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-  response.headers.set("X-Robots-Tag", "noai, noimageai");
+  response.headers.set("X-Robots-Tag", "all");
 
   return response;
 }

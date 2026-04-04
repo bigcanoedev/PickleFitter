@@ -8,10 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: ["/api/"],
       },
-      {
-        userAgent: ["GPTBot", "CCBot", "ChatGPT-User", "Google-Extended", "anthropic-ai", "ClaudeBot"],
-        disallow: "/",
-      },
     ],
     sitemap: "https://picklefitter.com/sitemap.xml",
   };
