@@ -14,7 +14,7 @@ export interface Paddle {
   balance: number | null;          // mm from butt cap
   grip_length: number | null;      // inches
   grip_thickness: string | null;   // e.g. "4.25"
-  // Lab-tested performance data (from Pickleball Effect)
+  // Lab-tested performance data
   power_mph: number | null;           // ball speed on drives
   pop_mph: number | null;             // ball speed on short shots
   spin_rpm: number | null;            // measured spin rate

@@ -3,8 +3,8 @@ import { Paddle, PlayerProfile, PaddleScore, IdealSpecs, CustomizerSpecs } from 
 /**
  * Recommendation Engine v3
  *
- * Uses lab-tested data from Pickleball Effect where available (Power MPH,
- * Pop MPH, Spin RPM, Firepower tiers) combined with specs from Pickleball Studio.
+ * Uses lab-tested data where available (Power MPH, Pop MPH, Spin RPM,
+ * Firepower tiers) combined with manufacturer and third-party specs.
  *
  * Scoring weights:
  *   20% - Swing weight match
@@ -49,8 +49,8 @@ function getWeights(profile: PlayerProfile) {
 // Research-backed ranges from:
 //   - Pro Pickleball Store: Light 80-110, Medium 110-120, Heavy 120+
 //   - Picklebowls: Low <110, High >125, Control = mid-to-low, Power = high
-//   - Pickleball Studio: Beginners → thicker core, Singles → thinner core
-//   - JustPaddles/PickleballEffect: 14mm = power/singles, 16mm = control/doubles
+//   - General guidance: Beginners → thicker core, Singles → thinner core
+//   - General consensus: 14mm = power/singles, 16mm = control/doubles
 //   - Shape guides: Elongated = singles/power, Widebody = doubles/forgiveness
 //   - Demographics: Women/teens 105-115, Men/fitness 115-125
 //   - TW: <5 = small sweet spot, 5-7 = most players, 7+ = maximum forgiveness
@@ -128,7 +128,7 @@ function calculateIdealSpecs(profile: PlayerProfile, allPaddles?: Paddle[]): Ide
   if (profile.skillLevel === "Beginner") {
     specs.swingWeightRange = [100, 115];  // "Light range" — quick hands, forgiving
     specs.twistWeightRange = [6.5, 8.5];  // 7+ = max forgiveness, beginners need this
-    specs.coreThicknessRange = [15, 16];  // Thicker = bigger sweet spot, Pickleball Studio recommends for <3.5
+    specs.coreThicknessRange = [15, 16];  // Thicker = bigger sweet spot, recommended for beginners
     specs.preferredMaterials = ["Fiberglass", "Hybrid", "Composite"]; // Forgiving, cheaper
     specs.preferredShapes = ["Standard", "Wide body"]; // Biggest sweet spot
   } else if (profile.skillLevel === "Advanced") {

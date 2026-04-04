@@ -158,7 +158,7 @@ export function LandingHero() {
             {
               icon: FlaskConical,
               title: "Lab-Tested Power",
-              desc: "Real MPH and RPM data from Pickleball Effect, not manufacturer claims.",
+              desc: "Real MPH and RPM data from independent lab testing, not manufacturer claims.",
             },
             {
               icon: Weight,
