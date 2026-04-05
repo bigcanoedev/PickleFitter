@@ -2,9 +2,10 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Search } from "lucide-react";
+import { Search, LayoutGrid, List } from "lucide-react";
 import { paddleSlug } from "@/lib/utils";
 import { BuyButtons } from "@/components/BuyButtons";
+import { PaddleImage } from "@/components/PaddleImage";
 import { PaddleScore } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 
@@ -21,6 +22,7 @@ const PAGE_SIZE = 25;
 
 export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = false, defaultSort = "match" }: PaddleRankingsProps) {
   const [expanded, setExpanded] = useState(startExpanded);
+  const [viewMode, setViewMode] = useState<"table" | "cards">("table");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [sortBy, setSortBy] = useState<SortKey>(defaultSort);
   const [sortAsc, setSortAsc] = useState(false);
@@ -99,9 +101,25 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-2">
         <h2 className="text-xl sm:text-2xl font-black">Full Rankings</h2>
-        <span className="text-sm text-muted-foreground whitespace-nowrap">
-          {sorted.length} paddles
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground whitespace-nowrap">
+            {sorted.length} paddles
+          </span>
+          <div className="flex bg-muted rounded-md p-0.5">
+            <button
+              onClick={() => setViewMode("table")}
+              className={`p-1.5 rounded ${viewMode === "table" ? "bg-background shadow-sm text-foreground" : "text-muted-foreground"}`}
+            >
+              <List className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setViewMode("cards")}
+              className={`p-1.5 rounded ${viewMode === "cards" ? "bg-background shadow-sm text-foreground" : "text-muted-foreground"}`}
+            >
+              <LayoutGrid className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Search */}
@@ -159,8 +177,44 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
         )}
       </div>
 
-      {/* Table */}
-      <div className="border rounded-lg overflow-x-auto">
+      {/* Card View */}
+      {viewMode === "cards" && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          {visible.map((paddle) => {
+            const slug = paddleSlug(paddle.brand, paddle.name);
+            const spinVal = paddle.spin_rpm || paddle.rpm;
+            return (
+              <Link
+                key={paddle.id}
+                href={`/paddle/${slug}`}
+                className="border rounded-lg p-3 hover:border-primary/40 hover:bg-primary/5 transition-all group"
+              >
+                <div className="flex justify-center mb-2">
+                  <PaddleImage paddle={paddle} size="sm" />
+                </div>
+                <div className="text-[10px] text-muted-foreground uppercase tracking-wide">{paddle.brand}</div>
+                <div className="text-sm font-bold group-hover:text-primary transition-colors line-clamp-2 leading-tight">{paddle.name}</div>
+                <div className="text-lg font-black text-primary mt-1">${paddle.price}</div>
+                {paddle.matchPercentage > 0 && (
+                  <div className="text-xs font-medium text-primary/80 mt-0.5">{paddle.matchPercentage}% match</div>
+                )}
+                <div className="flex flex-wrap gap-1 mt-2">
+                  <span className="text-[10px] bg-muted rounded px-1.5 py-0.5">SW {paddle.swing_weight}</span>
+                  <span className="text-[10px] bg-muted rounded px-1.5 py-0.5">TW {paddle.twist_weight}</span>
+                  {paddle.power_mph && <span className="text-[10px] bg-primary/10 text-primary rounded px-1.5 py-0.5">{paddle.power_mph} MPH</span>}
+                  {spinVal && <span className="text-[10px] bg-primary/10 text-primary rounded px-1.5 py-0.5">{spinVal} RPM</span>}
+                </div>
+                {paddle.shape && (
+                  <div className="text-[10px] text-muted-foreground mt-1">{paddle.shape}{paddle.core_thickness_mm ? ` · ${paddle.core_thickness_mm}mm` : ""}</div>
+                )}
+              </Link>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Table View */}
+      {viewMode === "table" && <div className="border rounded-lg overflow-x-auto">
         <table className="w-full text-sm min-w-[800px]">
           <thead className="bg-muted">
             <tr>
@@ -243,7 +297,7 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
             })}
           </tbody>
         </table>
-      </div>
+      </div>}
 
       {/* Load more */}
       {visibleCount < sorted.length && (
