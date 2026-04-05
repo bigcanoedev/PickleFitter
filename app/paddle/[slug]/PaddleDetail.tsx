@@ -11,6 +11,7 @@ import { ArrowLeft, ExternalLink, ShieldCheck, Zap, Target, Wind, Ruler, Weight,
 import { Button } from "@/components/ui/button";
 import { paddleSlug, selectBestLink } from "@/lib/utils";
 import { BuyButtons } from "@/components/BuyButtons";
+import { PaddleImage } from "@/components/PaddleImage";
 
 export default function PaddleDetail() {
   const params = useParams();
@@ -81,10 +82,13 @@ export default function PaddleDetail() {
       {/* ── Hero Section ── */}
       <section>
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-          <div>
+          <div className="flex gap-4">
+            <PaddleImage paddle={paddle} size="lg" className="shrink-0 hidden sm:block" />
+            <div>
             <div className="text-sm text-muted-foreground uppercase tracking-wide font-medium">{paddle.brand}</div>
             <h1 className="text-2xl sm:text-3xl font-black mt-1">{paddle.name}</h1>
             <p className="text-muted-foreground mt-2 max-w-xl">{analysis.verdict}</p>
+          </div>
           </div>
           <div ref={heroBuyRef} className="flex flex-col items-start sm:items-end gap-2 shrink-0">
             <div className="text-3xl font-black text-primary">${paddle.price}</div>

@@ -9,6 +9,7 @@ import { paddleSlug } from "@/lib/utils";
 import { BuyButtons } from "@/components/BuyButtons";
 import { getGuideBySlug, getGuideRanking, type GuideFAQ } from "@/lib/guides";
 import { generatePros, generateCons } from "@/lib/paddle-analysis";
+import { PaddleImage } from "@/components/PaddleImage";
 
 export default function GuideContent({ slug }: { slug: string }) {
   const guide = useMemo(() => getGuideBySlug(slug), [slug]);
@@ -105,8 +106,11 @@ function PaddleCard({ paddle, rank }: { paddle: Paddle; rank: number }) {
     <div className="border rounded-lg p-5 sm:p-6 hover:border-primary/30 transition-colors">
       {/* Header */}
       <div className="flex items-start gap-4">
-        <div className="shrink-0 w-10 h-10 rounded-full bg-primary/10 text-primary font-black text-lg flex items-center justify-center">
-          {rank}
+        <div className="shrink-0 flex flex-col items-center gap-2">
+          <div className="w-10 h-10 rounded-full bg-primary/10 text-primary font-black text-lg flex items-center justify-center">
+            {rank}
+          </div>
+          <PaddleImage paddle={paddle} size="sm" className="hidden sm:block" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">

@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SlidersHorizontal } from "lucide-react";
 import { BuyButtons } from "@/components/BuyButtons";
+import { PaddleImage } from "@/components/PaddleImage";
 
 interface PaddleCardProps {
   paddle: PaddleScore;
@@ -25,6 +26,9 @@ export function PaddleCard({ paddle, rank, onSelect, showSelectButton, currency 
         </div>
       )}
       <CardHeader className="pb-3">
+        <div className="flex gap-3">
+          <PaddleImage paddle={paddle} size="sm" className="shrink-0" />
+          <div className="min-w-0">
         <div className="text-xs text-muted-foreground uppercase tracking-wide">{paddle.brand}</div>
         <CardTitle className="text-lg">{paddle.name}</CardTitle>
         <div className="flex items-center gap-3 text-sm">
@@ -32,6 +36,8 @@ export function PaddleCard({ paddle, rank, onSelect, showSelectButton, currency 
           <span className="bg-accent text-accent-foreground px-2 py-0.5 rounded text-xs font-medium">
             {paddle.matchPercentage}% match
           </span>
+        </div>
+          </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-3">
