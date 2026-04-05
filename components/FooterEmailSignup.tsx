@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { track } from "@vercel/analytics";
 
 export function FooterEmailSignup() {
   const [email, setEmail] = useState("");
@@ -20,6 +21,7 @@ export function FooterEmailSignup() {
         body: JSON.stringify({ email }),
       });
       setSubmitted(true);
+      track("email_signup", { source: "footer" });
     } catch {
       // Fail silently
     } finally {

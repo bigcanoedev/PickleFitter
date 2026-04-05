@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { DiscountBadge } from "@/components/DiscountBadge";
 import { getRetailerLinks } from "@/lib/utils";
 import { Paddle } from "@/lib/types";
+import { track } from "@vercel/analytics";
 
 interface BuyButtonsProps {
   paddle: Paddle;
@@ -17,6 +18,10 @@ export function BuyButtons({ paddle, compact = false, size = "default" }: BuyBut
 
   if (links.length === 0) return null;
 
+  const trackClick = (retailer: string) => {
+    track("affiliate_click", { paddle: `${paddle.brand} ${paddle.name}`, retailer, price: paddle.price });
+  };
+
   if (compact) {
     return (
       <div className="flex items-center gap-2">
@@ -26,6 +31,7 @@ export function BuyButtons({ paddle, compact = false, size = "default" }: BuyBut
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackClick(link.label)}
             className="inline-flex items-center gap-1 text-xs text-primary hover:underline font-medium"
           >
             {link.label} <ExternalLink className="w-3 h-3" />
@@ -47,7 +53,7 @@ export function BuyButtons({ paddle, compact = false, size = "default" }: BuyBut
             variant={link.primary ? "default" : "outline"}
             className="gap-1.5"
           >
-            <a href={link.url} target="_blank" rel="noopener noreferrer">
+            <a href={link.url} target="_blank" rel="noopener noreferrer" onClick={() => trackClick(link.label)}>
               <ShoppingCart className="w-3.5 h-3.5" />
               {link.label}
             </a>

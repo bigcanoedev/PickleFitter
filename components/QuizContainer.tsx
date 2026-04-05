@@ -12,6 +12,7 @@ import { generateSessionId } from "@/lib/utils";
 import { paddleData } from "@/lib/paddle-data";
 import { getAllRanked } from "@/lib/recommendations";
 import { Paddle, PlayerProfile } from "@/lib/types";
+import { track } from "@vercel/analytics";
 
 interface QuizQuestion {
   id: number;
@@ -327,6 +328,8 @@ export function QuizContainer() {
 
   // ME7: Pre-fill answers from URL params (e.g. from guide pages)
   useEffect(() => {
+    track("quiz_started");
+
     const prefill: Record<string, string> = {};
     searchParams.forEach((value, key) => {
       if (quizQuestions.some((q) => q.key === key)) {
@@ -449,6 +452,8 @@ export function QuizContainer() {
   };
 
   const submitQuiz = async () => {
+    const answeredCount = Object.keys(answers).filter((k) => answers[k]).length;
+    track("quiz_completed", { questions_answered: answeredCount, phase: showGate === "phase1" ? 1 : showGate === "phase2" ? 2 : 3 });
     setIsSubmitting(true);
     const sessionId = generateSessionId();
     try {
@@ -519,6 +524,7 @@ export function QuizContainer() {
 
   // Phase gate interstitials
   if (showGate === "phase1") {
+    track("quiz_gate_shown", { gate: "phase1", matches_found: teaserMatchCount });
     return (
       <div className="max-w-lg mx-auto text-center space-y-6 py-8">
         <div className="text-4xl font-black text-primary">{teaserMatchCount}</div>
@@ -540,6 +546,7 @@ export function QuizContainer() {
   }
 
   if (showGate === "phase2") {
+    track("quiz_gate_shown", { gate: "phase2" });
     const phase3Count = phaseVisibleCounts[2] || 0;
     return (
       <div className="max-w-lg mx-auto text-center space-y-6 py-8">

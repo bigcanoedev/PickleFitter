@@ -14,6 +14,7 @@ import { LeadTapeOptimizer } from "@/components/LeadTapeOptimizer";
 import { EmailSignup } from "@/components/EmailSignup";
 import { ShareResults } from "@/components/ShareResults";
 import { SocialProofInsights } from "@/components/SocialProofInsights";
+import { track } from "@vercel/analytics";
 import { paddleSlug } from "@/lib/utils";
 
 function parseProfile(searchParams: URLSearchParams): PlayerProfile {
@@ -97,6 +98,12 @@ function ResultsContent() {
     setRecommendations(ranked.slice(0, 3));
     if (ranked.length > 0) {
       setSelectedPaddle(ranked[0]);
+      track("results_viewed", {
+        top_match: `${ranked[0].brand} ${ranked[0].name}`,
+        match_pct: ranked[0].matchPercentage,
+        skill: profile.skillLevel,
+        style: profile.playStyle,
+      });
       // S4: Persist results for return visit banner
       try {
         localStorage.setItem("picklefitter_last_results", JSON.stringify({

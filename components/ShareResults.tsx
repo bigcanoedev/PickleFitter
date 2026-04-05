@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Link2, Share2, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { track } from "@vercel/analytics";
 
 interface ShareResultsProps {
   paddleName: string;
@@ -19,17 +20,20 @@ export function ShareResults({ paddleName, matchPercentage }: ShareResultsProps)
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
+      track("share_click", { method: "copy" });
       setTimeout(() => setCopied(false), 2000);
     } catch {}
   };
 
   const handleTwitter = () => {
+    track("share_click", { method: "twitter" });
     const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`;
     window.open(tweetUrl, "_blank", "width=550,height=420");
   };
 
   const handleNativeShare = async () => {
     try {
+      track("share_click", { method: "native" });
       await navigator.share({ title: "My PickleFitter Match", text: shareText, url });
     } catch {}
   };

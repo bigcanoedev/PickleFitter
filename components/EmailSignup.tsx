@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { track } from "@vercel/analytics";
 
 interface TopPaddle {
   id: number;
@@ -39,6 +40,7 @@ export function EmailSignup({ sessionId, recommendedPaddleId, topPaddles }: Emai
         }),
       });
       setSubmitted(true);
+      track("email_signup", { source: "results" });
     } catch {
       // Fail silently for MVP
     } finally {
