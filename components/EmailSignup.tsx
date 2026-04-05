@@ -4,12 +4,20 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+interface TopPaddle {
+  id: number;
+  name: string;
+  brand: string;
+  price: number;
+}
+
 interface EmailSignupProps {
   sessionId?: string;
   recommendedPaddleId?: number;
+  topPaddles?: TopPaddle[];
 }
 
-export function EmailSignup({ sessionId, recommendedPaddleId }: EmailSignupProps) {
+export function EmailSignup({ sessionId, recommendedPaddleId, topPaddles }: EmailSignupProps) {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -23,7 +31,12 @@ export function EmailSignup({ sessionId, recommendedPaddleId }: EmailSignupProps
       await fetch("/api/email-signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, sessionId, recommendedPaddleId }),
+        body: JSON.stringify({
+          email,
+          sessionId,
+          recommendedPaddleId: recommendedPaddleId || topPaddles?.[0]?.id,
+          topPaddles,
+        }),
       });
       setSubmitted(true);
     } catch {

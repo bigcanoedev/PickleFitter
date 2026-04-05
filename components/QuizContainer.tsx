@@ -10,6 +10,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { generateSessionId } from "@/lib/utils";
 import { paddleData } from "@/lib/paddle-data";
+import { getAllRanked } from "@/lib/recommendations";
+import { Paddle, PlayerProfile } from "@/lib/types";
 
 interface QuizQuestion {
   id: number;
@@ -252,6 +254,53 @@ const quizQuestions: QuizQuestion[] = [
   },
 ];
 
+/* ───────────────── Phase Definitions ───────────────── */
+
+const PHASES = [
+  { name: "Your Game", keys: ["skillLevel", "playStyle", "gameType", "pointSource", "swingSpeed"] },
+  { name: "Your Preferences", keys: ["playingFrequency", "armIssues", "frustration", "feelPreference", "currentPaddle", "priorSport"] },
+  { name: "Fine-Tuning", keys: ["buildPreference", "shapePreference", "coreThickness", "spinPriority", "stabilityPreference", "customizationPreference", "handSize", "gripLength", "budget"] },
+];
+
+function getPhaseIndex(questionKey: string): number {
+  return PHASES.findIndex((p) => p.keys.includes(questionKey));
+}
+
+function buildPartialProfile(answers: Record<string, string>): PlayerProfile {
+  return {
+    playStyle: (answers.playStyle as PlayerProfile["playStyle"]) || "Balanced",
+    skillLevel: (answers.skillLevel as PlayerProfile["skillLevel"]) || "Intermediate",
+    gameType: (answers.gameType as PlayerProfile["gameType"]) || "Both",
+    swingSpeed: (answers.swingSpeed as PlayerProfile["swingSpeed"]) || "Moderate",
+    pointSource: (answers.pointSource as PlayerProfile["pointSource"]) || "Mix",
+    frustration: answers.frustration || "None",
+    armIssues: (answers.armIssues as PlayerProfile["armIssues"]) || "None",
+    feelPreference: (answers.feelPreference as PlayerProfile["feelPreference"]) || "No preference",
+    currentPaddle: answers.currentPaddle || "",
+    priorSport: (answers.priorSport as PlayerProfile["priorSport"]) || "None",
+    playingFrequency: (answers.playingFrequency as PlayerProfile["playingFrequency"]) || "Regular",
+    buildPreference: (answers.buildPreference as PlayerProfile["buildPreference"]) || "No preference",
+    shapePreference: (answers.shapePreference as PlayerProfile["shapePreference"]) || "No preference",
+    coreThickness: (answers.coreThickness as PlayerProfile["coreThickness"]) || "No preference",
+    spinPriority: (answers.spinPriority as PlayerProfile["spinPriority"]) || "Medium",
+    stabilityPreference: (answers.stabilityPreference as PlayerProfile["stabilityPreference"]) || "No preference",
+    customizationPreference: (answers.customizationPreference as PlayerProfile["customizationPreference"]) || "No preference",
+    handSize: (answers.handSize as PlayerProfile["handSize"]) || "Medium",
+    gripLength: (answers.gripLength as PlayerProfile["gripLength"]) || "No preference",
+    currency: "USD",
+    budgetMin: 0,
+    budgetMax: 500,
+  };
+}
+
+function countGoodMatches(answers: Record<string, string>): number {
+  const profile = buildPartialProfile(answers);
+  const ranked = getAllRanked(profile, paddleData as Paddle[]);
+  return ranked.filter((p) => p.matchPercentage >= 70).length;
+}
+
+/* ───────────────── Storage ───────────────── */
+
 const QUIZ_STORAGE_KEY = "picklefitter_quiz_progress";
 
 function loadSavedProgress(): { step: number; answers: Record<string, string> } | null {
@@ -273,6 +322,8 @@ export function QuizContainer() {
   const [currency, setCurrency] = useState<"USD" | "CAD">("USD");
   const [budgetRange, setBudgetRange] = useState<[number, number]>([50, 250]);
   const [showResume, setShowResume] = useState(false);
+  const [showGate, setShowGate] = useState<"phase1" | "phase2" | null>(null);
+  const [teaserMatchCount, setTeaserMatchCount] = useState(0);
 
   // ME7: Pre-fill answers from URL params (e.g. from guide pages)
   useEffect(() => {
@@ -331,13 +382,32 @@ export function QuizContainer() {
 
   const autoAdvanceTimer = useRef<NodeJS.Timeout | null>(null);
 
+  // Check if advancing past this step crosses a phase boundary
+  const wouldCrossPhase = (stepIndex: number): "phase1" | "phase2" | null => {
+    if (stepIndex >= totalSteps - 1) return null;
+    const currentQ = visibleQuestions[stepIndex];
+    const nextQ = visibleQuestions[stepIndex + 1];
+    if (!currentQ || !nextQ) return null;
+    const curPhase = getPhaseIndex(currentQ.key);
+    const nextPhase = getPhaseIndex(nextQ.key);
+    if (curPhase === 0 && nextPhase === 1) return "phase1";
+    if (curPhase === 1 && nextPhase === 2) return "phase2";
+    return null;
+  };
+
   const handleSelect = (value: string) => {
     setAnswers((prev) => ({ ...prev, [current.key]: value }));
     // Auto-advance on radio selection after brief visual confirmation
     if (current.type === "radio" && currentStep < totalSteps - 1) {
       if (autoAdvanceTimer.current) clearTimeout(autoAdvanceTimer.current);
       autoAdvanceTimer.current = setTimeout(() => {
-        setCurrentStep((prev) => prev + 1);
+        const gate = wouldCrossPhase(currentStep);
+        if (gate) {
+          if (gate === "phase1") setTeaserMatchCount(countGoodMatches({ ...answers, [current.key]: value }));
+          setShowGate(gate);
+        } else {
+          setCurrentStep((prev) => prev + 1);
+        }
       }, 350);
     }
   };
@@ -378,33 +448,38 @@ export function QuizContainer() {
     setCurrentStep((prev) => Math.min(prev + 1, visibleQuestions.length - 1));
   };
 
+  const submitQuiz = async () => {
+    setIsSubmitting(true);
+    const sessionId = generateSessionId();
+    try {
+      await fetch("/api/quiz-submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId, answers }),
+      });
+    } catch {}
+    const params = new URLSearchParams({
+      ...answers,
+      currency,
+      budgetMin: String(budgetRange[0]),
+      budgetMax: String(budgetRange[1]),
+      sessionId,
+    });
+    localStorage.removeItem(QUIZ_STORAGE_KEY);
+    router.push(`/results?${params.toString()}`);
+  };
+
   const handleNext = async () => {
     if (currentStep < totalSteps - 1) {
-      setCurrentStep((prev) => prev + 1);
-    } else {
-      setIsSubmitting(true);
-      const sessionId = generateSessionId();
-
-      try {
-        await fetch("/api/quiz-submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ sessionId, answers }),
-        });
-      } catch {
-        // Continue even if logging fails
+      const gate = wouldCrossPhase(currentStep);
+      if (gate) {
+        if (gate === "phase1") setTeaserMatchCount(countGoodMatches(answers));
+        setShowGate(gate);
+      } else {
+        setCurrentStep((prev) => prev + 1);
       }
-
-      const params = new URLSearchParams({
-        ...answers,
-        currency,
-        budgetMin: String(budgetRange[0]),
-        budgetMax: String(budgetRange[1]),
-        sessionId,
-      });
-
-      localStorage.removeItem(QUIZ_STORAGE_KEY);
-      router.push(`/results?${params.toString()}`);
+    } else {
+      await submitQuiz();
     }
   };
 
@@ -419,6 +494,16 @@ export function QuizContainer() {
     current.type === "budget-slider" ||
     (current.type === "multi-select" ? !!currentAnswer : !!currentAnswer);
 
+  // Compute current phase and per-phase progress
+  const currentPhaseIndex = current ? getPhaseIndex(current.key) : 0;
+  const phaseVisibleCounts = PHASES.map((phase) =>
+    visibleQuestions.filter((q) => phase.keys.includes(q.key)).length
+  );
+  const questionsInCurrentPhase = phaseVisibleCounts[currentPhaseIndex] || 1;
+  const questionIndexInPhase = visibleQuestions
+    .filter((q) => PHASES[currentPhaseIndex]?.keys.includes(q.key))
+    .indexOf(current);
+
   if (showResume) {
     return (
       <div className="max-w-lg mx-auto text-center space-y-4 py-8">
@@ -432,27 +517,82 @@ export function QuizContainer() {
     );
   }
 
+  // Phase gate interstitials
+  if (showGate === "phase1") {
+    return (
+      <div className="max-w-lg mx-auto text-center space-y-6 py-8">
+        <div className="text-4xl font-black text-primary">{teaserMatchCount}</div>
+        <h2 className="text-xl font-black">great matches found from {paddleData.length} paddles!</h2>
+        <p className="text-muted-foreground">
+          Answer a few more questions to narrow it down to your perfect top 3.
+        </p>
+        <div className="flex flex-col sm:flex-row justify-center gap-3">
+          <Button onClick={() => { setShowGate(null); setCurrentStep((prev) => prev + 1); }} className="gap-1.5">
+            Keep Going
+            <ChevronRight className="w-4 h-4" />
+          </Button>
+          <Button variant="outline" onClick={submitQuiz}>
+            Show results now
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (showGate === "phase2") {
+    const phase3Count = phaseVisibleCounts[2] || 0;
+    return (
+      <div className="max-w-lg mx-auto text-center space-y-6 py-8">
+        <h2 className="text-xl font-black">Your profile is ready!</h2>
+        <p className="text-muted-foreground">
+          You can see your matches now, or answer {phase3Count} more questions to fine-tune the results.
+        </p>
+        <div className="flex flex-col sm:flex-row justify-center gap-3">
+          <Button onClick={submitQuiz} className="gap-1.5 px-6 py-5 text-base font-bold">
+            Show My Matches
+          </Button>
+          <Button variant="outline" onClick={() => { setShowGate(null); setCurrentStep((prev) => prev + 1); }} className="gap-1.5">
+            Fine-Tune
+            <ChevronRight className="w-4 h-4" />
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-lg mx-auto">
-      {/* Progress bar */}
+      {/* Phase progress bar */}
       <div className="mb-8">
-        <div className="flex justify-between text-sm text-muted-foreground mb-2">
+        <div className="flex gap-1 mb-2">
+          {PHASES.map((phase, i) => {
+            const isActive = i === currentPhaseIndex;
+            const isCompleted = i < currentPhaseIndex;
+            const fillPct = isCompleted ? 100 : isActive ? ((questionIndexInPhase + 1) / questionsInCurrentPhase) * 100 : 0;
+            return (
+              <div key={phase.name} className="flex-1">
+                <div className={`text-[10px] sm:text-xs mb-1 text-center truncate ${
+                  isActive ? "text-primary font-bold" : isCompleted ? "text-primary/60" : "text-muted-foreground/50"
+                }`}>
+                  {phase.name}
+                </div>
+                <div className="h-2 bg-secondary rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-primary rounded-full transition-all duration-300"
+                    style={{ width: `${fillPct}%` }}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="flex justify-between text-xs text-muted-foreground">
           <span>
-            Question {currentStep + 1} of {totalSteps}
-            {currentStep === 1 && " — Great start!"}
-            {currentStep >= 4 && currentStep < totalSteps - 4 && " — Building your profile..."}
-            {currentStep === totalSteps - 4 && " — Almost there!"}
-            {currentStep === totalSteps - 3 && " — 3 left!"}
-            {currentStep === totalSteps - 2 && " — 2 left!"}
+            Question {questionIndexInPhase + 1} of {questionsInCurrentPhase}
+            {questionIndexInPhase === 0 && currentPhaseIndex === 0 && " — Let's go!"}
             {currentStep === totalSteps - 1 && " — Last one!"}
           </span>
-          <span>{Math.round(progress)}%</span>
-        </div>
-        <div className="w-full h-2 bg-secondary rounded-full overflow-hidden">
-          <div
-            className="h-full bg-primary rounded-full transition-all duration-300"
-            style={{ width: `${progress}%` }}
-          />
+          <span>{PHASES[currentPhaseIndex]?.name}</span>
         </div>
       </div>
 

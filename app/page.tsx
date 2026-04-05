@@ -1,10 +1,12 @@
 import { LandingHero } from "@/components/LandingHero";
+import { ReturnVisitBanner } from "@/components/ReturnVisitBanner";
 import Link from "next/link";
 import { guides } from "@/lib/guides";
 
 export default function HomePage() {
   return (
     <>
+      <ReturnVisitBanner />
       {/* Server-rendered SEO content visible to all crawlers */}
       <div className="sr-only">
         <h1>PickleFitter — Find Your Perfect Pickleball Paddle</h1>

@@ -12,6 +12,8 @@ import { PaddleRankings } from "@/components/PaddleRankings";
 import { PaddleCustomizer } from "@/components/PaddleCustomizer";
 import { LeadTapeOptimizer } from "@/components/LeadTapeOptimizer";
 import { EmailSignup } from "@/components/EmailSignup";
+import { ShareResults } from "@/components/ShareResults";
+import { SocialProofInsights } from "@/components/SocialProofInsights";
 import { paddleSlug } from "@/lib/utils";
 
 function parseProfile(searchParams: URLSearchParams): PlayerProfile {
@@ -95,6 +97,16 @@ function ResultsContent() {
     setRecommendations(ranked.slice(0, 3));
     if (ranked.length > 0) {
       setSelectedPaddle(ranked[0]);
+      // S4: Persist results for return visit banner
+      try {
+        localStorage.setItem("picklefitter_last_results", JSON.stringify({
+          topPaddleName: `${ranked[0].brand} ${ranked[0].name}`,
+          topPaddleMatch: ranked[0].matchPercentage,
+          resultsUrl: window.location.href,
+          timestamp: Date.now(),
+        }));
+        localStorage.removeItem("picklefitter_banner_dismissed");
+      } catch {}
     }
 
     // Reveal animation: count up then show results
@@ -151,6 +163,14 @@ function ResultsContent() {
             {profile.skillLevel} {profile.playStyle} player, {profile.swingSpeed} swing
           </p>
           <ProfileSummary profile={profile} />
+          {recommendations.length > 0 && (
+            <div className="mt-4 flex justify-center">
+              <ShareResults
+                paddleName={`${recommendations[0].brand} ${recommendations[0].name}`}
+                matchPercentage={recommendations[0].matchPercentage}
+              />
+            </div>
+          )}
         </div>
 
         {/* Hero card for #1 */}
@@ -198,11 +218,14 @@ function ResultsContent() {
         )}
       </section>
 
-      {/* Section 2: Email Signup — capture at peak excitement */}
+      {/* Section 2: Social proof */}
+      <SocialProofInsights profile={profile} />
+
+      {/* Section 3: Email Signup — capture at peak excitement */}
       <section>
         <EmailSignup
           sessionId={sessionId}
-          recommendedPaddleId={selectedPaddle?.id}
+          topPaddles={recommendations.map((p) => ({ id: p.id, name: p.name, brand: p.brand, price: p.price }))}
         />
       </section>
 
