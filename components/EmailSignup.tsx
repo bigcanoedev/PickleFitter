@@ -37,9 +37,9 @@ export function EmailSignup({ sessionId, recommendedPaddleId }: EmailSignupProps
     return (
       <Card className="border-primary/50 bg-primary/5">
         <CardContent className="pt-6 text-center">
-          <div className="text-2xl font-bold mb-2">You&apos;re in!</div>
+          <div className="text-2xl font-bold mb-2">Saved!</div>
           <p className="text-muted-foreground">
-            We&apos;ll check in with you in 2 weeks to see how your new paddle is working out.
+            Your top matches and buy links are on the way. You&apos;ll also get alerts if any go on sale.
           </p>
         </CardContent>
       </Card>
@@ -49,12 +49,11 @@ export function EmailSignup({ sessionId, recommendedPaddleId }: EmailSignupProps
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Get a 2-Week Check-In</CardTitle>
+        <CardTitle className="text-lg">Save Your Results</CardTitle>
       </CardHeader>
       <CardContent>
         <p className="text-sm text-muted-foreground mb-4">
-          We&apos;ll follow up in 2 weeks to see how your paddle choice is working out, plus send
-          gear recommendations based on your play style.
+          Get your top matches with buy links emailed to you, plus deal alerts if any go on sale.
         </p>
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
           <input
@@ -66,7 +65,7 @@ export function EmailSignup({ sessionId, recommendedPaddleId }: EmailSignupProps
             className="flex-1 px-3 py-2 rounded-md border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
           />
           <Button type="submit" disabled={loading} className="w-full sm:w-auto">
-            {loading ? "..." : "Sign Up"}
+            {loading ? "..." : "Email My Results"}
           </Button>
         </form>
       </CardContent>

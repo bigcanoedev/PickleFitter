@@ -268,10 +268,19 @@ export function QuizContainer() {
 
   const current = visibleQuestions[currentStep];
   const totalSteps = visibleQuestions.length;
-  const progress = ((currentStep + 1) / totalSteps) * 100;
+  const progress = 10 + ((currentStep + 1) / totalSteps) * 90;
+
+  const autoAdvanceTimer = useRef<NodeJS.Timeout | null>(null);
 
   const handleSelect = (value: string) => {
     setAnswers((prev) => ({ ...prev, [current.key]: value }));
+    // Auto-advance on radio selection after brief visual confirmation
+    if (current.type === "radio" && currentStep < totalSteps - 1) {
+      if (autoAdvanceTimer.current) clearTimeout(autoAdvanceTimer.current);
+      autoAdvanceTimer.current = setTimeout(() => {
+        setCurrentStep((prev) => prev + 1);
+      }, 350);
+    }
   };
 
   const handleMultiSelect = (value: string) => {
@@ -357,6 +366,12 @@ export function QuizContainer() {
         <div className="flex justify-between text-sm text-muted-foreground mb-2">
           <span>
             Question {currentStep + 1} of {totalSteps}
+            {currentStep === 1 && " — Great start!"}
+            {currentStep >= 4 && currentStep < totalSteps - 4 && " — Building your profile..."}
+            {currentStep === totalSteps - 4 && " — Almost there!"}
+            {currentStep === totalSteps - 3 && " — 3 left!"}
+            {currentStep === totalSteps - 2 && " — 2 left!"}
+            {currentStep === totalSteps - 1 && " — Last one!"}
           </span>
           <span>{Math.round(progress)}%</span>
         </div>
@@ -461,11 +476,18 @@ export function QuizContainer() {
           Previous
         </Button>
         {(current.type === "radio" || current.type === "multi-select" || current.type === "budget-slider") && (
-          <Button onClick={handleNext} disabled={!canProceed || isSubmitting} className="gap-1">
+          <Button
+            onClick={handleNext}
+            disabled={!canProceed || isSubmitting}
+            className={currentStep === totalSteps - 1
+              ? "gap-1.5 px-6 py-5 text-base font-bold"
+              : "gap-1"
+            }
+          >
             {isSubmitting ? (
               <><Loader2 className="w-4 h-4 animate-spin" /> Finding paddles...</>
             ) : currentStep === totalSteps - 1 ? (
-              "See My Matches"
+              "Show Me My Perfect Paddles"
             ) : (
               <>Next <ChevronRight className="w-4 h-4" /></>
             )}

@@ -96,15 +96,15 @@ export function LandingHero() {
           variants={fadeUp}
           className="text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed"
         >
-          Not marketing hype. Real swing weight, twist weight, power, and spin data
-          from lab testing — matched to your play style in 2 minutes.
+          Most players are using the wrong paddle. Real swing weight, twist weight,
+          power, and spin data from lab testing — matched to your play style in 2 minutes.
         </motion.p>
 
         <motion.div variants={fadeUp} className="flex flex-col sm:flex-row justify-center gap-3">
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
             <Button asChild size="lg" className="w-full sm:w-auto text-base px-8 py-6 font-bold gap-2">
               <Link href="/quiz">
-                Take the Quiz
+                Find My Match
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </Button>

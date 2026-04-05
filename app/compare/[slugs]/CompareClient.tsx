@@ -45,15 +45,15 @@ export default function CompareClient({ slugA, slugB }: { slugA: string; slugB: 
     verdict: getSpecVerdict(paddleB),
   };
 
-  const specs: { label: string; icon: React.ReactNode; getVal: (p: Paddle) => string | null; higherIsBetter?: boolean }[] = [
-    { label: "Price", icon: null, getVal: (p) => `$${p.price}`, higherIsBetter: false },
+  const specs: { label: string; icon: React.ReactNode; getVal: (p: Paddle) => string | null; getNum?: (p: Paddle) => number | null; higherIsBetter?: boolean }[] = [
+    { label: "Price", icon: null, getVal: (p) => `$${p.price}`, getNum: (p) => p.price, higherIsBetter: false },
     { label: "Swing Weight", icon: <Zap className="w-3.5 h-3.5" />, getVal: (p) => String(p.swing_weight) },
-    { label: "Twist Weight", icon: <ShieldCheck className="w-3.5 h-3.5" />, getVal: (p) => String(p.twist_weight), higherIsBetter: true },
+    { label: "Twist Weight", icon: <ShieldCheck className="w-3.5 h-3.5" />, getVal: (p) => String(p.twist_weight), getNum: (p) => p.twist_weight, higherIsBetter: true },
     { label: "Weight", icon: <Weight className="w-3.5 h-3.5" />, getVal: (p) => `${parseFloat(p.weight_oz.toFixed(1))} oz` },
     { label: "Core", icon: <Layers className="w-3.5 h-3.5" />, getVal: (p) => p.core_thickness_mm ? `${p.core_thickness_mm}mm` : null },
-    { label: "Power", icon: <Zap className="w-3.5 h-3.5" />, getVal: (p) => p.power_mph ? `${p.power_mph} MPH` : null, higherIsBetter: true },
-    { label: "Pop", icon: <Target className="w-3.5 h-3.5" />, getVal: (p) => p.pop_mph ? `${p.pop_mph} MPH` : null, higherIsBetter: true },
-    { label: "Spin", icon: <Wind className="w-3.5 h-3.5" />, getVal: (p) => (p.spin_rpm || p.rpm) ? `${p.spin_rpm || p.rpm} RPM` : null, higherIsBetter: true },
+    { label: "Power", icon: <Zap className="w-3.5 h-3.5" />, getVal: (p) => p.power_mph ? `${p.power_mph} MPH` : null, getNum: (p) => p.power_mph, higherIsBetter: true },
+    { label: "Pop", icon: <Target className="w-3.5 h-3.5" />, getVal: (p) => p.pop_mph ? `${p.pop_mph} MPH` : null, getNum: (p) => p.pop_mph, higherIsBetter: true },
+    { label: "Spin", icon: <Wind className="w-3.5 h-3.5" />, getVal: (p) => (p.spin_rpm || p.rpm) ? `${p.spin_rpm || p.rpm} RPM` : null, getNum: (p) => p.spin_rpm || p.rpm, higherIsBetter: true },
     { label: "Shape", icon: null, getVal: (p) => p.shape },
     { label: "Face", icon: null, getVal: (p) => p.face_material },
     { label: "Build", icon: null, getVal: (p) => p.build_style },
@@ -91,14 +91,32 @@ export default function CompareClient({ slugA, slugB }: { slugA: string; slugB: 
             const valA = spec.getVal(paddleA);
             const valB = spec.getVal(paddleB);
             if (!valA && !valB) return null;
+
+            // Determine winner for numeric specs
+            let winA = false;
+            let winB = false;
+            if (spec.getNum && spec.higherIsBetter !== undefined) {
+              const numA = spec.getNum(paddleA);
+              const numB = spec.getNum(paddleB);
+              if (numA != null && numB != null && numA !== numB) {
+                if (spec.higherIsBetter) {
+                  winA = numA > numB;
+                  winB = numB > numA;
+                } else {
+                  winA = numA < numB;
+                  winB = numB < numA;
+                }
+              }
+            }
+
             return (
               <div key={spec.label} className="grid grid-cols-3 text-sm border-t">
                 <div className="p-3 flex items-center gap-1.5 text-muted-foreground">
                   {spec.icon}
                   {spec.label}
                 </div>
-                <div className="p-3 text-center border-l font-medium">{valA || "—"}</div>
-                <div className="p-3 text-center border-l font-medium">{valB || "—"}</div>
+                <div className={`p-3 text-center border-l font-medium ${winA ? "text-primary bg-primary/5" : ""}`}>{valA || "—"}</div>
+                <div className={`p-3 text-center border-l font-medium ${winB ? "text-primary bg-primary/5" : ""}`}>{valB || "—"}</div>
               </div>
             );
           })}

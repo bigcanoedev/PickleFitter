@@ -5,12 +5,14 @@ import { useState, useEffect, Suspense } from "react";
 import { Paddle, PlayerProfile, PaddleScore } from "@/lib/types";
 import { getAllRanked } from "@/lib/recommendations";
 import { paddleData } from "@/lib/paddle-data";
+import Link from "next/link";
 import { PaddleCard } from "@/components/PaddleCard";
 import { PickleballLoader } from "@/components/PickleballLoader";
 import { PaddleRankings } from "@/components/PaddleRankings";
 import { PaddleCustomizer } from "@/components/PaddleCustomizer";
 import { LeadTapeOptimizer } from "@/components/LeadTapeOptimizer";
 import { EmailSignup } from "@/components/EmailSignup";
+import { paddleSlug } from "@/lib/utils";
 
 function parseProfile(searchParams: URLSearchParams): PlayerProfile {
   return {
@@ -99,34 +101,81 @@ function ResultsContent() {
 
   return (
     <div className="space-y-16">
-      {/* Section 1: Quiz Results */}
+      {/* Section 1: Quiz Results — Hero #1 */}
       <section>
         <div className="text-center mb-8">
-          <h1 className="text-2xl sm:text-3xl font-black">Your Paddle Matches</h1>
+          {recommendations.length > 0 ? (
+            <>
+              <h1 className="text-2xl sm:text-3xl font-black">
+                Your #1 Match: {recommendations[0].brand} {recommendations[0].name}
+              </h1>
+              <p className="text-primary font-bold text-lg mt-1">
+                {recommendations[0].matchPercentage}% match
+              </p>
+            </>
+          ) : (
+            <h1 className="text-2xl sm:text-3xl font-black">Your Paddle Matches</h1>
+          )}
           <p className="text-muted-foreground mt-2">
-            Profile:{" "}
-            <strong>
-              {profile.skillLevel} {profile.playStyle} player, {profile.swingSpeed} swing
-            </strong>
+            {profile.skillLevel} {profile.playStyle} player, {profile.swingSpeed} swing
           </p>
           <ProfileSummary profile={profile} />
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
-          {recommendations.map((paddle, i) => (
+        {/* Hero card for #1 */}
+        {recommendations.length > 0 && (
+          <div className="mb-6">
             <PaddleCard
-              key={paddle.id}
-              paddle={paddle}
-              rank={i + 1}
+              paddle={recommendations[0]}
+              rank={1}
               onSelect={(p) => selectAndScroll(p)}
               showSelectButton
               currency={profile.currency}
             />
-          ))}
-        </div>
+          </div>
+        )}
+
+        {/* #2 and #3 */}
+        {recommendations.length > 1 && (
+          <>
+            <p className="text-sm font-bold text-muted-foreground mb-3">Also great for you:</p>
+            <div className="grid gap-4 md:grid-cols-2">
+              {recommendations.slice(1).map((paddle, i) => (
+                <PaddleCard
+                  key={paddle.id}
+                  paddle={paddle}
+                  rank={i + 2}
+                  onSelect={(p) => selectAndScroll(p)}
+                  showSelectButton
+                  currency={profile.currency}
+                />
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Compare top 2 */}
+        {recommendations.length >= 2 && (
+          <div className="text-center mt-6">
+            <Link
+              href={`/compare/${paddleSlug(recommendations[0].brand, recommendations[0].name)}-vs-${paddleSlug(recommendations[1].brand, recommendations[1].name)}`}
+              className="text-sm text-primary hover:underline font-medium"
+            >
+              Can&apos;t decide? Compare your top 2 head-to-head
+            </Link>
+          </div>
+        )}
       </section>
 
-      {/* Section 2: Full Rankings */}
+      {/* Section 2: Email Signup — capture at peak excitement */}
+      <section>
+        <EmailSignup
+          sessionId={sessionId}
+          recommendedPaddleId={selectedPaddle?.id}
+        />
+      </section>
+
+      {/* Section 3: Full Rankings */}
       {allRanked.length > 0 && (
         <section>
           <PaddleRankings
@@ -136,20 +185,12 @@ function ResultsContent() {
         </section>
       )}
 
-      {/* Section 3: Lead Tape Optimizer */}
+      {/* Section 4: Lead Tape Optimizer */}
       {selectedPaddle && (
         <section id="lead-tape-optimizer">
           <LeadTapeOptimizer selectedPaddle={selectedPaddle} />
         </section>
       )}
-
-      {/* Section 4: Email Signup */}
-      <section>
-        <EmailSignup
-          sessionId={sessionId}
-          recommendedPaddleId={selectedPaddle?.id}
-        />
-      </section>
     </div>
   );
 }
