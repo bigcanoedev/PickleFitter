@@ -68,6 +68,8 @@ export interface Guide {
   intro: string;
   rank: (paddles: Paddle[]) => Paddle[];
   faqs?: GuideFAQ[];
+  /** URL params to pre-fill quiz from this guide's context */
+  quizPrefill?: Record<string, string>;
 }
 
 const allPaddles = paddleData as Paddle[];
@@ -182,6 +184,7 @@ const THERMOFORMED_PROFILE = profile({
 export const guides: Guide[] = [
   {
     slug: "best-paddles-for-power",
+    quizPrefill: { playStyle: "Aggressive", swingSpeed: "Fast" },
     title: "Best Pickleball Paddles for Power",
     metaTitle: "10 Best Pickleball Paddles for Power (2026) — Lab-Tested | PickleFitter",
     description:
@@ -197,6 +200,7 @@ export const guides: Guide[] = [
   },
   {
     slug: "best-paddles-for-control",
+    quizPrefill: { playStyle: "Control", gameType: "Doubles" },
     title: "Best Pickleball Paddles for Control",
     metaTitle: "10 Best Pickleball Paddles for Control (2026) — Lab-Tested | PickleFitter",
     description:
@@ -212,6 +216,7 @@ export const guides: Guide[] = [
   },
   {
     slug: "best-paddles-for-spin",
+    quizPrefill: { spinPriority: "High" },
     title: "Best Pickleball Paddles for Spin",
     metaTitle: "10 Best Pickleball Paddles for Spin (2026) — Lab-Tested RPM | PickleFitter",
     description:
@@ -227,6 +232,7 @@ export const guides: Guide[] = [
   },
   {
     slug: "best-paddles-for-beginners",
+    quizPrefill: { skillLevel: "Beginner" },
     title: "Best Pickleball Paddles for Beginners",
     metaTitle: "10 Best Pickleball Paddles for Beginners (2026) | PickleFitter",
     description:
@@ -242,6 +248,7 @@ export const guides: Guide[] = [
   },
   {
     slug: "best-paddles-for-advanced-players",
+    quizPrefill: { skillLevel: "Advanced", playStyle: "Aggressive" },
     title: "Best Pickleball Paddles for Advanced Players",
     metaTitle: "10 Best Pickleball Paddles for Advanced Players (2026) | PickleFitter",
     description:
@@ -256,6 +263,7 @@ export const guides: Guide[] = [
   },
   {
     slug: "best-paddles-for-tennis-players",
+    quizPrefill: { priorSport: "Tennis", shapePreference: "Elongated" },
     title: "Best Pickleball Paddles for Tennis Players",
     metaTitle: "10 Best Pickleball Paddles for Tennis Players (2026) | PickleFitter",
     description:
@@ -270,6 +278,7 @@ export const guides: Guide[] = [
   },
   {
     slug: "best-paddles-for-tennis-elbow",
+    quizPrefill: { armIssues: "Serious", feelPreference: "Soft" },
     title: "Best Pickleball Paddles for Tennis Elbow",
     metaTitle: "10 Best Pickleball Paddles for Tennis Elbow & Arm Issues (2026) | PickleFitter",
     description:

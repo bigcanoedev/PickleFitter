@@ -76,10 +76,11 @@ function ResultsContent() {
   const [recommendations, setRecommendations] = useState<PaddleScore[]>([]);
   const [allRanked, setAllRanked] = useState<PaddleScore[]>([]);
   const [selectedPaddle, setSelectedPaddle] = useState<PaddleScore | null>(null);
+  const [revealing, setRevealing] = useState(true);
+  const [analyzeCount, setAnalyzeCount] = useState(0);
 
   const selectAndScroll = (p: PaddleScore) => {
     setSelectedPaddle(p);
-    // Small delay so the section renders before scrolling
     setTimeout(() => {
       document.getElementById("lead-tape-optimizer")?.scrollIntoView({ behavior: "smooth" });
     }, 100);
@@ -89,15 +90,45 @@ function ResultsContent() {
   const sessionId = searchParams.get("sessionId") || "";
 
   useEffect(() => {
-    // Score all paddles once, top 3 = first 3
     const ranked = getAllRanked(profile, paddleData as Paddle[]);
     setAllRanked(ranked);
     setRecommendations(ranked.slice(0, 3));
     if (ranked.length > 0) {
       setSelectedPaddle(ranked[0]);
     }
+
+    // Reveal animation: count up then show results
+    const target = paddleData.length;
+    const duration = 1800;
+    const steps = 30;
+    const increment = Math.ceil(target / steps);
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setAnalyzeCount(target);
+        clearInterval(timer);
+        setTimeout(() => setRevealing(false), 400);
+      } else {
+        setAnalyzeCount(current);
+      }
+    }, duration / steps);
+
+    return () => clearInterval(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (revealing) {
+    return (
+      <div className="min-h-[50vh] flex flex-col items-center justify-center text-center space-y-4">
+        <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+        <div className="space-y-1">
+          <p className="text-lg font-bold">Analyzing {analyzeCount} paddles...</p>
+          <p className="text-sm text-muted-foreground">Scoring against your profile</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-16">

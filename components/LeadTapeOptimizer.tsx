@@ -48,6 +48,7 @@ function degToClockDisplay(deg: number): string {
 }
 
 export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
+  const [showControls, setShowControls] = useState(false);
   const [inputMode, setInputMode] = useState<InputMode>("grams");
   const [tapeRate, setTapeRate] = useState(1); // g per inch
 
@@ -123,13 +124,51 @@ export function LeadTapeOptimizer({ selectedPaddle }: LeadTapeOptimizerProps) {
   const twDelta = parseFloat((calculation.resultingTwistWeight - selectedPaddle.twist_weight).toFixed(1));
   const weightDelta = parseFloat((calculation.resultingWeightOz - selectedPaddle.weight_oz).toFixed(1));
 
+  if (!showControls) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-black mb-2">Lead Tape Optimizer</h2>
+          <p className="text-sm text-muted-foreground">
+            Customize how your {selectedPaddle.brand} {selectedPaddle.name} plays by adding lead tape.
+          </p>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {[
+            { label: "More Power", desc: "Add weight to the top for more swing weight and drive speed", preset: PRESETS.find((p) => p.label === "Power") },
+            { label: "More Stability", desc: "Add weight to the sides for a bigger sweet spot", preset: PRESETS.find((p) => p.label === "Stability") },
+            { label: "More Control", desc: "Add butt cap weight for better balance and touch", preset: PRESETS.find((p) => p.label === "Balanced") },
+            { label: "Custom Setup", desc: "Place tape exactly where you want it", preset: null },
+          ].map((goal) => (
+            <button
+              key={goal.label}
+              onClick={() => {
+                if (goal.preset) applyPreset(goal.preset);
+                setShowControls(true);
+              }}
+              className="border-2 rounded-lg p-4 text-left hover:border-primary/50 hover:bg-primary/5 transition-all"
+            >
+              <div className="font-bold text-sm">{goal.label}</div>
+              <p className="text-xs text-muted-foreground mt-1">{goal.desc}</p>
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-black mb-2">Lead Tape Optimizer</h2>
-        <p className="text-xs text-muted-foreground mt-1">
-          Calibrated to Thrive Pickleball RDC measurements. Actual results may vary slightly with paddle shape.
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-black mb-2">Lead Tape Optimizer</h2>
+          <p className="text-xs text-muted-foreground mt-1">
+            Calibrated to Thrive Pickleball RDC measurements. Actual results may vary slightly with paddle shape.
+          </p>
+        </div>
+        <Button variant="ghost" size="sm" onClick={() => setShowControls(false)}>
+          Back
+        </Button>
       </div>
 
       {/* Current Paddle - prominent card */}

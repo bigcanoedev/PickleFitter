@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useMemo, useRef, useEffect, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Search, Loader2 } from "lucide-react";
@@ -252,13 +252,72 @@ const quizQuestions: QuizQuestion[] = [
   },
 ];
 
+const QUIZ_STORAGE_KEY = "picklefitter_quiz_progress";
+
+function loadSavedProgress(): { step: number; answers: Record<string, string> } | null {
+  try {
+    const raw = localStorage.getItem(QUIZ_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed.step === "number" && parsed.answers) return parsed;
+  } catch {}
+  return null;
+}
+
 export function QuizContainer() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currency, setCurrency] = useState<"USD" | "CAD">("USD");
   const [budgetRange, setBudgetRange] = useState<[number, number]>([50, 250]);
+  const [showResume, setShowResume] = useState(false);
+
+  // ME7: Pre-fill answers from URL params (e.g. from guide pages)
+  useEffect(() => {
+    const prefill: Record<string, string> = {};
+    searchParams.forEach((value, key) => {
+      if (quizQuestions.some((q) => q.key === key)) {
+        prefill[key] = value;
+      }
+    });
+    if (Object.keys(prefill).length > 0) {
+      setAnswers(prefill);
+      // Skip to first unanswered question
+      const visible = quizQuestions.filter((q) => !q.showIf || q.showIf(prefill));
+      const firstUnanswered = visible.findIndex((q) => !prefill[q.key]);
+      if (firstUnanswered > 0) setCurrentStep(firstUnanswered);
+      return; // Don't show resume prompt if we have URL pre-fills
+    }
+
+    // ME1: Check for saved progress
+    const saved = loadSavedProgress();
+    if (saved && Object.keys(saved.answers).length > 0) {
+      setShowResume(true);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const resumeQuiz = useCallback(() => {
+    const saved = loadSavedProgress();
+    if (saved) {
+      setAnswers(saved.answers);
+      setCurrentStep(saved.step);
+    }
+    setShowResume(false);
+  }, []);
+
+  const startFresh = useCallback(() => {
+    localStorage.removeItem(QUIZ_STORAGE_KEY);
+    setShowResume(false);
+  }, []);
+
+  // Persist progress on every change
+  useEffect(() => {
+    if (Object.keys(answers).length > 0) {
+      localStorage.setItem(QUIZ_STORAGE_KEY, JSON.stringify({ step: currentStep, answers }));
+    }
+  }, [currentStep, answers]);
 
   // Filter questions based on conditional visibility
   const visibleQuestions = useMemo(
@@ -344,6 +403,7 @@ export function QuizContainer() {
         sessionId,
       });
 
+      localStorage.removeItem(QUIZ_STORAGE_KEY);
       router.push(`/results?${params.toString()}`);
     }
   };
@@ -358,6 +418,19 @@ export function QuizContainer() {
   const canProceed =
     current.type === "budget-slider" ||
     (current.type === "multi-select" ? !!currentAnswer : !!currentAnswer);
+
+  if (showResume) {
+    return (
+      <div className="max-w-lg mx-auto text-center space-y-4 py-8">
+        <h2 className="text-xl font-black">Welcome back!</h2>
+        <p className="text-muted-foreground">You have a quiz in progress. Pick up where you left off?</p>
+        <div className="flex justify-center gap-3">
+          <Button onClick={resumeQuiz} className="gap-1.5">Resume Quiz</Button>
+          <Button variant="outline" onClick={startFresh}>Start Fresh</Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-lg mx-auto">

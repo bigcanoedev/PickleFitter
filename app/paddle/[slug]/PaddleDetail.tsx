@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { Paddle, PaddleScore } from "@/lib/types";
 import { paddleData } from "@/lib/paddle-data";
 import { LeadTapeOptimizer } from "@/components/LeadTapeOptimizer";
@@ -41,6 +41,20 @@ export default function PaddleDetail() {
 
   const buyLink = paddle ? selectBestLink(paddle) : "";
 
+  // Sticky buy CTA: show when hero buy button scrolls out of view
+  const heroBuyRef = useRef<HTMLDivElement>(null);
+  const [showStickyBuy, setShowStickyBuy] = useState(false);
+
+  useEffect(() => {
+    if (!heroBuyRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowStickyBuy(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(heroBuyRef.current);
+    return () => observer.disconnect();
+  }, [paddle]);
+
   if (!paddle || !analysis) {
     return (
       <div className="text-center py-16">
@@ -71,7 +85,7 @@ export default function PaddleDetail() {
             <h1 className="text-2xl sm:text-3xl font-black mt-1">{paddle.name}</h1>
             <p className="text-muted-foreground mt-2 max-w-xl">{analysis.verdict}</p>
           </div>
-          <div className="flex flex-col items-start sm:items-end gap-2 shrink-0">
+          <div ref={heroBuyRef} className="flex flex-col items-start sm:items-end gap-2 shrink-0">
             <div className="text-3xl font-black text-primary">${paddle.price}</div>
             {buyLink && (
               <Button asChild className="gap-1.5">
@@ -226,6 +240,23 @@ export default function PaddleDetail() {
         <LeadTapeOptimizer selectedPaddle={paddle} />
       </section>
 
+      {/* Sticky buy bar */}
+      {buyLink && showStickyBuy && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur border-t shadow-lg">
+          <div className="max-w-5xl mx-auto px-3 sm:px-4 py-3 flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <div className="font-bold text-sm truncate">{paddle.brand} {paddle.name}</div>
+              <div className="text-primary font-black">${paddle.price}</div>
+            </div>
+            <Button asChild className="gap-1.5 shrink-0">
+              <a href={buyLink} target="_blank" rel="noopener noreferrer">
+                <ShoppingCart className="w-4 h-4" />
+                Buy Now
+              </a>
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

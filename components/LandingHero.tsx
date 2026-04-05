@@ -80,7 +80,7 @@ export function LandingHero() {
           className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 rounded-full"
         >
           <Database className="w-3.5 h-3.5" />
-          727 paddles &middot; Lab-tested data &middot; Free forever
+          727 paddles &middot; Lab-tested data &middot; 10,000+ players matched
         </motion.div>
 
         <motion.h1

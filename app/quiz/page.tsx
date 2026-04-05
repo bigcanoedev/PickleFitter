@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { QuizContainer } from "@/components/QuizContainer";
 
 export const metadata: Metadata = {
@@ -23,7 +24,9 @@ export default function QuizPage() {
           Answer a few quick questions and we&apos;ll match you from 727 paddles.
         </p>
       </div>
-      <QuizContainer />
+      <Suspense>
+        <QuizContainer />
+      </Suspense>
     </div>
   );
 }

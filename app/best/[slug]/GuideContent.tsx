@@ -12,6 +12,11 @@ import { generatePros, generateCons } from "@/lib/paddle-analysis";
 export default function GuideContent({ slug }: { slug: string }) {
   const guide = useMemo(() => getGuideBySlug(slug), [slug]);
   const paddles = useMemo(() => (guide ? getGuideRanking(guide) : []), [guide]);
+  const quizLink = useMemo(() => {
+    if (!guide?.quizPrefill) return "/quiz";
+    const params = new URLSearchParams(guide.quizPrefill);
+    return `/quiz?${params.toString()}`;
+  }, [guide]);
 
   if (!guide) {
     return (
@@ -40,8 +45,8 @@ export default function GuideContent({ slug }: { slug: string }) {
         <p className="text-muted-foreground mt-3 leading-relaxed">{guide.intro}</p>
         <div className="mt-4">
           <Button asChild size="sm" variant="outline" className="gap-1.5">
-            <Link href="/quiz">
-              Want a personalized match? Take the Quiz
+            <Link href={quizLink}>
+              Want a personalized match? Find My Match
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </Button>
@@ -78,8 +83,8 @@ export default function GuideContent({ slug }: { slug: string }) {
         </p>
         <div className="mt-4">
           <Button asChild className="gap-1.5">
-            <Link href="/quiz">
-              Take the 2-Minute Quiz
+            <Link href={quizLink}>
+              Find My Match
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </Button>
