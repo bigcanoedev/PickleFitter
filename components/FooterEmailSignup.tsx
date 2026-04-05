@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { track } from "@vercel/analytics";
 
@@ -34,18 +35,24 @@ export function FooterEmailSignup() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-      <input
-        type="email"
-        placeholder="your@email.com"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-        className="px-3 py-1.5 text-sm rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring w-full sm:w-56"
-      />
-      <Button type="submit" size="sm" disabled={loading}>
-        {loading ? "..." : "Subscribe"}
-      </Button>
-    </form>
+    <div className="w-full sm:w-auto">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
+        <input
+          type="email"
+          placeholder="your@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="px-3 py-1.5 text-sm rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring w-full sm:w-56"
+        />
+        <Button type="submit" size="sm" disabled={loading}>
+          {loading ? "..." : "Subscribe"}
+        </Button>
+      </form>
+      <p className="text-[10px] text-muted-foreground/50 mt-1.5 text-center sm:text-left">
+        Unsubscribe anytime.{" "}
+        <Link href="/privacy" className="underline hover:text-foreground">Privacy Policy</Link>
+      </p>
+    </div>
   );
 }

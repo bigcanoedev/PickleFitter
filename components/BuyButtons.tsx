@@ -61,6 +61,7 @@ export function BuyButtons({ paddle, compact = false, size = "default" }: BuyBut
         ))}
       </div>
       <DiscountBadge discountCode={paddle.discount_code} />
+      <p className="text-[10px] text-muted-foreground/50">Affiliate link — we may earn a commission</p>
     </div>
   );
 }

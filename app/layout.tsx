@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/next";
 import { FooterEmailSignup } from "@/components/FooterEmailSignup";
+import { CookieConsent } from "@/components/CookieConsent";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -99,6 +100,11 @@ export default function RootLayout({
                   <Link href="/methodology" className="hover:text-foreground transition-colors">Methodology</Link>
                 </nav>
               </div>
+              <p className="text-xs text-muted-foreground/70 text-center">
+                As an Amazon Associate and affiliate partner, PickleFitter earns from qualifying purchases.
+                Recommendations are based on data, not sponsorships. Buying through our links supports the
+                site at no extra cost to you.
+              </p>
               <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground/70">
                 <p>Lab-tested paddle recommendations based on swing physics.</p>
                 <div className="flex gap-4">
@@ -109,6 +115,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        <CookieConsent />
         <Analytics />
       </body>
     </html>

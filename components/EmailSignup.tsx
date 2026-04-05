@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { track } from "@vercel/analytics";
@@ -83,6 +84,10 @@ export function EmailSignup({ sessionId, recommendedPaddleId, topPaddles }: Emai
             {loading ? "..." : "Email My Results"}
           </Button>
         </form>
+        <p className="text-[11px] text-muted-foreground/60 mt-2">
+          We&apos;ll email your results and occasional deal alerts. Unsubscribe anytime.{" "}
+          <Link href="/privacy" className="underline hover:text-foreground">Privacy Policy</Link>
+        </p>
       </CardContent>
     </Card>
   );
