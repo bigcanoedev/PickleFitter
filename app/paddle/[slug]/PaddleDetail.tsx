@@ -7,9 +7,10 @@ import { paddleData } from "@/lib/paddle-data";
 import { LeadTapeOptimizer } from "@/components/LeadTapeOptimizer";
 import { generatePros, generateCons, generateBestFor, getProPlayers, getSpecVerdict } from "@/lib/paddle-analysis";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, ShoppingCart, ShieldCheck, Zap, Target, Wind, Ruler, Weight, CircleDot, Layers } from "lucide-react";
+import { ArrowLeft, ExternalLink, ShieldCheck, Zap, Target, Wind, Ruler, Weight, CircleDot, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { paddleSlug, selectBestLink } from "@/lib/utils";
+import { BuyButtons } from "@/components/BuyButtons";
 
 export default function PaddleDetail() {
   const params = useParams();
@@ -87,14 +88,7 @@ export default function PaddleDetail() {
           </div>
           <div ref={heroBuyRef} className="flex flex-col items-start sm:items-end gap-2 shrink-0">
             <div className="text-3xl font-black text-primary">${paddle.price}</div>
-            {buyLink && (
-              <Button asChild className="gap-1.5">
-                <a href={buyLink} target="_blank" rel="noopener noreferrer">
-                  <ShoppingCart className="w-4 h-4" />
-                  Buy Now
-                </a>
-              </Button>
-            )}
+            <BuyButtons paddle={paddle} />
             <Button asChild variant="outline">
               <Link href="/quiz">Find Your Match</Link>
             </Button>
@@ -248,12 +242,7 @@ export default function PaddleDetail() {
               <div className="font-bold text-sm truncate">{paddle.brand} {paddle.name}</div>
               <div className="text-primary font-black">${paddle.price}</div>
             </div>
-            <Button asChild className="gap-1.5 shrink-0">
-              <a href={buyLink} target="_blank" rel="noopener noreferrer">
-                <ShoppingCart className="w-4 h-4" />
-                Buy Now
-              </a>
-            </Button>
+            <BuyButtons paddle={paddle} compact />
           </div>
         </div>
       )}

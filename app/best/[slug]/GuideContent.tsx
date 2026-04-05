@@ -2,10 +2,11 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ShoppingCart, Zap, ShieldCheck, Wind, Weight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Zap, ShieldCheck, Wind, Weight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Paddle } from "@/lib/types";
-import { paddleSlug, selectBestLink } from "@/lib/utils";
+import { paddleSlug } from "@/lib/utils";
+import { BuyButtons } from "@/components/BuyButtons";
 import { getGuideBySlug, getGuideRanking, type GuideFAQ } from "@/lib/guides";
 import { generatePros, generateCons } from "@/lib/paddle-analysis";
 
@@ -192,14 +193,7 @@ function PaddleCard({ paddle, rank }: { paddle: Paddle; rank: number }) {
 
           {/* Actions */}
           <div className="flex flex-wrap gap-2 mt-4">
-            {selectBestLink(paddle) && (
-              <Button asChild size="sm" className="gap-1.5">
-                <a href={selectBestLink(paddle)} target="_blank" rel="noopener noreferrer">
-                  <ShoppingCart className="w-3.5 h-3.5" />
-                  Buy Now
-                </a>
-              </Button>
-            )}
+            <BuyButtons paddle={paddle} size="sm" />
             <Button asChild size="sm" variant="outline" className="gap-1.5">
               <Link href={`/paddle/${slug}`}>
                 Full specs & lead tape optimizer

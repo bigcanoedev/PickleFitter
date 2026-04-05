@@ -2,8 +2,9 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Search, ExternalLink } from "lucide-react";
-import { paddleSlug, selectBestLink } from "@/lib/utils";
+import { Search } from "lucide-react";
+import { paddleSlug } from "@/lib/utils";
+import { BuyButtons } from "@/components/BuyButtons";
 import { PaddleScore } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 
@@ -225,16 +226,7 @@ export function PaddleRankings({ allRanked, onSelectPaddle, startExpanded = fals
                     <span className="text-xs">{paddle.shape || "—"}</span>
                   </td>
                   <td className="px-3 py-2">
-                    {selectBestLink(paddle) && (
-                      <a
-                        href={selectBestLink(paddle)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-primary hover:underline font-medium"
-                      >
-                        Buy <ExternalLink className="w-3 h-3" />
-                      </a>
-                    )}
+                    <BuyButtons paddle={paddle} compact />
                   </td>
                   {onSelectPaddle && (
                     <td className="px-3 py-2">

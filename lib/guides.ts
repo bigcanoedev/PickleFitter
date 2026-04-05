@@ -179,6 +179,43 @@ const THERMOFORMED_PROFILE = profile({
   spinPriority: "High",
 });
 
+const DOUBLES_PROFILE = profile({
+  playStyle: "Control",
+  gameType: "Doubles",
+  swingSpeed: "Moderate",
+  pointSource: "Kitchen",
+  feelPreference: "Soft",
+  stabilityPreference: "Stability",
+  coreThickness: "Thick",
+});
+
+const SENIORS_PROFILE = profile({
+  playStyle: "Control",
+  gameType: "Doubles",
+  swingSpeed: "Slow",
+  armIssues: "Mild",
+  feelPreference: "Soft",
+  coreThickness: "Thick",
+  stabilityPreference: "Stability",
+  spinPriority: "Low",
+});
+
+const WOMEN_PROFILE = profile({
+  gameType: "Doubles",
+  swingSpeed: "Moderate",
+  handSize: "Small",
+  gripLength: "Short",
+  stabilityPreference: "Stability",
+});
+
+const INTERMEDIATE_PROFILE = profile({
+  skillLevel: "Intermediate",
+  playStyle: "Balanced",
+  swingSpeed: "Moderate",
+  buildPreference: "No preference",
+  budgetMax: 200,
+});
+
 /* ───────────────── Guide Definitions ───────────────── */
 
 export const guides: Guide[] = [
@@ -359,6 +396,89 @@ export const guides: Guide[] = [
       );
       return getAllRanked(THERMOFORMED_PROFILE, filtered);
     },
+  },
+  {
+    slug: "best-paddles-for-doubles",
+    quizPrefill: { gameType: "Doubles", playStyle: "Control" },
+    title: "Best Pickleball Paddles for Doubles",
+    metaTitle: "10 Best Pickleball Paddles for Doubles (2026) — Lab-Tested | PickleFitter",
+    description:
+      "Top pickleball paddles for doubles play, scored for control, stability, and soft feel at the kitchen. Real data, not opinions.",
+    intro:
+      "Doubles is a different game — quick hands at the kitchen, touch on dinks, and stability on blocks matter more than raw power. We scored every paddle for a doubles-focused player who values control, soft feel, and a thick core for forgiveness.",
+    rank: (paddles) => getAllRanked(DOUBLES_PROFILE, paddles),
+    faqs: [
+      { question: "What makes a good doubles pickleball paddle?", answer: "Doubles paddles prioritize control, stability, and touch over raw power. Look for thick cores (16mm+), high twist weight for stability on blocks, and a soft feel for precise dinks. These rankings score for all three factors using lab data." },
+      { question: "Should I use a different paddle for doubles vs singles?", answer: "Many competitive players do. Doubles favors control and quick hands at the kitchen, while singles rewards power and reach. If you play both, a versatile 16mm paddle can work, but dedicated doubles players benefit from a control-focused setup." },
+      { question: "Is a heavier or lighter paddle better for doubles?", answer: "Lighter paddles (7.3-7.8 oz) give faster hand speed for volleys, but very light paddles sacrifice stability. A moderate weight with high twist weight gives the best balance of quick reactions and solid blocks." },
+    ],
+  },
+  {
+    slug: "best-paddles-for-seniors",
+    quizPrefill: { swingSpeed: "Slow", armIssues: "Mild" },
+    title: "Best Pickleball Paddles for Seniors",
+    metaTitle: "10 Best Pickleball Paddles for Seniors (2026) — Arm-Friendly | PickleFitter",
+    description:
+      "Arm-friendly, forgiving pickleball paddles for senior players. Scored for comfort, stability, and ease of play.",
+    intro:
+      "The right paddle makes pickleball easier on your body and more fun to play. We scored every paddle for a senior player — prioritizing arm comfort, stability on off-center hits, light swing weight, and a forgiving thick core.",
+    rank: (paddles) => getAllRanked(SENIORS_PROFILE, paddles),
+    faqs: [
+      { question: "What pickleball paddle is best for seniors?", answer: "Seniors benefit from paddles with thick cores (16mm+) for vibration absorption, moderate weight for less fatigue, high twist weight for stability, and a soft feel. These rankings factor in all of these using lab-tested data." },
+      { question: "Does paddle weight matter for older players?", answer: "Yes. A lighter paddle (7.3-7.8 oz) reduces fatigue and is easier on joints, but extremely light paddles lack stability. The sweet spot for most seniors is 7.5-7.9 oz with a thick core for comfort." },
+      { question: "Can seniors use thermoformed paddles?", answer: "Some thermoformed 16mm paddles work well for seniors — they offer consistency and stability. Avoid thin-core thermoformed paddles (14mm), which tend to be stiff and transmit more vibration to the arm." },
+    ],
+  },
+  {
+    slug: "best-paddles-for-women",
+    quizPrefill: { handSize: "Small", gripLength: "Short" },
+    title: "Best Pickleball Paddles for Women",
+    metaTitle: "10 Best Pickleball Paddles for Women (2026) | PickleFitter",
+    description:
+      "Pickleball paddles optimized for women players. Scored for grip size, maneuverability, stability, and overall performance.",
+    intro:
+      "Paddle fit matters. We scored every paddle for a player with a smaller hand size and shorter grip preference — prioritizing maneuverability, stability, and a grip that doesn't force you to overgrip and cause fatigue.",
+    rank: (paddles) => getAllRanked(WOMEN_PROFILE, paddles),
+    faqs: [
+      { question: "What paddle grip size is best for women?", answer: "Most women prefer a 4\" to 4.25\" grip circumference. A grip that's too large forces you to squeeze harder, causing fatigue and reducing control. You can always build up a small grip with an overgrip, but you can't shrink a large one." },
+      { question: "Should women use lighter paddles?", answer: "Not necessarily — it depends on your strength and swing style. Many women play well with paddles in the 7.5-7.9 oz range. The key is finding a weight that lets you react quickly at the kitchen without sacrificing stability." },
+      { question: "Are there paddles designed specifically for women?", answer: "A few brands offer women-specific models with smaller grips, but most paddles work for anyone. What matters is matching the specs (grip size, weight, balance) to your hand size and play style — which is exactly what these rankings do." },
+    ],
+  },
+  {
+    slug: "best-paddles-under-75",
+    quizPrefill: { skillLevel: "Beginner" },
+    title: "Best Pickleball Paddles Under $75",
+    metaTitle: "10 Best Pickleball Paddles Under $75 (2026) — Budget Picks | PickleFitter",
+    description:
+      "The best pickleball paddles under $75. Budget-friendly picks ranked by our lab-tested recommendation engine.",
+    intro:
+      "You don't need to spend a fortune to get a solid paddle. We filtered to paddles under $75 and ranked them using our full 13-dimension scoring engine — finding the best performance per dollar across power, spin, stability, and feel.",
+    rank: (paddles) => {
+      const filtered = paddles.filter((p) => p.price > 0 && p.price <= 75);
+      return getAllRanked(BUDGET_BEGINNER_PROFILE, filtered);
+    },
+    faqs: [
+      { question: "Can you get a good pickleball paddle for under $75?", answer: "Absolutely. Several paddles under $75 offer solid construction, decent spin, and good control. You won't get thermoformed construction or raw carbon fiber faces at this price, but you'll get a paddle that performs well for recreational and beginner play." },
+      { question: "What's the difference between a $50 and a $200 paddle?", answer: "Premium paddles use advanced construction (thermoforming), higher-quality face materials (raw carbon fiber), and more precise weight distribution. Budget paddles use simpler construction but can still offer good playability, especially for beginners developing their game." },
+      { question: "Should beginners buy cheap paddles?", answer: "A $50-75 paddle is perfect for beginners. It lets you learn the game without a big investment, and once you know your play style (power vs control, singles vs doubles), you can upgrade to a paddle that matches your preferences." },
+    ],
+  },
+  {
+    slug: "best-paddles-for-intermediate-players",
+    quizPrefill: { skillLevel: "Intermediate", playStyle: "Balanced" },
+    title: "Best Pickleball Paddles for Intermediate Players",
+    metaTitle: "10 Best Pickleball Paddles for Intermediate Players (2026) | PickleFitter",
+    description:
+      "Top pickleball paddles for intermediate players ready to level up. Scored for versatility, quality construction, and value under $200.",
+    intro:
+      "You know the game — now you need a paddle that grows with you. We scored every paddle for an intermediate player who wants balanced performance, quality construction, and room to develop without overspending.",
+    rank: (paddles) => getAllRanked(INTERMEDIATE_PROFILE, paddles),
+    faqs: [
+      { question: "When should I upgrade from a beginner paddle?", answer: "If you're consistently playing 2-3 times per week and have developed a clear play style (aggressive vs control, singles vs doubles), it's time to upgrade. An intermediate paddle offers better feel, spin, and consistency that rewards developing technique." },
+      { question: "How much should an intermediate player spend?", answer: "The $100-200 range offers excellent value for intermediate players. You get quality construction, good face materials, and consistent performance without paying the premium for top-tier tournament paddles." },
+      { question: "Should intermediate players choose power or control?", answer: "It depends on your play style. If you're unsure, a balanced paddle is the safest choice — it won't limit you as your game develops. Take our quiz for a personalized recommendation based on your specific play style and preferences." },
+    ],
   },
 ];
 

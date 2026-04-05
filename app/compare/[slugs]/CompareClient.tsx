@@ -2,11 +2,12 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
-import { ArrowLeft, ShoppingCart, ArrowRight, Zap, ShieldCheck, Wind, Weight, Layers, Target, CircleDot } from "lucide-react";
+import { ArrowLeft, ArrowRight, Zap, ShieldCheck, Wind, Weight, Layers, Target, CircleDot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Paddle } from "@/lib/types";
 import { paddleData } from "@/lib/paddle-data";
-import { paddleSlug, selectBestLink } from "@/lib/utils";
+import { paddleSlug } from "@/lib/utils";
+import { BuyButtons } from "@/components/BuyButtons";
 import { generatePros, generateCons, generateBestFor, getSpecVerdict } from "@/lib/paddle-analysis";
 
 function findPaddle(slug: string): Paddle | undefined {
@@ -162,15 +163,8 @@ export default function CompareClient({ slugA, slugB }: { slugA: string; slugB: 
               </div>
             </div>
           )}
-          <div className="flex gap-2">
-            {selectBestLink(paddleA) && (
-              <Button asChild size="sm" className="gap-1.5">
-                <a href={selectBestLink(paddleA)} target="_blank" rel="noopener noreferrer">
-                  <ShoppingCart className="w-3.5 h-3.5" />
-                  Buy {paddleA.name}
-                </a>
-              </Button>
-            )}
+          <div className="flex flex-wrap gap-2">
+            <BuyButtons paddle={paddleA} size="sm" />
             <Button asChild size="sm" variant="outline" className="gap-1.5">
               <Link href={`/paddle/${slugA}`}>
                 Full details <ArrowRight className="w-3.5 h-3.5" />
@@ -216,15 +210,8 @@ export default function CompareClient({ slugA, slugB }: { slugA: string; slugB: 
               </div>
             </div>
           )}
-          <div className="flex gap-2">
-            {selectBestLink(paddleB) && (
-              <Button asChild size="sm" className="gap-1.5">
-                <a href={selectBestLink(paddleB)} target="_blank" rel="noopener noreferrer">
-                  <ShoppingCart className="w-3.5 h-3.5" />
-                  Buy {paddleB.name}
-                </a>
-              </Button>
-            )}
+          <div className="flex flex-wrap gap-2">
+            <BuyButtons paddle={paddleB} size="sm" />
             <Button asChild size="sm" variant="outline" className="gap-1.5">
               <Link href={`/paddle/${slugB}`}>
                 Full details <ArrowRight className="w-3.5 h-3.5" />
